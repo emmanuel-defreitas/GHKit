@@ -1,32 +1,46 @@
-// swift-tools-version: 6.4
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version: 6.2
+// Swift 6.2 is the minimum because GHKit uses `@concurrent`, nonisolated(nonsending)
+// by default, and default MainActor isolation for the SwiftUI module.
 
 import PackageDescription
 
+let strictSettings: [SwiftSetting] = [
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+    .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("ExistentialAny"),
+    .enableUpcomingFeature("MemberImportVisibility"),
+]
+
 let package = Package(
     name: "GHKit",
+    platforms: [
+        .iOS(.v17),
+        .macOS(.v14),
+        .tvOS(.v17),
+        .watchOS(.v10),
+        .visionOS(.v1),
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "GHKit",
-            targets: ["GHKit"]
-        ),
+        // Core client: networking, auth, and the typed GitHub API surface.
+        .library(name: "GHKit", targets: ["GHKit"]),
+        // SwiftUI helpers: an observable session, sign-in views, environment values.
+        .library(name: "GHKitUI", targets: ["GHKitUI"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "GHKit",
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
-            ],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitUI",
+            dependencies: ["GHKit"],
+            swiftSettings: strictSettings + [.defaultIsolation(MainActor.self)]
         ),
         .testTarget(
             name: "GHKitTests",
             dependencies: ["GHKit"],
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
-            ],
+            resources: [.copy("Fixtures")],
+            swiftSettings: strictSettings
         ),
     ]
 )

@@ -1,0 +1,97 @@
+name: Update
+
+# Opens an "update(doc): …" PR into next that refreshes README.md, CHANGELOG.md,
+# TODO.md, AGENTS.md, and CLAUDE.md for a release. Runs automatically after
+# Release, or by hand. Rebase runs once this PR merges.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Released version, e.g. 0.2.0. Defaults to the latest tag.
+        required: false
+
+concurrency: release
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  update:
+    name: Update release docs
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: next
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT || github.token }}
+
+      - name: Pick the version
+        id: version
+        env:
+          INPUT: ${{ inputs.version }}
+        run: |
+          version="${INPUT:-$(git describe --tags --abbrev=0 --match '[0-9]*.[0-9]*.[0-9]*' origin/main 2>/dev/null || true)}"
+          version="${version#v}"
+          [ -n "$version" ] || { echo "::error::No version given and no release tag found."; exit 1; }
+          previous="$(git describe --tags --abbrev=0 --match '[0-9]*.[0-9]*.[0-9]*' "$version^" 2>/dev/null || echo "")"
+          {
+            echo "version=$version"
+            echo "previous=$previous"
+            echo "branch=doc/update-v$version"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Regenerate TODO.md and bump the library version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          BRANCH: ${{ steps.version.outputs.branch }}
+        run: |
+          git switch -c "$BRANCH"
+          curl -sSL -o "$RUNNER_TEMP/api.json" \
+            https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json
+          python3 -I Scripts/generate_todo.py "$RUNNER_TEMP/api.json" > TODO.md
+          sed -i -E "s/(public static let current = \")[^\"]+(\")/\1$VERSION\2/" Sources/GHKit/GHKit.swift
+
+      - name: Claude updates the docs
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GH_PAT || github.token }}
+          claude_args: >-
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(git log:*),Bash(git diff:*),Bash(git show:*),Bash(git tag:*)"
+          prompt: |
+            GHKit ${{ steps.version.outputs.version }} was just released (previous release: `${{ steps.version.outputs.previous || 'none' }}`).
+            TODO.md has already been regenerated; don't edit it. Update these files so they match the released code:
+
+            - CHANGELOG.md: move the [Unreleased] entries into a new `## [${{ steps.version.outputs.version }}] - <today's date>`
+              section, filling gaps from `git log` since the previous release. Keep the Keep a Changelog format and add the compare link.
+            - README.md: update the REST coverage badge and the roadmap table from TODO.md's numbers, and any examples
+              or feature lists that the released changes made out of date.
+            - AGENTS.md: update the project layout, commands, and conventions if the release changed them.
+            - CLAUDE.md: keep it in step with AGENTS.md.
+
+            Make small, accurate edits. Don't invent features. Don't commit; the workflow commits for you.
+
+      - name: Open the update(doc) PR
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          BRANCH: ${{ steps.version.outputs.branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md CHANGELOG.md TODO.md AGENTS.md CLAUDE.md Sources/GHKit/GHKit.swift
+          if git diff --cached --quiet; then
+            echo "Docs already up to date." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          git commit -m "update(doc): $VERSION release docs"
+          git push -u origin "$BRANCH"
+          gh pr create --base next --head "$BRANCH" \
+            --title "update(doc): $VERSION release docs" \
+            --body "Refreshes README, CHANGELOG, TODO, AGENTS, and CLAUDE docs for $VERSION. When this merges, Rebase syncs dev with next."
+          gh pr merge "$BRANCH" --auto --squash

@@ -1,0 +1,43 @@
+name: Rebase
+
+# After the update(doc) PR merges into next, bring dev up to date with next.
+# dev is protected (no force pushes), so this opens a "next -> dev" PR and merges it
+# when checks pass, instead of rewriting dev's history.
+
+on:
+  pull_request:
+    branches: [next]
+    types: [closed]
+  workflow_dispatch:
+
+concurrency: rebase-dev
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  sync:
+    name: Sync dev with next
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'update(doc):'))
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
+    steps:
+      - name: Open and queue the next -> dev PR
+        run: |
+          compare="$(gh api "repos/${{ github.repository }}/compare/dev...next" --jq '.ahead_by')"
+          if [ "$compare" = "0" ]; then
+            echo "dev already has everything on next." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          number="$(gh pr list --repo "${{ github.repository }}" --base dev --head next --state open --json number --jq '.[0].number')"
+          if [ -z "$number" ]; then
+            gh pr create --repo "${{ github.repository }}" --base dev --head next \
+              --title "chore(rebase): sync dev with next" \
+              --body "Brings release docs and hotfixes from next back into dev."
+            number="$(gh pr list --repo "${{ github.repository }}" --base dev --head next --state open --json number --jq '.[0].number')"
+          fi
+          gh pr merge "$number" --repo "${{ github.repository }}" --auto --merge
+          echo "PR #$number queued to merge into dev." >> "$GITHUB_STEP_SUMMARY"

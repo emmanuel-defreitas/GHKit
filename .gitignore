@@ -6,3 +6,10 @@ DerivedData/
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
+
+# Local tooling (not part of the package)
+.swiftpm/
+.agents/
+.claude/
+.grok/
+skills-lock.json

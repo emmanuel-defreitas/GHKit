@@ -1,0 +1,63 @@
+name: Prepare
+
+# Works out the next version from what's on next but not on main, then opens
+# (or updates) a draft release PR next -> main. CI lints and tests the PR.
+
+on:
+  workflow_dispatch:
+
+concurrency: release
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  prepare:
+    name: Prepare release PR
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: next
+          fetch-depth: 0
+
+      - name: Work out the next version
+        id: version
+        run: |
+          git fetch origin main --tags
+          .github/scripts/next_version.sh origin/main
+
+      - name: Open or update the draft release PR
+        env:
+          # A personal access token makes CI run on the PR; GITHUB_TOKEN-created PRs don't trigger workflows.
+          GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          LEVEL: ${{ steps.version.outputs.level }}
+          REASON: ${{ steps.version.outputs.reason }}
+        run: |
+          title="release: v$VERSION"
+          {
+            echo "## Release v$VERSION"
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Previous | \`$PREVIOUS\` |"
+            echo "| Bump | **$LEVEL**: $REASON |"
+            echo
+            echo "### Changes"
+            git log --format='- %s (%h)' origin/main..HEAD --no-merges
+            echo
+            echo "---"
+            echo "Next: run the **Promote** workflow to mark this ready, review it, and release on merge."
+          } > body.md
+
+          existing="$(gh pr list --base main --head next --state open --json number --jq '.[0].number')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --title "$title" --body-file body.md
+            echo "Updated PR #$existing" >> "$GITHUB_STEP_SUMMARY"
+          else
+            gh pr create --draft --base main --head next --title "$title" --body-file body.md
+            echo "Opened draft release PR for v$VERSION" >> "$GITHUB_STEP_SUMMARY"
+          fi

@@ -1,0 +1,64 @@
+name: Release
+
+# Second half of Promote: when the release PR (next -> main) merges, tag the
+# merge commit, publish a GitHub release, check Swift Package Index, and start Update.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  release:
+    name: Tag and publish
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref == 'next' &&
+      startsWith(github.event.pull_request.title, 'release: v')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
+      SHA: ${{ github.event.pull_request.merge_commit_sha }}
+      TITLE: ${{ github.event.pull_request.title }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Read the version
+        id: version
+        run: |
+          version="${TITLE#release: v}"
+          echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' || { echo "::error::Bad version '$version' in title"; exit 1; }
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Tag v${{ steps.version.outputs.version }}
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # SwiftPM and Swift Package Index read plain semver tags.
+          gh api "repos/${{ github.repository }}/git/refs" -f ref="refs/tags/$VERSION" -f sha="$SHA"
+
+      - name: Create GitHub release
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "$VERSION" --target "$SHA" --title "v$VERSION" --generate-notes --latest
+
+      - name: Check Swift Package Index
+        run: |
+          status="$(curl -s -o /dev/null -w '%{http_code}' "https://swiftpackageindex.com/${{ github.repository }}")"
+          if [ "$status" = "200" ]; then
+            echo "Swift Package Index picks up new tags automatically: https://swiftpackageindex.com/${{ github.repository }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::GHKit isn't on Swift Package Index yet. Add it once at https://swiftpackageindex.com/add-a-package"
+          fi
+
+      - name: Start Update
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh workflow run update-docs.yml --ref next -f version="$VERSION"

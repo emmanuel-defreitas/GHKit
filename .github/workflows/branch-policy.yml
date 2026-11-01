@@ -1,0 +1,59 @@
+name: Branch policy
+
+# Enforces which branches may open pull requests into dev, next, and main.
+# "Branch policy" is a required check on all three branches.
+#
+#   dev  <- feat/*, fix/*, doc/*, ai/*, core/*   (conventional PR title required)
+#        <- next                                 (sync after a release)
+#   next <- dev                                  (staging)
+#        <- any branch, title "<type>(hotfix): …" (hotfixes)
+#        <- any branch, title "update(doc): …"   (release docs from the Update action)
+#   main <- next                                 (releases)
+
+on:
+  pull_request:
+    branches: [dev, next, main]
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    name: Branch policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch and title
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          conventional='^(feat|fix|doc|docs|ai|core|chore|refactor|test|perf|ci|build)(\([^)]+\))?!?: .+'
+          fail() { echo "::error title=Branch policy::$1"; exit 1; }
+
+          case "$BASE" in
+            dev)
+              if [ "$HEAD" = "next" ]; then
+                echo "OK: sync from next into dev"; exit 0
+              fi
+              case "$HEAD" in
+                feat/*|fix/*|doc/*|ai/*|core/*) ;;
+                *) fail "dev only accepts branches named feat/, fix/, doc/, ai/, core/, or the next branch. Got '$HEAD'." ;;
+              esac
+              echo "$TITLE" | grep -Eq "$conventional" \
+                || fail "Use a conventional PR title, e.g. 'feat(projects): add view updates'. It becomes the squash commit and drives the version bump."
+              ;;
+            next)
+              if [ "$HEAD" = "dev" ]; then
+                echo "OK: staging from dev"; exit 0
+              fi
+              echo "$TITLE" | grep -Eq '^[a-z]+\(hotfix\)!?: .+' && { echo "OK: hotfix"; exit 0; }
+              echo "$TITLE" | grep -Eq '^update\(doc\): .+' && { echo "OK: release docs"; exit 0; }
+              fail "next only accepts the dev branch, PRs titled '<type>(hotfix): …', or 'update(doc): …'. Got '$HEAD' / '$TITLE'."
+              ;;
+            main)
+              [ "$HEAD" = "next" ] || fail "main only accepts pull requests from next. Got '$HEAD'."
+              ;;
+          esac
+          echo "OK: $HEAD -> $BASE"

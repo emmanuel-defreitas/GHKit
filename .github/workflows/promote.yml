@@ -1,0 +1,76 @@
+name: Promote
+
+# Marks the release PR ready, has Claude review it, and queues it to merge.
+# If Claude finds problems, it opens a "fix(hotfix): …" PR into next instead;
+# merge that, then run Promote again. The Release workflow tags and publishes on merge.
+
+on:
+  workflow_dispatch:
+
+concurrency: release
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  promote:
+    name: Review and queue release
+    runs-on: macos-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT || github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: next
+          fetch-depth: 0
+
+      - name: Find the release PR
+        id: pr
+        run: |
+          git fetch origin main
+          read -r number title <<< "$(gh pr list --base main --head next --state open --json number,title --jq '.[0] | "\(.number) \(.title)"')"
+          if [ -z "$number" ] || [ "$number" = "null" ]; then
+            echo "::error::No open release PR from next to main. Run Prepare first."; exit 1
+          fi
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+          echo "version=${title#release: v}" >> "$GITHUB_OUTPUT"
+          gh pr ready "$number" || true
+
+      - name: Claude code review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GH_PAT || github.token }}
+          claude_args: >-
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(git:*),Bash(gh pr:*),Bash(swift:*),Bash(xcodebuild:*)"
+          prompt: |
+            You are reviewing release PR #${{ steps.pr.outputs.number }} (v${{ steps.pr.outputs.version }}) of GHKit,
+            which merges `next` into `main`. Read AGENTS.md first for the project's conventions.
+
+            1. Review `git diff origin/main...HEAD` for bugs, concurrency problems, API design issues,
+               missing tests, and anything that would break consumers of the package.
+            2. Run `swift format lint --strict --recursive Sources Tests Package.swift`, `swift build`, and `swift test`.
+            3. Post one review comment on PR #${{ steps.pr.outputs.number }} with `gh pr comment`, listing findings by severity.
+               If there's nothing to fix, say so plainly.
+            4. Only if you found problems worth fixing before release: create a branch
+               `fix/release-v${{ steps.pr.outputs.version }}-review` from `next`, commit the fixes, push it, and open a PR into
+               `next` titled `fix(hotfix): address v${{ steps.pr.outputs.version }} release review`.
+               Do not push to `next` or `main` directly, and do not merge anything.
+
+      - name: Queue the release PR, unless review fixes are pending
+        env:
+          NUMBER: ${{ steps.pr.outputs.number }}
+          VERSION: ${{ steps.pr.outputs.version }}
+        run: |
+          pending="$(gh pr list --base next --state open --search "in:title \"(hotfix)\" v$VERSION" --json number --jq 'length')"
+          if [ "$pending" != "0" ]; then
+            gh pr comment "$NUMBER" --body "Review fixes are open against \`next\`. Merge them, then run **Promote** again."
+            echo "Review fixes pending; release not queued." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          gh pr merge "$NUMBER" --auto --merge
+          echo "Release PR #$NUMBER queued to merge when checks pass." >> "$GITHUB_STEP_SUMMARY"
