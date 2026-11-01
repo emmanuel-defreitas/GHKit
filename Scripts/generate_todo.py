@@ -6,7 +6,7 @@ Usage:
       https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json
     python3 Scripts/generate_todo.py /tmp/api.json > TODO.md
 
-To record progress, edit DONE and IN_PROGRESS below (keyed by operationId), then rerun.
+To record progress, edit DONE, IN_PROGRESS and DEFERRED below (keyed by operationId), then rerun.
 """
 
 import json
@@ -21,6 +21,46 @@ DONE = {
     "users/get-by-username": "`github.users.user(_:)`",
     "users/get-by-id": "`github.users.user(id:)`",
     "rate-limit/get": "`github.rateLimit()`",
+    # Users (milestone 2)
+    "users/update-authenticated": "`users.updateProfile(_:)`",
+    "users/list": "`users.all(since:perPage:)`",
+    "users/get-context-for-user": "`users.hovercard(for:about:)`",
+    "users/list-followers-for-authenticated-user": "`users.followers()`",
+    "users/list-followers-for-user": "`users.followers(of:)`",
+    "users/list-followed-by-authenticated-user": "`users.following()`",
+    "users/list-following-for-user": "`users.following(of:)`",
+    "users/check-person-is-followed-by-authenticated": "`users.isFollowing(_:)`",
+    "users/check-following-for-user": "`users.isFollowing(_:by:)`",
+    "users/follow": "`users.follow(_:)`",
+    "users/unfollow": "`users.unfollow(_:)`",
+    "users/list-blocked-by-authenticated-user": "`users.blockedUsers()`",
+    "users/check-blocked": "`users.isBlocked(_:)`",
+    "users/block": "`users.block(_:)`",
+    "users/unblock": "`users.unblock(_:)`",
+    "users/list-emails-for-authenticated-user": "`users.emails()`",
+    "users/list-public-emails-for-authenticated-user": "`users.publicEmails()`",
+    "users/add-email-for-authenticated-user": "`users.addEmails(_:)`",
+    "users/delete-email-for-authenticated-user": "`users.deleteEmails(_:)`",
+    "users/set-primary-email-visibility-for-authenticated-user": "`users.setPrimaryEmailVisibility(_:)`",
+    "users/list-gpg-keys-for-authenticated-user": "`users.gpgKeys()`",
+    "users/list-gpg-keys-for-user": "`users.gpgKeys(of:)`",
+    "users/get-gpg-key-for-authenticated-user": "`users.gpgKey(id:)`",
+    "users/create-gpg-key-for-authenticated-user": "`users.addGPGKey(armoredPublicKey:name:)`",
+    "users/delete-gpg-key-for-authenticated-user": "`users.deleteGPGKey(id:)`",
+    "users/list-public-ssh-keys-for-authenticated-user": "`users.sshKeys()`",
+    "users/list-public-keys-for-user": "`users.sshKeys(of:)`",
+    "users/get-public-ssh-key-for-authenticated-user": "`users.sshKey(id:)`",
+    "users/create-public-ssh-key-for-authenticated-user": "`users.addSSHKey(_:title:)`",
+    "users/delete-public-ssh-key-for-authenticated-user": "`users.deleteSSHKey(id:)`",
+    "users/list-ssh-signing-keys-for-authenticated-user": "`users.sshSigningKeys()`",
+    "users/list-ssh-signing-keys-for-user": "`users.sshSigningKeys(of:)`",
+    "users/get-ssh-signing-key-for-authenticated-user": "`users.sshSigningKey(id:)`",
+    "users/create-ssh-signing-key-for-authenticated-user": "`users.addSSHSigningKey(_:title:)`",
+    "users/delete-ssh-signing-key-for-authenticated-user": "`users.deleteSSHSigningKey(id:)`",
+    "users/list-social-accounts-for-authenticated-user": "`users.socialAccounts()`",
+    "users/list-social-accounts-for-user": "`users.socialAccounts(of:)`",
+    "users/add-social-account-for-authenticated-user": "`users.addSocialAccounts(_:)`",
+    "users/delete-social-account-for-authenticated-user": "`users.deleteSocialAccounts(_:)`",
     # Authentication: GitHub Apps
     "apps/get-authenticated": "`apps.authenticatedApp()`",
     "apps/get-by-slug": "`apps.app(slug:)`",
@@ -72,9 +112,19 @@ DONE = {
 # operationId -> note
 IN_PROGRESS: dict[str, str] = {}
 
+# operationId -> note, for to-do endpoints scheduled outside their category's milestone
+DEFERRED: dict[str, str] = {
+    # Artifact attestations are supply-chain security, so they ship with the security work.
+    "users/list-attestations": "milestone 5",
+    "users/list-attestations-bulk": "milestone 5",
+    "users/delete-attestations-bulk": "milestone 5",
+    "users/delete-attestations-by-subject-digest": "milestone 5",
+    "users/delete-attestations-by-id": "milestone 5",
+}
+
 MILESTONES = [
     ("M1", "Authentication & Projects", "✅ Done"),
-    ("M2", "Core resources: users, organizations, teams, repositories", "⬜ Next"),
+    ("M2", "Core resources: users, organizations, teams, repositories", "🚧 In progress"),
     ("M3", "Collaboration: issues, pull requests, search, activity", "⬜ Planned"),
     ("M4", "Automation: Actions, checks, packages, app webhooks", "⬜ Planned"),
     ("M5", "Security: code scanning, secret scanning, Dependabot", "⬜ Planned"),
@@ -169,6 +219,8 @@ def main(spec_path: str) -> None:
                 w(f"- [x] ✅ {line} → {DONE[e['id']]}")
             elif e["id"] in IN_PROGRESS:
                 w(f"- [ ] 🚧 {line} ({IN_PROGRESS[e['id']]})")
+            elif e["id"] in DEFERRED:
+                w(f"- [ ] {line} (deferred to {DEFERRED[e['id']]})")
             else:
                 w(f"- [ ] {line}")
         w("")
