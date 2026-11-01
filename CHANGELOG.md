@@ -19,5 +19,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - TODO.md coverage tracker generated from GitHub's OpenAPI description.
 - Users: profile updates, the user directory, hovercards, followers, blocks, emails, GPG keys, SSH keys,
   SSH signing keys, and social accounts. Check endpoints such as `isFollowing(_:)` return a `Bool`.
+- Organizations: profiles and settings, members, memberships, public membership, outside collaborators,
+  invitations, blocks, and app installations, plus the signed-in user's memberships and invitations.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next

@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 86 of 1254 endpoints (6%)
+**REST progress:** 118 of 1254 endpoints (9%)
 
 ## Milestones
 
@@ -60,7 +60,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [licenses](#licenses) | M2 | 0 | 3 | ⬜ |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 0 | 116 | ⬜ |
+| [orgs](#orgs) | M2 | 32 | 116 | 🚧 |
 | [repos](#repos) | M2 | 0 | 203 | ⬜ |
 | [teams](#teams) | M2 | 0 | 32 | ⬜ |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
@@ -252,30 +252,30 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-0/116 done · milestone M2
+32/116 done · milestone M2
 
-- [ ] `GET /organizations` — List organizations
-- [ ] `GET /orgs/{org}` — Get an organization
-- [ ] `PATCH /orgs/{org}` — Update an organization
-- [ ] `DELETE /orgs/{org}` — Delete an organization
-- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record` — Create an artifact deployment record
-- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}` — Set cluster deployment records
-- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs` — Create a cluster deployment records job
-- [ ] `GET /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs/{job_id}` — Get cluster deployment records job status
-- [ ] `POST /orgs/{org}/artifacts/metadata/storage-record` — Create artifact metadata storage record
-- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/deployment-records` — List artifact deployment records
-- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/storage-records` — List artifact storage records
-- [ ] `POST /orgs/{org}/attestations/bulk-list` — List attestations by bulk subject digests
-- [ ] `POST /orgs/{org}/attestations/delete-request` — Delete attestations in bulk
-- [ ] `DELETE /orgs/{org}/attestations/digest/{subject_digest}` — Delete attestations by subject digest
-- [ ] `GET /orgs/{org}/attestations/repositories` — List attestation repositories
-- [ ] `DELETE /orgs/{org}/attestations/{attestation_id}` — Delete attestations by ID
-- [ ] `GET /orgs/{org}/attestations/{subject_digest}` — List attestations
-- [ ] `GET /orgs/{org}/blocks` — List users blocked by an organization
-- [ ] `GET /orgs/{org}/blocks/{username}` — Check if a user is blocked by an organization
-- [ ] `PUT /orgs/{org}/blocks/{username}` — Block a user from an organization
-- [ ] `DELETE /orgs/{org}/blocks/{username}` — Unblock a user from an organization
-- [ ] `GET /orgs/{org}/failed_invitations` — List failed organization invitations
+- [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
+- [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
+- [x] ✅ `PATCH /orgs/{org}` — Update an organization → `organizations.update(_:_:)`
+- [x] ✅ `DELETE /orgs/{org}` — Delete an organization → `organizations.delete(_:)`
+- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record` — Create an artifact deployment record (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}` — Set cluster deployment records (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs` — Create a cluster deployment records job (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs/{job_id}` — Get cluster deployment records job status (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/artifacts/metadata/storage-record` — Create artifact metadata storage record (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/deployment-records` — List artifact deployment records (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/storage-records` — List artifact storage records (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/attestations/bulk-list` — List attestations by bulk subject digests (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/attestations/delete-request` — Delete attestations in bulk (deferred to milestone 5)
+- [ ] `DELETE /orgs/{org}/attestations/digest/{subject_digest}` — Delete attestations by subject digest (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/attestations/repositories` — List attestation repositories (deferred to milestone 5)
+- [ ] `DELETE /orgs/{org}/attestations/{attestation_id}` — Delete attestations by ID (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/attestations/{subject_digest}` — List attestations (deferred to milestone 5)
+- [x] ✅ `GET /orgs/{org}/blocks` — List users blocked by an organization → `organizations.blockedUsers(in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/blocks/{username}` — Check if a user is blocked by an organization → `organizations.isBlocked(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/blocks/{username}` — Block a user from an organization → `organizations.block(_:in:)`
+- [x] ✅ `DELETE /orgs/{org}/blocks/{username}` — Unblock a user from an organization → `organizations.unblock(_:in:)`
+- [x] ✅ `GET /orgs/{org}/failed_invitations` — List failed organization invitations → `organizations.failedInvitations(of:perPage:)`
 - [ ] `GET /orgs/{org}/hooks` — List organization webhooks
 - [ ] `POST /orgs/{org}/hooks` — Create an organization webhook
 - [ ] `GET /orgs/{org}/hooks/{hook_id}` — Get an organization webhook
@@ -296,25 +296,25 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /orgs/{org}/insights/api/time-stats/users/{user_id}` — Get time stats by user
 - [ ] `GET /orgs/{org}/insights/api/time-stats/{actor_type}/{actor_id}` — Get time stats by actor
 - [ ] `GET /orgs/{org}/insights/api/user-stats/{user_id}` — Get user stats
-- [ ] `GET /orgs/{org}/installations` — List app installations for an organization
-- [ ] `GET /orgs/{org}/invitations` — List pending organization invitations
-- [ ] `POST /orgs/{org}/invitations` — Create an organization invitation
-- [ ] `DELETE /orgs/{org}/invitations/{invitation_id}` — Cancel an organization invitation
-- [ ] `GET /orgs/{org}/invitations/{invitation_id}/teams` — List organization invitation teams
-- [ ] `GET /orgs/{org}/issue-fields` — List issue fields for an organization
-- [ ] `POST /orgs/{org}/issue-fields` — Create issue field for an organization
-- [ ] `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization
-- [ ] `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization
-- [ ] `GET /orgs/{org}/issue-types` — List issue types for an organization
-- [ ] `POST /orgs/{org}/issue-types` — Create issue type for an organization
-- [ ] `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization
-- [ ] `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization
-- [ ] `GET /orgs/{org}/members` — List organization members
-- [ ] `GET /orgs/{org}/members/{username}` — Check organization membership for a user
-- [ ] `DELETE /orgs/{org}/members/{username}` — Remove an organization member
-- [ ] `GET /orgs/{org}/memberships/{username}` — Get organization membership for a user
-- [ ] `PUT /orgs/{org}/memberships/{username}` — Set organization membership for a user
-- [ ] `DELETE /orgs/{org}/memberships/{username}` — Remove organization membership for a user
+- [x] ✅ `GET /orgs/{org}/installations` — List app installations for an organization → `organizations.installations(of:perPage:)`
+- [x] ✅ `GET /orgs/{org}/invitations` — List pending organization invitations → `organizations.invitations(of:role:source:perPage:)`
+- [x] ✅ `POST /orgs/{org}/invitations` — Create an organization invitation → `organizations.invite(_:to:)`
+- [x] ✅ `DELETE /orgs/{org}/invitations/{invitation_id}` — Cancel an organization invitation → `organizations.cancelInvitation(id:in:)`
+- [x] ✅ `GET /orgs/{org}/invitations/{invitation_id}/teams` — List organization invitation teams → `organizations.invitationTeams(id:in:perPage:)`
+- [ ] `GET /orgs/{org}/issue-fields` — List issue fields for an organization (deferred to milestone 3)
+- [ ] `POST /orgs/{org}/issue-fields` — Create issue field for an organization (deferred to milestone 3)
+- [ ] `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization (deferred to milestone 3)
+- [ ] `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization (deferred to milestone 3)
+- [ ] `GET /orgs/{org}/issue-types` — List issue types for an organization (deferred to milestone 3)
+- [ ] `POST /orgs/{org}/issue-types` — Create issue type for an organization (deferred to milestone 3)
+- [ ] `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization (deferred to milestone 3)
+- [ ] `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization (deferred to milestone 3)
+- [x] ✅ `GET /orgs/{org}/members` — List organization members → `organizations.members(of:filter:role:perPage:)`
+- [x] ✅ `GET /orgs/{org}/members/{username}` — Check organization membership for a user → `organizations.isMember(_:of:)`
+- [x] ✅ `DELETE /orgs/{org}/members/{username}` — Remove an organization member → `organizations.removeMember(_:from:)`
+- [x] ✅ `GET /orgs/{org}/memberships/{username}` — Get organization membership for a user → `organizations.membership(of:in:)`
+- [x] ✅ `PUT /orgs/{org}/memberships/{username}` — Set organization membership for a user → `organizations.setMembership(of:in:role:)`
+- [x] ✅ `DELETE /orgs/{org}/memberships/{username}` — Remove organization membership for a user → `organizations.removeMembership(of:from:)`
 - [ ] `GET /orgs/{org}/organization-roles` — Get all organization roles for an organization
 - [ ] `DELETE /orgs/{org}/organization-roles/teams/{team_slug}` — Remove all organization roles for a team
 - [ ] `PUT /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Assign an organization role to a team
@@ -325,9 +325,9 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /orgs/{org}/organization-roles/{role_id}` — Get an organization role
 - [ ] `GET /orgs/{org}/organization-roles/{role_id}/teams` — List teams that are assigned to an organization role
 - [ ] `GET /orgs/{org}/organization-roles/{role_id}/users` — List users that are assigned to an organization role
-- [ ] `GET /orgs/{org}/outside_collaborators` — List outside collaborators for an organization
-- [ ] `PUT /orgs/{org}/outside_collaborators/{username}` — Convert an organization member to outside collaborator
-- [ ] `DELETE /orgs/{org}/outside_collaborators/{username}` — Remove outside collaborator from an organization
+- [x] ✅ `GET /orgs/{org}/outside_collaborators` — List outside collaborators for an organization → `organizations.outsideCollaborators(of:filter:perPage:)`
+- [x] ✅ `PUT /orgs/{org}/outside_collaborators/{username}` — Convert an organization member to outside collaborator → `organizations.convertToOutsideCollaborator(_:in:async:)`
+- [x] ✅ `DELETE /orgs/{org}/outside_collaborators/{username}` — Remove outside collaborator from an organization → `organizations.removeOutsideCollaborator(_:from:)`
 - [ ] `GET /orgs/{org}/personal-access-token-requests` — List requests to access organization resources with fine-grained personal access tokens
 - [ ] `POST /orgs/{org}/personal-access-token-requests` — Review requests to access organization resources with fine-grained personal access tokens
 - [ ] `POST /orgs/{org}/personal-access-token-requests/{pat_request_id}` — Review a request to access organization resources with a fine-grained personal access token
@@ -349,10 +349,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /orgs/{org}/properties/schema/{custom_property_name}` — Remove a custom property for an organization
 - [ ] `GET /orgs/{org}/properties/values` — List custom property values for organization repositories
 - [ ] `PATCH /orgs/{org}/properties/values` — Create or update custom property values for organization repositories
-- [ ] `GET /orgs/{org}/public_members` — List public organization members
-- [ ] `GET /orgs/{org}/public_members/{username}` — Check public organization membership for a user
-- [ ] `PUT /orgs/{org}/public_members/{username}` — Set public organization membership for the authenticated user
-- [ ] `DELETE /orgs/{org}/public_members/{username}` — Remove public organization membership for the authenticated user
+- [x] ✅ `GET /orgs/{org}/public_members` — List public organization members → `organizations.publicMembers(of:perPage:)`
+- [x] ✅ `GET /orgs/{org}/public_members/{username}` — Check public organization membership for a user → `organizations.isPublicMember(_:of:)`
+- [x] ✅ `PUT /orgs/{org}/public_members/{username}` — Set public organization membership for the authenticated user → `organizations.publicizeMembership(of:in:)`
+- [x] ✅ `DELETE /orgs/{org}/public_members/{username}` — Remove public organization membership for the authenticated user → `organizations.concealMembership(of:in:)`
 - [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history
 - [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version
 - [ ] ~~`GET /orgs/{org}/security-managers` — List security manager teams~~
@@ -365,11 +365,11 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PUT /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Enable a selected repository for immutable releases in an organization
 - [ ] `DELETE /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Disable a selected repository for immutable releases in an organization
 - [ ] ~~`POST /orgs/{org}/{security_product}/{enablement}` — Enable or disable a security feature for an organization~~
-- [ ] `GET /user/memberships/orgs` — List organization memberships for the authenticated user
-- [ ] `GET /user/memberships/orgs/{org}` — Get an organization membership for the authenticated user
-- [ ] `PATCH /user/memberships/orgs/{org}` — Update an organization membership for the authenticated user
-- [ ] `GET /user/orgs` — List organizations for the authenticated user
-- [ ] `GET /users/{username}/orgs` — List organizations for a user
+- [x] ✅ `GET /user/memberships/orgs` — List organization memberships for the authenticated user → `organizations.memberships(state:perPage:)`
+- [x] ✅ `GET /user/memberships/orgs/{org}` — Get an organization membership for the authenticated user → `organizations.membership(in:)`
+- [x] ✅ `PATCH /user/memberships/orgs/{org}` — Update an organization membership for the authenticated user → `organizations.acceptInvitation(to:)`
+- [x] ✅ `GET /user/orgs` — List organizations for the authenticated user → `organizations.list(perPage:)`
+- [x] ✅ `GET /users/{username}/orgs` — List organizations for a user → `organizations.list(of:perPage:)`
 
 ### repos
 

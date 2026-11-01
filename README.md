@@ -326,7 +326,7 @@ graph LR
     App[Your SwiftUI app] --> Session[GitHubSession<br/>GHKitUI]
     Session --> Client[GitHubClient]
     App --> Client
-    Client --> APIs[ProjectsAPI · UsersAPI · AppsAPI]
+    Client --> APIs[ProjectsAPI · UsersAPI · OrganizationsAPI · AppsAPI]
     Client --> Auth[Authenticator<br/>token · OAuth · GitHub App]
     Client --> Transport[HTTPTransport<br/>URLSession]
     APIs --> REST[(REST API)]
