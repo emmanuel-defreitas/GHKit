@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 118 of 1254 endpoints (9%)
+**REST progress:** 147 of 1254 endpoints (11%)
 
 ## Milestones
 
@@ -60,7 +60,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [licenses](#licenses) | M2 | 0 | 3 | ⬜ |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 32 | 116 | 🚧 |
+| [orgs](#orgs) | M2 | 61 | 116 | 🚧 |
 | [repos](#repos) | M2 | 0 | 203 | ⬜ |
 | [teams](#teams) | M2 | 0 | 32 | ⬜ |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
@@ -252,7 +252,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-32/116 done · milestone M2
+61/116 done · milestone M2
 
 - [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
 - [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
@@ -276,17 +276,17 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `PUT /orgs/{org}/blocks/{username}` — Block a user from an organization → `organizations.block(_:in:)`
 - [x] ✅ `DELETE /orgs/{org}/blocks/{username}` — Unblock a user from an organization → `organizations.unblock(_:in:)`
 - [x] ✅ `GET /orgs/{org}/failed_invitations` — List failed organization invitations → `organizations.failedInvitations(of:perPage:)`
-- [ ] `GET /orgs/{org}/hooks` — List organization webhooks
-- [ ] `POST /orgs/{org}/hooks` — Create an organization webhook
-- [ ] `GET /orgs/{org}/hooks/{hook_id}` — Get an organization webhook
-- [ ] `PATCH /orgs/{org}/hooks/{hook_id}` — Update an organization webhook
-- [ ] `DELETE /orgs/{org}/hooks/{hook_id}` — Delete an organization webhook
-- [ ] `GET /orgs/{org}/hooks/{hook_id}/config` — Get a webhook configuration for an organization
-- [ ] `PATCH /orgs/{org}/hooks/{hook_id}/config` — Update a webhook configuration for an organization
-- [ ] `GET /orgs/{org}/hooks/{hook_id}/deliveries` — List deliveries for an organization webhook
-- [ ] `GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a webhook delivery for an organization webhook
-- [ ] `POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for an organization webhook
-- [ ] `POST /orgs/{org}/hooks/{hook_id}/pings` — Ping an organization webhook
+- [x] ✅ `GET /orgs/{org}/hooks` — List organization webhooks → `organizations.webhooks(of:perPage:)`
+- [x] ✅ `POST /orgs/{org}/hooks` — Create an organization webhook → `organizations.createWebhook(_:in:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}` — Get an organization webhook → `organizations.webhook(id:in:)`
+- [x] ✅ `PATCH /orgs/{org}/hooks/{hook_id}` — Update an organization webhook → `organizations.updateWebhook(id:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/hooks/{hook_id}` — Delete an organization webhook → `organizations.deleteWebhook(id:in:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/config` — Get a webhook configuration for an organization → `organizations.webhookConfiguration(id:in:)`
+- [x] ✅ `PATCH /orgs/{org}/hooks/{hook_id}/config` — Update a webhook configuration for an organization → `organizations.updateWebhookConfiguration(id:in:_:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/deliveries` — List deliveries for an organization webhook → `organizations.webhookDeliveries(id:in:status:perPage:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a webhook delivery for an organization webhook → `organizations.webhookDelivery(_:webhook:in:)`
+- [x] ✅ `POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for an organization webhook → `organizations.redeliver(_:webhook:in:)`
+- [x] ✅ `POST /orgs/{org}/hooks/{hook_id}/pings` — Ping an organization webhook → `organizations.pingWebhook(id:in:)`
 - [ ] `GET /orgs/{org}/insights/api/route-stats/{actor_type}/{actor_id}` — Get route stats by actor
 - [ ] `GET /orgs/{org}/insights/api/subject-stats` — Get subject stats
 - [ ] `GET /orgs/{org}/insights/api/summary-stats` — Get summary stats
@@ -315,27 +315,27 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /orgs/{org}/memberships/{username}` — Get organization membership for a user → `organizations.membership(of:in:)`
 - [x] ✅ `PUT /orgs/{org}/memberships/{username}` — Set organization membership for a user → `organizations.setMembership(of:in:role:)`
 - [x] ✅ `DELETE /orgs/{org}/memberships/{username}` — Remove organization membership for a user → `organizations.removeMembership(of:from:)`
-- [ ] `GET /orgs/{org}/organization-roles` — Get all organization roles for an organization
-- [ ] `DELETE /orgs/{org}/organization-roles/teams/{team_slug}` — Remove all organization roles for a team
-- [ ] `PUT /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Assign an organization role to a team
-- [ ] `DELETE /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Remove an organization role from a team
-- [ ] `DELETE /orgs/{org}/organization-roles/users/{username}` — Remove all organization roles for a user
-- [ ] `PUT /orgs/{org}/organization-roles/users/{username}/{role_id}` — Assign an organization role to a user
-- [ ] `DELETE /orgs/{org}/organization-roles/users/{username}/{role_id}` — Remove an organization role from a user
-- [ ] `GET /orgs/{org}/organization-roles/{role_id}` — Get an organization role
-- [ ] `GET /orgs/{org}/organization-roles/{role_id}/teams` — List teams that are assigned to an organization role
-- [ ] `GET /orgs/{org}/organization-roles/{role_id}/users` — List users that are assigned to an organization role
+- [x] ✅ `GET /orgs/{org}/organization-roles` — Get all organization roles for an organization → `organizations.roles(of:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/teams/{team_slug}` — Remove all organization roles for a team → `organizations.revokeAllRoles(fromTeam:in:)`
+- [x] ✅ `PUT /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Assign an organization role to a team → `organizations.assignRole(_:toTeam:in:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Remove an organization role from a team → `organizations.revokeRole(_:fromTeam:in:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/users/{username}` — Remove all organization roles for a user → `organizations.revokeAllRoles(fromUser:in:)`
+- [x] ✅ `PUT /orgs/{org}/organization-roles/users/{username}/{role_id}` — Assign an organization role to a user → `organizations.assignRole(_:toUser:in:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/users/{username}/{role_id}` — Remove an organization role from a user → `organizations.revokeRole(_:fromUser:in:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles/{role_id}` — Get an organization role → `organizations.role(id:in:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles/{role_id}/teams` — List teams that are assigned to an organization role → `organizations.teams(withRole:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles/{role_id}/users` — List users that are assigned to an organization role → `organizations.users(withRole:in:perPage:)`
 - [x] ✅ `GET /orgs/{org}/outside_collaborators` — List outside collaborators for an organization → `organizations.outsideCollaborators(of:filter:perPage:)`
 - [x] ✅ `PUT /orgs/{org}/outside_collaborators/{username}` — Convert an organization member to outside collaborator → `organizations.convertToOutsideCollaborator(_:in:async:)`
 - [x] ✅ `DELETE /orgs/{org}/outside_collaborators/{username}` — Remove outside collaborator from an organization → `organizations.removeOutsideCollaborator(_:from:)`
-- [ ] `GET /orgs/{org}/personal-access-token-requests` — List requests to access organization resources with fine-grained personal access tokens
-- [ ] `POST /orgs/{org}/personal-access-token-requests` — Review requests to access organization resources with fine-grained personal access tokens
-- [ ] `POST /orgs/{org}/personal-access-token-requests/{pat_request_id}` — Review a request to access organization resources with a fine-grained personal access token
-- [ ] `GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories` — List repositories requested to be accessed by a fine-grained personal access token
-- [ ] `GET /orgs/{org}/personal-access-tokens` — List fine-grained personal access tokens with access to organization resources
-- [ ] `POST /orgs/{org}/personal-access-tokens` — Update the access to organization resources via fine-grained personal access tokens
-- [ ] `POST /orgs/{org}/personal-access-tokens/{pat_id}` — Update the access a fine-grained personal access token has to organization resources
-- [ ] `GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories` — List repositories a fine-grained personal access token has access to
+- [x] ✅ `GET /orgs/{org}/personal-access-token-requests` — List requests to access organization resources with fine-grained personal access tokens → `organizations.tokenRequests(in:matching:perPage:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-token-requests` — Review requests to access organization resources with fine-grained personal access tokens → `organizations.reviewTokenRequests(ids:in:_:reason:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-token-requests/{pat_request_id}` — Review a request to access organization resources with a fine-grained personal access token → `organizations.reviewTokenRequest(id:in:_:reason:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories` — List repositories requested to be accessed by a fine-grained personal access token → `organizations.tokenRequestRepositories(id:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-tokens` — List fine-grained personal access tokens with access to organization resources → `organizations.tokenGrants(in:matching:perPage:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-tokens` — Update the access to organization resources via fine-grained personal access tokens → `organizations.revokeTokenGrants(ids:in:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-tokens/{pat_id}` — Update the access a fine-grained personal access token has to organization resources → `organizations.revokeTokenGrant(id:in:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories` — List repositories a fine-grained personal access token has access to → `organizations.tokenGrantRepositories(id:in:perPage:)`
 - [ ] `GET /orgs/{org}/properties/installations` — Get registered app installations for external custom properties
 - [ ] `POST /orgs/{org}/properties/installations` — Register an app installation for external custom properties
 - [ ] `GET /orgs/{org}/properties/installations/schema` — Get all external custom properties for a GitHub App installation in an organization

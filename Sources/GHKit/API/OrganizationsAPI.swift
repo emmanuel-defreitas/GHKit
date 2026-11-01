@@ -11,7 +11,7 @@ extension GitHubClient {
 public struct OrganizationsAPI: Sendable {
     let client: GitHubClient
 
-    private func path(_ org: String, _ rest: String = "") -> String { "/orgs/\(escape(org))\(rest)" }
+    func path(_ org: String, _ rest: String = "") -> String { "/orgs/\(escape(org))\(rest)" }
 
     // MARK: Organizations
 
