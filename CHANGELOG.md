@@ -23,5 +23,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   invitations, blocks, and app installations, plus the signed-in user's memberships and invitations.
 - Organization administration: webhooks with delivery history and redelivery, fine-grained organization
   roles for teams and users, and approval and revocation of fine-grained personal access tokens.
+- Organization settings: custom and external repository properties, immutable releases policy, and
+  API insights (request totals, usage over time, and usage per route, subject, and actor).
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next
