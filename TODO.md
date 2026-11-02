@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 147 of 1254 endpoints (11%)
+**REST progress:** 175 of 1254 endpoints (13%)
 
 ## Milestones
 
@@ -60,7 +60,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [licenses](#licenses) | M2 | 0 | 3 | ⬜ |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 61 | 116 | 🚧 |
+| [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
 | [repos](#repos) | M2 | 0 | 203 | ⬜ |
 | [teams](#teams) | M2 | 0 | 32 | ⬜ |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
@@ -252,7 +252,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-61/116 done · milestone M2
+89/116 done · milestone M2
 
 - [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
 - [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
@@ -287,15 +287,15 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a webhook delivery for an organization webhook → `organizations.webhookDelivery(_:webhook:in:)`
 - [x] ✅ `POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for an organization webhook → `organizations.redeliver(_:webhook:in:)`
 - [x] ✅ `POST /orgs/{org}/hooks/{hook_id}/pings` — Ping an organization webhook → `organizations.pingWebhook(id:in:)`
-- [ ] `GET /orgs/{org}/insights/api/route-stats/{actor_type}/{actor_id}` — Get route stats by actor
-- [ ] `GET /orgs/{org}/insights/api/subject-stats` — Get subject stats
-- [ ] `GET /orgs/{org}/insights/api/summary-stats` — Get summary stats
-- [ ] `GET /orgs/{org}/insights/api/summary-stats/users/{user_id}` — Get summary stats by user
-- [ ] `GET /orgs/{org}/insights/api/summary-stats/{actor_type}/{actor_id}` — Get summary stats by actor
-- [ ] `GET /orgs/{org}/insights/api/time-stats` — Get time stats
-- [ ] `GET /orgs/{org}/insights/api/time-stats/users/{user_id}` — Get time stats by user
-- [ ] `GET /orgs/{org}/insights/api/time-stats/{actor_type}/{actor_id}` — Get time stats by actor
-- [ ] `GET /orgs/{org}/insights/api/user-stats/{user_id}` — Get user stats
+- [x] ✅ `GET /orgs/{org}/insights/api/route-stats/{actor_type}/{actor_id}` — Get route stats by actor → `organizations.apiRouteUsage(in:by:during:sortedBy:ascending:routeContaining:perPage:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/subject-stats` — Get subject stats → `organizations.apiSubjectUsage(in:during:sortedBy:ascending:subjectContaining:perPage:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/summary-stats` — Get summary stats → `organizations.apiUsageSummary(in:for:during:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/summary-stats/users/{user_id}` — Get summary stats by user → `organizations.apiUsageSummary(in:for:during:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/summary-stats/{actor_type}/{actor_id}` — Get summary stats by actor → `organizations.apiUsageSummary(in:for:during:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/time-stats` — Get time stats → `organizations.apiUsageOverTime(in:for:during:every:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/time-stats/users/{user_id}` — Get time stats by user → `organizations.apiUsageOverTime(in:for:during:every:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/time-stats/{actor_type}/{actor_id}` — Get time stats by actor → `organizations.apiUsageOverTime(in:for:during:every:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/user-stats/{user_id}` — Get user stats → `organizations.apiActorUsage(in:forUser:during:sortedBy:ascending:actorContaining:perPage:)`
 - [x] ✅ `GET /orgs/{org}/installations` — List app installations for an organization → `organizations.installations(of:perPage:)`
 - [x] ✅ `GET /orgs/{org}/invitations` — List pending organization invitations → `organizations.invitations(of:role:source:perPage:)`
 - [x] ✅ `POST /orgs/{org}/invitations` — Create an organization invitation → `organizations.invite(_:to:)`
@@ -336,34 +336,34 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `POST /orgs/{org}/personal-access-tokens` — Update the access to organization resources via fine-grained personal access tokens → `organizations.revokeTokenGrants(ids:in:)`
 - [x] ✅ `POST /orgs/{org}/personal-access-tokens/{pat_id}` — Update the access a fine-grained personal access token has to organization resources → `organizations.revokeTokenGrant(id:in:)`
 - [x] ✅ `GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories` — List repositories a fine-grained personal access token has access to → `organizations.tokenGrantRepositories(id:in:perPage:)`
-- [ ] `GET /orgs/{org}/properties/installations` — Get registered app installations for external custom properties
-- [ ] `POST /orgs/{org}/properties/installations` — Register an app installation for external custom properties
-- [ ] `GET /orgs/{org}/properties/installations/schema` — Get all external custom properties for a GitHub App installation in an organization
-- [ ] `PATCH /orgs/{org}/properties/installations/values` — Create or update external custom property values for organization repositories
-- [ ] `PATCH /orgs/{org}/properties/installations/values/{property_name}` — Create or update external custom property values for a property across organization repositories
-- [ ] `DELETE /orgs/{org}/properties/installations/values/{property_name}` — Remove all external custom property values for a property across all organization repositories
-- [ ] `GET /orgs/{org}/properties/schema` — Get all custom properties for an organization
-- [ ] `PATCH /orgs/{org}/properties/schema` — Create or update custom properties for an organization
-- [ ] `GET /orgs/{org}/properties/schema/{custom_property_name}` — Get a custom property for an organization
-- [ ] `PUT /orgs/{org}/properties/schema/{custom_property_name}` — Create or update a custom property for an organization
-- [ ] `DELETE /orgs/{org}/properties/schema/{custom_property_name}` — Remove a custom property for an organization
-- [ ] `GET /orgs/{org}/properties/values` — List custom property values for organization repositories
-- [ ] `PATCH /orgs/{org}/properties/values` — Create or update custom property values for organization repositories
+- [x] ✅ `GET /orgs/{org}/properties/installations` — Get registered app installations for external custom properties → `organizations.externalPropertyInstallations(of:)`
+- [x] ✅ `POST /orgs/{org}/properties/installations` — Register an app installation for external custom properties → `organizations.registerExternalPropertyInstallation(_:displayName:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/installations/schema` — Get all external custom properties for a GitHub App installation in an organization → `organizations.externalProperties(of:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/installations/values` — Create or update external custom property values for organization repositories → `organizations.setExternalPropertyValues(_:onRepositories:in:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/installations/values/{property_name}` — Create or update external custom property values for a property across organization repositories → `organizations.setExternalPropertyValue(_:values:in:)`
+- [x] ✅ `DELETE /orgs/{org}/properties/installations/values/{property_name}` — Remove all external custom property values for a property across all organization repositories → `organizations.deleteExternalPropertyValues(_:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/schema` — Get all custom properties for an organization → `organizations.customProperties(of:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/schema` — Create or update custom properties for an organization → `organizations.setCustomProperties(_:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/schema/{custom_property_name}` — Get a custom property for an organization → `organizations.customProperty(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/properties/schema/{custom_property_name}` — Create or update a custom property for an organization → `organizations.setCustomProperty(_:in:)`
+- [x] ✅ `DELETE /orgs/{org}/properties/schema/{custom_property_name}` — Remove a custom property for an organization → `organizations.deleteCustomProperty(_:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/values` — List custom property values for organization repositories → `organizations.customPropertyValues(in:repositoryQuery:perPage:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/values` — Create or update custom property values for organization repositories → `organizations.setCustomPropertyValues(_:onRepositories:in:)`
 - [x] ✅ `GET /orgs/{org}/public_members` — List public organization members → `organizations.publicMembers(of:perPage:)`
 - [x] ✅ `GET /orgs/{org}/public_members/{username}` — Check public organization membership for a user → `organizations.isPublicMember(_:of:)`
 - [x] ✅ `PUT /orgs/{org}/public_members/{username}` — Set public organization membership for the authenticated user → `organizations.publicizeMembership(of:in:)`
 - [x] ✅ `DELETE /orgs/{org}/public_members/{username}` — Remove public organization membership for the authenticated user → `organizations.concealMembership(of:in:)`
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version
+- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history (deferred to the rulesets work)
+- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version (deferred to the rulesets work)
 - [ ] ~~`GET /orgs/{org}/security-managers` — List security manager teams~~
 - [ ] ~~`PUT /orgs/{org}/security-managers/teams/{team_slug}` — Add a security manager team~~
 - [ ] ~~`DELETE /orgs/{org}/security-managers/teams/{team_slug}` — Remove a security manager team~~
-- [ ] `GET /orgs/{org}/settings/immutable-releases` — Get immutable releases settings for an organization
-- [ ] `PUT /orgs/{org}/settings/immutable-releases` — Set immutable releases settings for an organization
-- [ ] `GET /orgs/{org}/settings/immutable-releases/repositories` — List selected repositories for immutable releases enforcement
-- [ ] `PUT /orgs/{org}/settings/immutable-releases/repositories` — Set selected repositories for immutable releases enforcement
-- [ ] `PUT /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Enable a selected repository for immutable releases in an organization
-- [ ] `DELETE /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Disable a selected repository for immutable releases in an organization
+- [x] ✅ `GET /orgs/{org}/settings/immutable-releases` — Get immutable releases settings for an organization → `organizations.immutableReleasesSettings(of:)`
+- [x] ✅ `PUT /orgs/{org}/settings/immutable-releases` — Set immutable releases settings for an organization → `organizations.setImmutableReleases(_:in:)`
+- [x] ✅ `GET /orgs/{org}/settings/immutable-releases/repositories` — List selected repositories for immutable releases enforcement → `organizations.immutableReleasesRepositories(of:perPage:)`
+- [x] ✅ `PUT /orgs/{org}/settings/immutable-releases/repositories` — Set selected repositories for immutable releases enforcement → `organizations.setImmutableReleasesRepositories(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Enable a selected repository for immutable releases in an organization → `organizations.enableImmutableReleases(forRepository:in:)`
+- [x] ✅ `DELETE /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Disable a selected repository for immutable releases in an organization → `organizations.disableImmutableReleases(forRepository:in:)`
 - [ ] ~~`POST /orgs/{org}/{security_product}/{enablement}` — Enable or disable a security feature for an organization~~
 - [x] ✅ `GET /user/memberships/orgs` — List organization memberships for the authenticated user → `organizations.memberships(state:perPage:)`
 - [x] ✅ `GET /user/memberships/orgs/{org}` — Get an organization membership for the authenticated user → `organizations.membership(in:)`
