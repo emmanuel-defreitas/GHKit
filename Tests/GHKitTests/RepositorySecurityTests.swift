@@ -22,17 +22,22 @@ struct RepositorySecurityTests {
         try await repos.setVulnerabilityAlerts(enabled: false, in: "o", "r")
         #expect(try await repos.dependabotSecurityUpdates("o", "r") == DependabotSecurityUpdatesStatus(isEnabled: true, isPaused: false))
         try await repos.setDependabotSecurityUpdates(enabled: true, in: "o", "r")
+        try await repos.setDependabotSecurityUpdates(enabled: false, in: "o", "r")
         #expect(try await repos.privateVulnerabilityReportingEnabled("o", "r"))
+        try await repos.setPrivateVulnerabilityReporting(enabled: true, in: "o", "r")
         try await repos.setPrivateVulnerabilityReporting(enabled: false, in: "o", "r")
         #expect(try await repos.immutableReleases("o", "r").isEnforcedByOwner)
         try await repos.setImmutableReleases(enabled: true, in: "o", "r")
+        try await repos.setImmutableReleases(enabled: false, in: "o", "r")
 
         #expect(
             transport.requests.map(\.route) == [
                 "GET /repos/o/r/vulnerability-alerts", "GET /repos/o/r/vulnerability-alerts", "PUT /repos/o/r/vulnerability-alerts",
                 "DELETE /repos/o/r/vulnerability-alerts", "GET /repos/o/r/automated-security-fixes", "PUT /repos/o/r/automated-security-fixes",
-                "GET /repos/o/r/private-vulnerability-reporting", "DELETE /repos/o/r/private-vulnerability-reporting",
-                "GET /repos/o/r/immutable-releases", "PUT /repos/o/r/immutable-releases",
+                "DELETE /repos/o/r/automated-security-fixes",
+                "GET /repos/o/r/private-vulnerability-reporting", "PUT /repos/o/r/private-vulnerability-reporting",
+                "DELETE /repos/o/r/private-vulnerability-reporting",
+                "GET /repos/o/r/immutable-releases", "PUT /repos/o/r/immutable-releases", "DELETE /repos/o/r/immutable-releases",
             ])
     }
 
