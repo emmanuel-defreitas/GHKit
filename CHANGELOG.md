@@ -21,5 +21,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   SSH signing keys, and social accounts. Check endpoints such as `isFollowing(_:)` return a `Bool`.
 - Organizations: profiles and settings, members, memberships, public membership, outside collaborators,
   invitations, blocks, and app installations, plus the signed-in user's memberships and invitations.
+- Organization administration: webhooks with delivery history and redelivery, fine-grained organization
+  roles for teams and users, and approval and revocation of fine-grained personal access tokens.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next
