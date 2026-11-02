@@ -70,17 +70,17 @@ extension GitHubClient {
     func valueUnlessAccepted<Value: Decodable & Sendable>(
         _ path: String, empty: Value? = nil
     ) async throws(GitHubError) -> Value? {
-        let response = try await send(GitHubRequest<Data>(method: .get, target: .path(path)) { $0 })
-        switch response.metadata.statusCode {
-        case 202: return nil
-        case 204: return empty
-        default:
-            if response.value.isEmpty { return empty }
-            do {
-                return try GitHubJSON.decoder().decode(Value.self, from: response.value)
-            } catch {
-                throw .decoding(type: String(describing: Value.self), underlying: error)
-            }
+        // Decode inside the request's decoder, which runs off the caller's actor. A 202 body is `{}`,
+        // so keep the failure and only report it once the status says the value should be there.
+        let response = try await send(
+            GitHubRequest<Result<Value, any Error>?>(method: .get, target: .path(path)) { data in
+                data.isEmpty ? nil : Result { try GitHubJSON.decoder().decode(Value.self, from: data) }
+            })
+        switch (response.metadata.statusCode, response.value) {
+        case (202, _): return nil
+        case (204, _), (_, nil): return empty
+        case (_, .success(let value)?): return value
+        case (_, .failure(let error)?): throw .decoding(type: String(describing: Value.self), underlying: error)
         }
     }
 }
