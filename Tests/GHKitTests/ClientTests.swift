@@ -61,7 +61,7 @@ struct ClientTests {
     ])
     func customRequestPathsAreEncodedSafely(path: String, expected: String) async throws {
         let transport = MockTransport(.noContent())
-        try await makeClient(transport).send(GitHubRequest<Void>(.get, path))
+        _ = try await makeClient(transport).send(GitHubRequest<Void>(.get, path))
         #expect(transport.requests.first?.url?.path(percentEncoded: true) == expected)
     }
 
