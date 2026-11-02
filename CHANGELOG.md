@@ -46,6 +46,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Deployments and deployment statuses, and environments with their wait timers, required reviewers,
   deployment branch and tag patterns, and app-based protection rules. The model is `DeploymentEnvironment`
   so it doesn't clash with SwiftUI's `Environment`.
+- Repository webhooks: create, update (including adding or removing single events), delete, ping, test,
+  and delivery history with redelivery. Webhook types shared with organizations now live in `Webhooks.swift`.
+- GitHub Pages: sites (create, update, custom domains, delete), builds, workflow artifact deployments,
+  and DNS health checks.
+- Traffic (views, clones, popular content, referrers) and commit statistics (code frequency, commit activity,
+  contributors, participation, punch card). Statistics return `nil` while GitHub is still computing them.
 
 ### Fixed
 
