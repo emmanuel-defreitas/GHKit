@@ -63,6 +63,15 @@ struct RepositoriesTests {
 
     // MARK: Requests
 
+    @Test func fetchOneRepository() async throws {
+        let transport = MockTransport(.fixture("full-repository"))
+        let repository = try await makeClient(transport).repositories.repository("octocat", "Hello-World")
+        #expect(repository.fullName == "octocat/Hello-World")
+        #expect(repository.license?.spdxID == "MIT")
+        #expect(repository.parent?.fullName == "octocat/Hello-World")
+        #expect(transport.requests.map(\.route) == ["GET /repos/octocat/Hello-World"])
+    }
+
     @Test func createSendsVisibilityAndMergeSettings() async throws {
         let transport = MockTransport(.fixture("full-repository", status: 201))
         let repos = makeClient(transport).repositories
