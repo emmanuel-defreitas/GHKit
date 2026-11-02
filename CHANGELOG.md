@@ -30,5 +30,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Repositories: create (for you or an organization), get, update settings (merge options, security
   features), delete, transfer, and list; plus topics, languages, tags, teams, contributors, activity,
   community profile, and hash algorithm. `Repository` is one model for every repository payload.
+- Repository contents: read files and directories (decoded or raw), write and delete files, README,
+  license, CODEOWNERS errors, source archives, forks, syncing a fork, and creating from a template.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next
