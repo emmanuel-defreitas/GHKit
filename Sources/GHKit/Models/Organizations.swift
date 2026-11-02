@@ -402,7 +402,9 @@ public enum InvitationSourceFilter: String, Sendable, Hashable, CustomStringConv
 
 // MARK: Teams
 
-/// A team in an organization (`team`).
+/// A team in an organization (`team`, `team-full`).
+///
+/// Counts, dates, and the organization are only set when you fetch one team or your own teams.
 public struct Team: Sendable, Hashable, Codable, Identifiable {
     public var id: Int
     public var nodeID: String
@@ -421,7 +423,15 @@ public struct Team: Sendable, Hashable, Codable, Identifiable {
     /// `organization` or `enterprise`.
     public var type: String?
     public var organizationID: Int?
+    public var enterpriseID: Int?
     public var parent: Parent?
+    public var membersCount: Int?
+    public var reposCount: Int?
+    public var organization: Organization?
+    /// The LDAP group the team syncs with, on GitHub Enterprise Server.
+    public var ldapDN: String?
+    public var createdAt: Date?
+    public var updatedAt: Date?
 
     /// The team a team is nested under.
     public struct Parent: Sendable, Hashable, Codable, Identifiable {
@@ -450,5 +460,12 @@ public struct Team: Sendable, Hashable, Codable, Identifiable {
         case membersURL = "members_url"
         case repositoriesURL = "repositories_url"
         case organizationID = "organization_id"
+        case enterpriseID = "enterprise_id"
+        case membersCount = "members_count"
+        case reposCount = "repos_count"
+        case organization
+        case ldapDN = "ldap_dn"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
     }
 }
