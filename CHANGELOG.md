@@ -38,5 +38,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   protection rule (status checks, reviews, admin enforcement, signed commits, and who can push).
 - Rulesets for organizations and repositories: create, update, delete, version history, rule insights
   (rule suites), and the rules that apply to a branch. Every rule type is a typed `RepositoryRule` case.
+- Releases: list, get (by ID, tag, or latest), create, update, publish, delete, and generate release notes;
+  plus release assets: list, get, download, upload, rename, and delete.
+- `GitHubServer.uploadsURL` for upload endpoints, set for github.com, Enterprise Server, and ghe.com.
+
+### Fixed
+
+- Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next

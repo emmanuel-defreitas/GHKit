@@ -8,18 +8,34 @@ public struct GitHubServer: Sendable, Hashable {
     public var graphQLURL: URL
     /// Base URL for the website, used for OAuth (`/login/oauth/...`).
     public var webURL: URL
+    /// Base URL for file uploads, such as release assets.
+    public var uploadsURL: URL
 
-    public init(apiURL: URL, graphQLURL: URL, webURL: URL) {
+    /// - Parameter uploadsURL: Defaults to `uploads.` in place of `api.` in the API host, or `api/uploads` on the website.
+    public init(apiURL: URL, graphQLURL: URL, webURL: URL, uploadsURL: URL? = nil) {
         self.apiURL = apiURL
         self.graphQLURL = graphQLURL
         self.webURL = webURL
+        self.uploadsURL = uploadsURL ?? Self.defaultUploadsURL(apiURL: apiURL, webURL: webURL)
+    }
+
+    private static func defaultUploadsURL(apiURL: URL, webURL: URL) -> URL {
+        if var components = URLComponents(url: apiURL, resolvingAgainstBaseURL: false),
+            let host = components.host, host.hasPrefix("api.")
+        {
+            components.host = "uploads." + host.dropFirst("api.".count)
+            components.path = ""
+            if let url = components.url { return url }
+        }
+        return webURL.appending(path: "api/uploads")
     }
 
     /// github.com
     public static let dotCom = GitHubServer(
         apiURL: URL(string: "https://api.github.com")!,
         graphQLURL: URL(string: "https://api.github.com/graphql")!,
-        webURL: URL(string: "https://github.com")!
+        webURL: URL(string: "https://github.com")!,
+        uploadsURL: URL(string: "https://uploads.github.com")!
     )
 
     /// GitHub Enterprise Server at `host`, for example `https://github.example.com`.
@@ -27,7 +43,8 @@ public struct GitHubServer: Sendable, Hashable {
         GitHubServer(
             apiURL: host.appending(path: "api/v3"),
             graphQLURL: host.appending(path: "api/graphql"),
-            webURL: host
+            webURL: host,
+            uploadsURL: host.appending(path: "api/uploads")
         )
     }
 
@@ -36,7 +53,8 @@ public struct GitHubServer: Sendable, Hashable {
         GitHubServer(
             apiURL: URL(string: "https://api.\(subdomain).ghe.com")!,
             graphQLURL: URL(string: "https://api.\(subdomain).ghe.com/graphql")!,
-            webURL: URL(string: "https://\(subdomain).ghe.com")!
+            webURL: URL(string: "https://\(subdomain).ghe.com")!,
+            uploadsURL: URL(string: "https://uploads.\(subdomain).ghe.com")!
         )
     }
 }

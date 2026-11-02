@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 299 of 1254 endpoints (23%)
+**REST progress:** 312 of 1254 endpoints (24%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
-| [repos](#repos) | M2 | 105 | 203 | 🚧 |
+| [repos](#repos) | M2 | 118 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-105/203 done · milestone M2
+118/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -527,19 +527,19 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PATCH /repos/{owner}/{repo}/properties/values` — Create or update custom property values for a repository
 - [x] ✅ `GET /repos/{owner}/{repo}/readme` — Get a repository README → `repositories.readme(_:_:in:ref:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/readme/{dir}` — Get a repository README for a directory → `repositories.readme(_:_:in:ref:)`
-- [ ] `GET /repos/{owner}/{repo}/releases` — List releases
-- [ ] `POST /repos/{owner}/{repo}/releases` — Create a release
-- [ ] `GET /repos/{owner}/{repo}/releases/assets/{asset_id}` — Get a release asset
-- [ ] `PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}` — Update a release asset
-- [ ] `DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}` — Delete a release asset
-- [ ] `POST /repos/{owner}/{repo}/releases/generate-notes` — Generate release notes content for a release
-- [ ] `GET /repos/{owner}/{repo}/releases/latest` — Get the latest release
-- [ ] `GET /repos/{owner}/{repo}/releases/tags/{tag}` — Get a release by tag name
-- [ ] `GET /repos/{owner}/{repo}/releases/{release_id}` — Get a release
-- [ ] `PATCH /repos/{owner}/{repo}/releases/{release_id}` — Update a release
-- [ ] `DELETE /repos/{owner}/{repo}/releases/{release_id}` — Delete a release
-- [ ] `GET /repos/{owner}/{repo}/releases/{release_id}/assets` — List release assets
-- [ ] `POST /repos/{owner}/{repo}/releases/{release_id}/assets` — Upload a release asset
+- [x] ✅ `GET /repos/{owner}/{repo}/releases` — List releases → `repositories.releases(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases` — Create a release → `repositories.createRelease(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/assets/{asset_id}` — Get a release asset → `repositories.releaseAsset(id:in:_:)` / `repositories.downloadReleaseAsset(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}` — Update a release asset → `repositories.updateReleaseAsset(id:in:_:fileName:label:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}` — Delete a release asset → `repositories.deleteReleaseAsset(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases/generate-notes` — Generate release notes content for a release → `repositories.generateReleaseNotes(for:in:_:target:previousTag:configurationFile:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/latest` — Get the latest release → `repositories.latestRelease(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/tags/{tag}` — Get a release by tag name → `repositories.release(tag:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/{release_id}` — Get a release → `repositories.release(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/releases/{release_id}` — Update a release → `repositories.updateRelease(id:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/releases/{release_id}` — Delete a release → `repositories.deleteRelease(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/{release_id}/assets` — List release assets → `repositories.releaseAssets(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases/{release_id}/assets` — Upload a release asset → `repositories.uploadReleaseAsset(_:fileName:label:contentType:to:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch → `repositories.rules(for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/rulesets` — Get all repository rulesets → `rulesets(_:).list(targets:includesParents:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/rulesets` — Create a repository ruleset → `rulesets(_:).create(_:)`
