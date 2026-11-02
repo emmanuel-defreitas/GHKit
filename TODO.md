@@ -1,10 +1,10 @@
 # GHKit API coverage
 
-Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-01 by `Scripts/generate_todo.py`.
+Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-02 by `Scripts/generate_todo.py`.
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 345 of 1254 endpoints (27%)
+**REST progress:** 378 of 1254 endpoints (30%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
-| [repos](#repos) | M2 | 151 | 203 | 🚧 |
+| [repos](#repos) | M2 | 184 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-151/203 done · milestone M2
+184/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -482,18 +482,18 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/forks` — List forks → `repositories.forks(_:_:sort:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/forks` — Create a fork → `repositories.fork(_:_:into:as:defaultBranchOnly:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository → `repositories.hashAlgorithm(_:_:)`
-- [ ] `GET /repos/{owner}/{repo}/hooks` — List repository webhooks
-- [ ] `POST /repos/{owner}/{repo}/hooks` — Create a repository webhook
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}` — Get a repository webhook
-- [ ] `PATCH /repos/{owner}/{repo}/hooks/{hook_id}` — Update a repository webhook
-- [ ] `DELETE /repos/{owner}/{repo}/hooks/{hook_id}` — Delete a repository webhook
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}/config` — Get a webhook configuration for a repository
-- [ ] `PATCH /repos/{owner}/{repo}/hooks/{hook_id}/config` — Update a webhook configuration for a repository
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries` — List deliveries for a repository webhook
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a delivery for a repository webhook
-- [ ] `POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for a repository webhook
-- [ ] `POST /repos/{owner}/{repo}/hooks/{hook_id}/pings` — Ping a repository webhook
-- [ ] `POST /repos/{owner}/{repo}/hooks/{hook_id}/tests` — Test the push repository webhook
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks` — List repository webhooks → `repositories.webhooks(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks` — Create a repository webhook → `repositories.createWebhook(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}` — Get a repository webhook → `repositories.webhook(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/hooks/{hook_id}` — Update a repository webhook → `repositories.updateWebhook(id:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/hooks/{hook_id}` — Delete a repository webhook → `repositories.deleteWebhook(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}/config` — Get a webhook configuration for a repository → `repositories.webhookConfiguration(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/hooks/{hook_id}/config` — Update a webhook configuration for a repository → `repositories.updateWebhookConfiguration(id:in:_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries` — List deliveries for a repository webhook → `repositories.webhookDeliveries(id:in:_:status:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a delivery for a repository webhook → `repositories.webhookDelivery(_:webhook:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for a repository webhook → `repositories.redeliver(_:webhook:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks/{hook_id}/pings` — Ping a repository webhook → `repositories.pingWebhook(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks/{hook_id}/tests` — Test the push repository webhook → `repositories.testWebhook(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/immutable-releases` — Check if immutable releases are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/immutable-releases` — Enable immutable releases
 - [ ] `DELETE /repos/{owner}/{repo}/immutable-releases` — Disable immutable releases
@@ -508,18 +508,18 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/languages` — List repository languages → `repositories.languages(_:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository → `repositories.syncWithUpstream(_:_:branch:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/merges` — Merge a branch → `repositories.merge(_:into:in:_:message:)`
-- [ ] `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site
-- [ ] `POST /repos/{owner}/{repo}/pages` — Create a GitHub Pages site
-- [ ] `PUT /repos/{owner}/{repo}/pages` — Update information about a GitHub Pages site
-- [ ] `DELETE /repos/{owner}/{repo}/pages` — Delete a GitHub Pages site
-- [ ] `GET /repos/{owner}/{repo}/pages/builds` — List GitHub Pages builds
-- [ ] `POST /repos/{owner}/{repo}/pages/builds` — Request a GitHub Pages build
-- [ ] `GET /repos/{owner}/{repo}/pages/builds/latest` — Get latest Pages build
-- [ ] `GET /repos/{owner}/{repo}/pages/builds/{build_id}` — Get GitHub Pages build
-- [ ] `POST /repos/{owner}/{repo}/pages/deployments` — Create a GitHub Pages deployment
-- [ ] `GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}` — Get the status of a GitHub Pages deployment
-- [ ] `POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel` — Cancel a GitHub Pages deployment
-- [ ] `GET /repos/{owner}/{repo}/pages/health` — Get a DNS health check for GitHub Pages
+- [x] ✅ `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site → `repositories.pagesSite(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages` — Create a GitHub Pages site → `repositories.createPagesSite(from:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pages` — Update information about a GitHub Pages site → `repositories.updatePagesSite(_:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pages` — Delete a GitHub Pages site → `repositories.deletePagesSite(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/builds` — List GitHub Pages builds → `repositories.pagesBuilds(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages/builds` — Request a GitHub Pages build → `repositories.requestPagesBuild(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/builds/latest` — Get latest Pages build → `repositories.latestPagesBuild(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/builds/{build_id}` — Get GitHub Pages build → `repositories.pagesBuild(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages/deployments` — Create a GitHub Pages deployment → `repositories.createPagesDeployment(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}` — Get the status of a GitHub Pages deployment → `repositories.pagesDeploymentState(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel` — Cancel a GitHub Pages deployment → `repositories.cancelPagesDeployment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/health` — Get a DNS health check for GitHub Pages → `repositories.pagesHealthCheck(_:_:)`
 - [ ] `GET /repos/{owner}/{repo}/private-vulnerability-reporting` — Check if private vulnerability reporting is enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/private-vulnerability-reporting` — Enable private vulnerability reporting for a repository
 - [ ] `DELETE /repos/{owner}/{repo}/private-vulnerability-reporting` — Disable private vulnerability reporting for a repository
@@ -550,21 +550,21 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `DELETE /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Delete a repository ruleset → `rulesets(_:).delete(id:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history` — Get repository ruleset history → `rulesets(_:).history(of:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history/{version_id}` — Get repository ruleset version → `rulesets(_:).version(_:of:)`
-- [ ] `GET /repos/{owner}/{repo}/stats/code_frequency` — Get the weekly commit activity
-- [ ] `GET /repos/{owner}/{repo}/stats/commit_activity` — Get the last year of commit activity
-- [ ] `GET /repos/{owner}/{repo}/stats/contributors` — Get all contributor commit activity
-- [ ] `GET /repos/{owner}/{repo}/stats/participation` — Get the weekly commit count
-- [ ] `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/code_frequency` — Get the weekly commit activity → `repositories.codeFrequency(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/commit_activity` — Get the last year of commit activity → `repositories.commitActivity(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/contributors` — Get all contributor commit activity → `repositories.contributorStatistics(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/participation` — Get the weekly commit count → `repositories.participation(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day → `repositories.punchCard(_:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status → `repositories.createStatus(_:on:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/tags` — List repository tags → `repositories.tags(_:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar) → `repositories.archive(_:_:format:ref:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/teams` — List repository teams → `repositories.teams(_:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/topics` — Get all repository topics → `repositories.topics(_:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/topics` — Replace all repository topics → `repositories.replaceTopics(_:on:_:)`
-- [ ] `GET /repos/{owner}/{repo}/traffic/clones` — Get repository clones
-- [ ] `GET /repos/{owner}/{repo}/traffic/popular/paths` — Get top referral paths
-- [ ] `GET /repos/{owner}/{repo}/traffic/popular/referrers` — Get top referral sources
-- [ ] `GET /repos/{owner}/{repo}/traffic/views` — Get page views
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/clones` — Get repository clones → `repositories.clones(_:_:per:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/popular/paths` — Get top referral paths → `repositories.popularContent(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/popular/referrers` — Get top referral sources → `repositories.referrers(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/views` — Get page views → `repositories.views(_:_:per:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/transfer` — Transfer a repository → `repositories.transfer(_:_:to:newName:teamIDs:)`
 - [ ] `GET /repos/{owner}/{repo}/vulnerability-alerts` — Check if vulnerability alerts are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/vulnerability-alerts` — Enable vulnerability alerts
