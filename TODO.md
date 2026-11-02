@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 223 of 1254 endpoints (17%)
+**REST progress:** 242 of 1254 endpoints (19%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
-| [repos](#repos) | M2 | 31 | 203 | 🚧 |
+| [repos](#repos) | M2 | 50 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-31/203 done · milestone M2
+50/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -390,10 +390,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/activity` — List repository activities → `repositories.activity(_:_:matching:perPage:)`
 - [ ] `POST /repos/{owner}/{repo}/attestations` — Create an attestation
 - [ ] `GET /repos/{owner}/{repo}/attestations/{subject_digest}` — List attestations
-- [ ] `GET /repos/{owner}/{repo}/autolinks` — Get all autolinks of a repository
-- [ ] `POST /repos/{owner}/{repo}/autolinks` — Create an autolink reference for a repository
-- [ ] `GET /repos/{owner}/{repo}/autolinks/{autolink_id}` — Get an autolink reference of a repository
-- [ ] `DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}` — Delete an autolink reference from a repository
+- [x] ✅ `GET /repos/{owner}/{repo}/autolinks` — Get all autolinks of a repository → `repositories.autolinks(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/autolinks` — Create an autolink reference for a repository → `repositories.createAutolink(prefix:urlTemplate:alphanumeric:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/autolinks/{autolink_id}` — Get an autolink reference of a repository → `repositories.autolink(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}` — Delete an autolink reference from a repository → `repositories.deleteAutolink(id:from:_:)`
 - [ ] `GET /repos/{owner}/{repo}/automated-security-fixes` — Check if Dependabot security updates are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/automated-security-fixes` — Enable Dependabot security updates
 - [ ] `DELETE /repos/{owner}/{repo}/automated-security-fixes` — Disable Dependabot security updates
@@ -434,11 +434,11 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Remove user access restrictions
 - [ ] `POST /repos/{owner}/{repo}/branches/{branch}/rename` — Rename a branch
 - [x] ✅ `GET /repos/{owner}/{repo}/codeowners/errors` — List CODEOWNERS errors → `repositories.codeownersErrors(_:_:ref:)`
-- [ ] `GET /repos/{owner}/{repo}/collaborators` — List repository collaborators
-- [ ] `GET /repos/{owner}/{repo}/collaborators/{username}` — Check if a user is a repository collaborator
-- [ ] `PUT /repos/{owner}/{repo}/collaborators/{username}` — Add a repository collaborator
-- [ ] `DELETE /repos/{owner}/{repo}/collaborators/{username}` — Remove a repository collaborator
-- [ ] `GET /repos/{owner}/{repo}/collaborators/{username}/permission` — Get repository permissions for a user
+- [x] ✅ `GET /repos/{owner}/{repo}/collaborators` — List repository collaborators → `repositories.collaborators(_:_:affiliation:role:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/collaborators/{username}` — Check if a user is a repository collaborator → `repositories.isCollaborator(_:on:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/collaborators/{username}` — Add a repository collaborator → `repositories.addCollaborator(_:to:_:role:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/collaborators/{username}` — Remove a repository collaborator → `repositories.removeCollaborator(_:from:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/collaborators/{username}/permission` — Get repository permissions for a user → `repositories.permission(of:on:_:)`
 - [ ] `GET /repos/{owner}/{repo}/comments` — List commit comments for a repository
 - [ ] `GET /repos/{owner}/{repo}/comments/{comment_id}` — Get a commit comment
 - [ ] `PATCH /repos/{owner}/{repo}/comments/{comment_id}` — Update a commit comment
@@ -497,14 +497,14 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/immutable-releases` — Check if immutable releases are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/immutable-releases` — Enable immutable releases
 - [ ] `DELETE /repos/{owner}/{repo}/immutable-releases` — Disable immutable releases
-- [ ] `GET /repos/{owner}/{repo}/invitations` — List repository invitations
-- [ ] `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation
-- [ ] `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation
+- [x] ✅ `GET /repos/{owner}/{repo}/invitations` — List repository invitations → `repositories.invitations(_:_:perPage:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation → `repositories.updateInvitation(id:on:_:permission:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation → `repositories.cancelInvitation(id:on:_:)`
 - [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository (deferred to milestone 3)
-- [ ] `GET /repos/{owner}/{repo}/keys` — List deploy keys
-- [ ] `POST /repos/{owner}/{repo}/keys` — Create a deploy key
-- [ ] `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key
-- [ ] `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key
+- [x] ✅ `GET /repos/{owner}/{repo}/keys` — List deploy keys → `repositories.deployKeys(_:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/keys` — Create a deploy key → `repositories.addDeployKey(_:title:readOnly:to:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key → `repositories.deployKey(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key → `repositories.deleteDeployKey(id:from:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/languages` — List repository languages → `repositories.languages(_:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository → `repositories.syncWithUpstream(_:_:branch:)`
 - [ ] `POST /repos/{owner}/{repo}/merges` — Merge a branch
@@ -574,9 +574,9 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repositories` — List public repositories → `repositories.all(since:)`
 - [x] ✅ `GET /user/repos` — List repositories for the authenticated user → `repositories.list(matching:sort:ascending:perPage:)`
 - [x] ✅ `POST /user/repos` — Create a repository for the authenticated user → `repositories.create(_:)`
-- [ ] `GET /user/repository_invitations` — List repository invitations for the authenticated user
-- [ ] `PATCH /user/repository_invitations/{invitation_id}` — Accept a repository invitation
-- [ ] `DELETE /user/repository_invitations/{invitation_id}` — Decline a repository invitation
+- [x] ✅ `GET /user/repository_invitations` — List repository invitations for the authenticated user → `repositories.myInvitations(perPage:)`
+- [x] ✅ `PATCH /user/repository_invitations/{invitation_id}` — Accept a repository invitation → `repositories.acceptInvitation(id:)`
+- [x] ✅ `DELETE /user/repository_invitations/{invitation_id}` — Decline a repository invitation → `repositories.declineInvitation(id:)`
 - [x] ✅ `GET /users/{username}/repos` — List repositories for a user → `repositories.list(of:type:sort:ascending:perPage:)`
 
 ### teams
