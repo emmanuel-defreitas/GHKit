@@ -153,27 +153,48 @@ struct OrganizationSettingsTests {
 
     @Test func insightsPathsAndQueries() async throws {
         let transport = MockTransport { request, _ in
-            request.path.contains("summary-stats") ? .fixture("api-insights-summary-stats") : .json("[]")
+            let stats = request.path.split(separator: "/")[4]
+            return .fixture("api-insights-\(stats)")
         }
         let orgs = makeClient(transport).organizations
         let window = APIUsageWindow(from: Date(timeIntervalSince1970: 0), to: Date(timeIntervalSince1970: 3600))
-        _ = try await orgs.apiUsageSummary(in: "acme", during: window)
-        _ = try await orgs.apiUsageSummary(in: "acme", for: .user(id: 9), during: window)
-        _ = try await orgs.apiUsageOverTime(in: "acme", for: .actor(.fineGrainedToken(id: 5)), during: window, every: .hour)
-        _ = try await orgs.apiRouteUsage(in: "acme", by: .installation(id: 2), during: window, sortedBy: .totalRequests).collect()
-        _ = try await orgs.apiSubjectUsage(in: "acme", during: window, ascending: true, subjectContaining: "api").collect()
-        _ = try await orgs.apiActorUsage(in: "acme", forUser: 9, during: window).collect()
+        let scopes: [APIUsageScope] = [.organization, .user(id: 9), .actor(.fineGrainedToken(id: 5))]
+        for scope in scopes {
+            #expect(try await orgs.apiUsageSummary(in: "acme", for: scope, during: window).totalRequestCount == 34225)
+        }
+        for scope in scopes {
+            let samples = try await orgs.apiUsageOverTime(in: "acme", for: scope, during: window, every: .hour)
+            #expect(samples.first?.totalRequestCount == 34225)
+        }
+        let routes = try await orgs.apiRouteUsage(in: "acme", by: .installation(id: 2), during: window, sortedBy: .totalRequests).collect()
+        #expect(routes.first?.apiRoute == "/repositories/:repository_id")
+        let subjects = try await orgs.apiSubjectUsage(in: "acme", during: window, ascending: true, subjectContaining: "api").collect()
+        #expect(subjects.first?.subjectName == "GitHub Actions")
+        let actors = try await orgs.apiActorUsage(in: "acme", forUser: 9, during: window, actorContaining: "Actions").collect()
+        #expect(actors.first?.actorType == "oauth_app")
         #expect(
-            transport.requests.map(\.path) == [
-                "/orgs/acme/insights/api/summary-stats", "/orgs/acme/insights/api/summary-stats/users/9",
-                "/orgs/acme/insights/api/time-stats/fine_grained_pat/5", "/orgs/acme/insights/api/route-stats/installation/2",
-                "/orgs/acme/insights/api/subject-stats", "/orgs/acme/insights/api/user-stats/9",
+            transport.requests.map(\.route) == [
+                "GET /orgs/acme/insights/api/summary-stats",
+                "GET /orgs/acme/insights/api/summary-stats/users/9",
+                "GET /orgs/acme/insights/api/summary-stats/fine_grained_pat/5",
+                "GET /orgs/acme/insights/api/time-stats",
+                "GET /orgs/acme/insights/api/time-stats/users/9",
+                "GET /orgs/acme/insights/api/time-stats/fine_grained_pat/5",
+                "GET /orgs/acme/insights/api/route-stats/installation/2",
+                "GET /orgs/acme/insights/api/subject-stats",
+                "GET /orgs/acme/insights/api/user-stats/9",
             ])
+        let timeWindow = ["min_timestamp": "1970-01-01T00:00:00Z", "max_timestamp": "1970-01-01T01:00:00Z"]
+        #expect(transport.requests[0..<3].allSatisfy { $0.queryItems == timeWindow })
+        #expect(transport.requests[3..<6].allSatisfy { $0.queryItems == timeWindow.merging(["timestamp_increment": "1h"]) { a, _ in a } })
         #expect(
-            transport.requests[0].queryItems == ["min_timestamp": "1970-01-01T00:00:00Z", "max_timestamp": "1970-01-01T01:00:00Z"])
-        #expect(transport.requests[2].queryItems["timestamp_increment"] == "1h")
-        #expect(transport.requests[3].queryItems["sort"] == "total_request_count")
-        #expect(transport.requests[4].queryItems["direction"] == "asc")
-        #expect(transport.requests[4].queryItems["subject_name_substring"] == "api")
+            transport.requests[6].queryItems
+                == timeWindow.merging(["sort": "total_request_count", "direction": "desc", "per_page": "100"]) { a, _ in a })
+        #expect(
+            transport.requests[7].queryItems
+                == timeWindow.merging(["direction": "asc", "subject_name_substring": "api", "per_page": "100"]) { a, _ in a })
+        #expect(
+            transport.requests[8].queryItems
+                == timeWindow.merging(["direction": "desc", "actor_name_substring": "Actions", "per_page": "100"]) { a, _ in a })
     }
 }
