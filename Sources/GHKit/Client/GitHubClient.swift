@@ -146,11 +146,12 @@ extension GitHubClient {
             throw .invalidRequest("Invalid URL: \(base)")
         }
         if case .path(let path) = request.target {
-            // Paths arrive already escaped segment by segment, so append them as-is.
-            // `URL.appending(path:)` would encode them a second time.
+            // Wrapped endpoints escape each segment already, and `URL.appending(path:)` would
+            // encode them a second time. `encodePath` keeps those escapes and encodes anything
+            // else a path can't hold, which `percentEncodedPath` would otherwise trap on.
             var basePath = components.percentEncodedPath
             if basePath.hasSuffix("/") { basePath.removeLast() }
-            components.percentEncodedPath = basePath + path
+            components.percentEncodedPath = basePath + encodePath(path)
         }
         if !request.query.isEmpty {
             components.queryItems = (components.queryItems ?? []) + request.query

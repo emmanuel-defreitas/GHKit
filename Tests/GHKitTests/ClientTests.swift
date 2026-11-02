@@ -52,6 +52,19 @@ struct ClientTests {
                 == "https://ghe.example.com/api/v3/repos/o/r/contents/docs/50%25%20off%20%231.md")
     }
 
+    @Test(arguments: [
+        ("/repos/o/r/contents/My File.txt", "/repos/o/r/contents/My%20File.txt"),
+        ("/repos/o/r/contents/My%20File.txt", "/repos/o/r/contents/My%20File.txt"),
+        ("/repos/o/r/contents/50% off #1?.md", "/repos/o/r/contents/50%25%20off%20%231%3F.md"),
+        ("/repos/o/r/contents/café", "/repos/o/r/contents/caf%C3%A9"),
+        ("user", "/user"),
+    ])
+    func customRequestPathsAreEncodedSafely(path: String, expected: String) async throws {
+        let transport = MockTransport(.noContent())
+        try await makeClient(transport).send(GitHubRequest<Void>(.get, path))
+        #expect(transport.requests.first?.url?.path(percentEncoded: true) == expected)
+    }
+
     @Test func plusSignsInQueriesAreEscaped() async throws {
         let transport = MockTransport(.json("[]"))
         _ = try await makeClient(transport).projects(.organization("acme")).list(matching: "is:open c++").collect()
