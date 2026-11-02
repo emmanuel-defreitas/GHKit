@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 210 of 1254 endpoints (16%)
+**REST progress:** 223 of 1254 endpoints (17%)
 
 ## Milestones
 
@@ -57,11 +57,11 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [emojis](#emojis) | M2 | 0 | 1 | ⬜ |
 | [git](#git) | M2 | 0 | 13 | ⬜ |
 | [gitignore](#gitignore) | M2 | 0 | 2 | ⬜ |
-| [licenses](#licenses) | M2 | 0 | 3 | ⬜ |
+| [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
-| [repos](#repos) | M2 | 19 | 203 | 🚧 |
+| [repos](#repos) | M2 | 31 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -227,11 +227,11 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### licenses
 
-0/3 done · milestone M2
+1/3 done · milestone M2
 
 - [ ] `GET /licenses` — Get all commonly used licenses
 - [ ] `GET /licenses/{license}` — Get a license
-- [ ] `GET /repos/{owner}/{repo}/license` — Get the license for a repository
+- [x] ✅ `GET /repos/{owner}/{repo}/license` — Get the license for a repository → `repositories.license(_:_:ref:)`
 
 ### markdown
 
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-19/203 done · milestone M2
+31/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -433,7 +433,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Set user access restrictions
 - [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Remove user access restrictions
 - [ ] `POST /repos/{owner}/{repo}/branches/{branch}/rename` — Rename a branch
-- [ ] `GET /repos/{owner}/{repo}/codeowners/errors` — List CODEOWNERS errors
+- [x] ✅ `GET /repos/{owner}/{repo}/codeowners/errors` — List CODEOWNERS errors → `repositories.codeownersErrors(_:_:ref:)`
 - [ ] `GET /repos/{owner}/{repo}/collaborators` — List repository collaborators
 - [ ] `GET /repos/{owner}/{repo}/collaborators/{username}` — Check if a user is a repository collaborator
 - [ ] `PUT /repos/{owner}/{repo}/collaborators/{username}` — Add a repository collaborator
@@ -453,9 +453,9 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference
 - [x] ✅ `GET /repos/{owner}/{repo}/community/profile` — Get community profile metrics → `repositories.communityProfile(_:_:)`
 - [ ] `GET /repos/{owner}/{repo}/compare/{basehead}` — Compare two commits
-- [ ] `GET /repos/{owner}/{repo}/contents/{path}` — Get repository content
-- [ ] `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents
-- [ ] `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file
+- [x] ✅ `GET /repos/{owner}/{repo}/contents/{path}` — Get repository content → `repositories.contents(_:_:at:ref:)` / `rawContents(_:_:at:ref:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents → `repositories.writeFile(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file → `repositories.deleteFile(_:sha:message:in:_:branch:committer:author:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/contributors` — List repository contributors → `repositories.contributors(_:_:includeAnonymous:perPage:)`
 - [ ] `GET /repos/{owner}/{repo}/deployments` — List deployments
 - [ ] `POST /repos/{owner}/{repo}/deployments` — Create a deployment
@@ -479,8 +479,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps` — List custom deployment rule integrations available for an environment
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Get a custom deployment protection rule
 - [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Disable a custom protection rule for an environment
-- [ ] `GET /repos/{owner}/{repo}/forks` — List forks
-- [ ] `POST /repos/{owner}/{repo}/forks` — Create a fork
+- [x] ✅ `GET /repos/{owner}/{repo}/forks` — List forks → `repositories.forks(_:_:sort:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/forks` — Create a fork → `repositories.fork(_:_:into:as:defaultBranchOnly:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository → `repositories.hashAlgorithm(_:_:)`
 - [ ] `GET /repos/{owner}/{repo}/hooks` — List repository webhooks
 - [ ] `POST /repos/{owner}/{repo}/hooks` — Create a repository webhook
@@ -506,7 +506,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key
 - [ ] `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key
 - [x] ✅ `GET /repos/{owner}/{repo}/languages` — List repository languages → `repositories.languages(_:_:)`
-- [ ] `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository
+- [x] ✅ `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository → `repositories.syncWithUpstream(_:_:branch:)`
 - [ ] `POST /repos/{owner}/{repo}/merges` — Merge a branch
 - [ ] `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site
 - [ ] `POST /repos/{owner}/{repo}/pages` — Create a GitHub Pages site
@@ -525,8 +525,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/private-vulnerability-reporting` — Disable private vulnerability reporting for a repository
 - [ ] `GET /repos/{owner}/{repo}/properties/values` — Get all custom property values for a repository
 - [ ] `PATCH /repos/{owner}/{repo}/properties/values` — Create or update custom property values for a repository
-- [ ] `GET /repos/{owner}/{repo}/readme` — Get a repository README
-- [ ] `GET /repos/{owner}/{repo}/readme/{dir}` — Get a repository README for a directory
+- [x] ✅ `GET /repos/{owner}/{repo}/readme` — Get a repository README → `repositories.readme(_:_:in:ref:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/readme/{dir}` — Get a repository README for a directory → `repositories.readme(_:_:in:ref:)`
 - [ ] `GET /repos/{owner}/{repo}/releases` — List releases
 - [ ] `POST /repos/{owner}/{repo}/releases` — Create a release
 - [ ] `GET /repos/{owner}/{repo}/releases/assets/{asset_id}` — Get a release asset
@@ -557,7 +557,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day
 - [ ] `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status
 - [x] ✅ `GET /repos/{owner}/{repo}/tags` — List repository tags → `repositories.tags(_:_:perPage:)`
-- [ ] `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar)
+- [x] ✅ `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar) → `repositories.archive(_:_:format:ref:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/teams` — List repository teams → `repositories.teams(_:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/topics` — Get all repository topics → `repositories.topics(_:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/topics` — Replace all repository topics → `repositories.replaceTopics(_:on:_:)`
@@ -569,8 +569,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/vulnerability-alerts` — Check if vulnerability alerts are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/vulnerability-alerts` — Enable vulnerability alerts
 - [ ] `DELETE /repos/{owner}/{repo}/vulnerability-alerts` — Disable vulnerability alerts
-- [ ] `GET /repos/{owner}/{repo}/zipball/{ref}` — Download a repository archive (zip)
-- [ ] `POST /repos/{template_owner}/{template_repo}/generate` — Create a repository using a template
+- [x] ✅ `GET /repos/{owner}/{repo}/zipball/{ref}` — Download a repository archive (zip) → `repositories.archive(_:_:format:ref:)`
+- [x] ✅ `POST /repos/{template_owner}/{template_repo}/generate` — Create a repository using a template → `repositories.create(_:fromTemplate:_:)`
 - [x] ✅ `GET /repositories` — List public repositories → `repositories.all(since:)`
 - [x] ✅ `GET /user/repos` — List repositories for the authenticated user → `repositories.list(matching:sort:ascending:perPage:)`
 - [x] ✅ `POST /user/repos` — Create a repository for the authenticated user → `repositories.create(_:)`
