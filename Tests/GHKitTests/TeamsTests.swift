@@ -33,6 +33,15 @@ struct TeamsTests {
 
     // MARK: Requests
 
+    @Test func fetchOneTeam() async throws {
+        let transport = MockTransport(.fixture("team-full"))
+        let team = try await makeClient(transport).teams.team("justice-league", in: "github")
+        #expect(team.slug == "justice-league")
+        #expect(team.membersCount == 3)
+        #expect(team.organization?.login == "github")
+        #expect(transport.requests.map(\.route) == ["GET /orgs/github/teams/justice-league"])
+    }
+
     @Test func createAndUpdate() async throws {
         let transport = MockTransport(.fixture("team-full", status: 201))
         let teams = makeClient(transport).teams
