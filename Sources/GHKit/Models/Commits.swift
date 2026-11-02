@@ -115,7 +115,7 @@ public struct CommitComparison: Sendable, Hashable, Codable {
     public var baseCommit: Commit
     /// The newest commit both refs share.
     public var mergeBaseCommit: Commit
-    /// Up to 250 commits, oldest first. Page through them with `page` for more.
+    /// Up to 250 commits, oldest first. Use ``RepositoriesAPI/comparedCommits(_:_:in:_:perPage:)`` for all of them.
     public var commits: [Commit]
     /// Up to 300 changed files.
     public var files: [DiffEntry]?

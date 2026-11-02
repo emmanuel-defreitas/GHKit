@@ -63,6 +63,18 @@ struct CommitsTests {
         #expect(transport.requests[6].value(forHTTPHeaderField: "Accept") == "application/vnd.github.diff")
     }
 
+    @Test func comparedCommitsPaginate() async throws {
+        let comparison = try JSONSerialization.jsonObject(with: loadFixture("commit-comparison")) as? [String: Any]
+        let commits = try JSONSerialization.data(withJSONObject: ["total_commits": 2, "commits": comparison?["commits"] ?? []])
+        let next = #"<https://api.github.com/repos/o/r/compare/main...dev?page=2&per_page=1>; rel="next""#
+        let transport = MockTransport(MockResponse(headers: ["Link": next], body: commits), MockResponse(body: commits))
+        let all = try await makeClient(transport).repositories.comparedCommits("main", "dev", in: "o", "r", perPage: 1).collect()
+        #expect(all.count == 2)
+        #expect(transport.requests.map(\.path) == ["/repos/o/r/compare/main...dev", "/repos/o/r/compare/main...dev"])
+        #expect(transport.requests[0].queryItems == ["per_page": "1"])
+        #expect(transport.requests[1].queryItems == ["page": "2", "per_page": "1"])
+    }
+
     @Test func commentRequests() async throws {
         let transport = MockTransport { request, _ in
             switch request.route {

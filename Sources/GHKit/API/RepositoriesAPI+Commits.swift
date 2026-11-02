@@ -58,6 +58,13 @@ extension RepositoriesAPI {
         try await client.value(GitHubRequest(.get, comparePath(owner, name, base, head)))
     }
 
+    /// Every commit between two refs, oldest first, page by page.
+    /// ``compare(_:_:in:_:)`` returns at most 250; use this when ``CommitComparison/totalCommits`` is larger.
+    /// `GET /repos/{owner}/{repo}/compare/{base}...{head}`
+    public func comparedCommits(_ base: String, _ head: String, in owner: String, _ name: String, perPage: Int = 100) -> Paginated<Commit> {
+        client.paginate(.wrappedList(comparePath(owner, name, base, head), key: "commits", query: .query(("per_page", perPage))))
+    }
+
     /// The changes between two refs as a diff or patch.
     /// `GET /repos/{owner}/{repo}/compare/{base}...{head}` with a diff or patch media type
     public func compareDiff(
