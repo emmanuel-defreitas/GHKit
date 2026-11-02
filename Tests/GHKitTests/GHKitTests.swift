@@ -86,8 +86,8 @@ func makeClient(
 
 extension URLRequest {
     var path: String { url?.path() ?? "" }
-    /// The method and path, such as `GET /user`.
-    var route: String { "\(httpMethod ?? "GET") \(path)" }
+    /// The method and percent-encoded path, such as `GET /user`, so `%2F` stays distinct from `/`.
+    var route: String { "\(httpMethod ?? "GET") \(url?.path(percentEncoded: true) ?? "")" }
     var queryItems: [String: String] {
         let items = URLComponents(url: url!, resolvingAgainstBaseURL: false)?.queryItems ?? []
         return Dictionary(items.map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { a, _ in a })
