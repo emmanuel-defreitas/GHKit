@@ -34,13 +34,14 @@ struct CollaboratorsTests {
 
     @Test func collaboratorRequests() async throws {
         let transport = MockTransport { request, _ in
-            switch (request.httpMethod, request.path) {
-            case ("PUT", "/repos/o/r/collaborators/mona"): .fixture("repository-invitation", status: 201)
-            case ("PUT", _): .noContent()
-            case ("GET", "/repos/o/r/collaborators"): .fixture("collaborator-items")
-            case ("GET", "/repos/o/r/collaborators/mona/permission"): .fixture("collaborator-permission")
-            case ("GET", _): .noContent()
-            default: .noContent()
+            switch request.route {
+            case "PUT /repos/o/r/collaborators/mona": .fixture("repository-invitation", status: 201)
+            case "PUT /repos/o/r/collaborators/member": .noContent()
+            case "GET /repos/o/r/collaborators": .fixture("collaborator-items")
+            case "GET /repos/o/r/collaborators/mona": .noContent()
+            case "GET /repos/o/r/collaborators/mona/permission": .fixture("collaborator-permission")
+            case "DELETE /repos/o/r/collaborators/mona": .noContent()
+            default: .json(#"{"message":"Not Found"}"#, status: 404)
             }
         }
         let repos = makeClient(transport).repositories
@@ -55,7 +56,12 @@ struct CollaboratorsTests {
         #expect(transport.requests[0].queryItems == ["affiliation": "outside", "permission": "maintain", "per_page": "100"])
         #expect(transport.requests[3].jsonBody == ["permission": "admin"])
         #expect(transport.requests[4].jsonBody == ["permission": "push"])
-        #expect(transport.requests[5].httpMethod == "DELETE")
+        #expect(
+            transport.requests.map(\.route) == [
+                "GET /repos/o/r/collaborators", "GET /repos/o/r/collaborators/mona",
+                "GET /repos/o/r/collaborators/mona/permission", "PUT /repos/o/r/collaborators/mona",
+                "PUT /repos/o/r/collaborators/member", "DELETE /repos/o/r/collaborators/mona",
+            ])
     }
 
     @Test func invitationRequests() async throws {
@@ -84,31 +90,39 @@ struct CollaboratorsTests {
 
     @Test func deployKeysAndAutolinks() async throws {
         let transport = MockTransport { request, _ in
-            switch (request.httpMethod, request.path) {
-            case ("DELETE", _): .noContent()
-            case (_, "/repos/o/r/keys"): request.httpMethod == "GET" ? .fixture("deploy-key-items") : .fixture("deploy-key", status: 201)
-            case (_, "/repos/o/r/keys/1"): .fixture("deploy-key")
-            case ("GET", "/repos/o/r/autolinks"): .fixture("autolink-items")
-            default: .fixture("autolink")
+            switch request.route {
+            case "GET /repos/o/r/keys": .fixture("deploy-key-items")
+            case "GET /repos/o/r/keys/1": .fixture("deploy-key")
+            case "POST /repos/o/r/keys": .fixture("deploy-key", status: 201)
+            case "DELETE /repos/o/r/keys/1", "DELETE /repos/o/r/autolinks/1": .noContent()
+            case "GET /repos/o/r/autolinks": .fixture("autolink-items")
+            case "GET /repos/o/r/autolinks/1": .fixture("autolink")
+            case "POST /repos/o/r/autolinks": .fixture("autolink", status: 201)
+            default: .json(#"{"message":"Not Found"}"#, status: 404)
             }
         }
         let repos = makeClient(transport).repositories
-        _ = try await repos.deployKeys("o", "r").collect()
-        _ = try await repos.deployKey(id: 1, in: "o", "r")
-        _ = try await repos.addDeployKey("ssh-ed25519 AAAA", title: "CI", to: "o", "r")
+        #expect(try await repos.deployKeys("o", "r").collect().first?.title == "octocat@octomac")
+        #expect(try await repos.deployKey(id: 1, in: "o", "r").id == 1)
+        #expect(try await repos.addDeployKey("ssh-ed25519 AAAA", title: "CI", to: "o", "r").verified == true)
         try await repos.deleteDeployKey(id: 1, from: "o", "r")
-        _ = try await repos.autolinks("o", "r")
-        _ = try await repos.autolink(id: 1, in: "o", "r")
-        _ = try await repos.createAutolink(prefix: "JIRA-", urlTemplate: "https://jira.example.com/browse/JIRA-<num>", in: "o", "r")
+        #expect(try await repos.autolinks("o", "r").collect().first?.keyPrefix == "TICKET-")
+        #expect(try await repos.autolink(id: 1, in: "o", "r").urlTemplate == "https://example.com/TICKET?query=<num>")
+        let created = try await repos.createAutolink(
+            prefix: "JIRA-", urlTemplate: "https://jira.example.com/browse/JIRA-<num>", in: "o", "r")
+        #expect(created.isAlphanumeric)
         try await repos.deleteAutolink(id: 1, from: "o", "r")
+        #expect(
+            transport.requests.map(\.route) == [
+                "GET /repos/o/r/keys", "GET /repos/o/r/keys/1", "POST /repos/o/r/keys", "DELETE /repos/o/r/keys/1",
+                "GET /repos/o/r/autolinks", "GET /repos/o/r/autolinks/1", "POST /repos/o/r/autolinks",
+                "DELETE /repos/o/r/autolinks/1",
+            ])
+        #expect(transport.requests[0].queryItems == ["per_page": "100"])
         #expect(transport.requests[2].jsonBody == ["key": "ssh-ed25519 AAAA", "title": "CI", "read_only": true])
         #expect(
             transport.requests[6].jsonBody == [
                 "key_prefix": "JIRA-", "url_template": "https://jira.example.com/browse/JIRA-<num>", "is_alphanumeric": true,
-            ])
-        #expect(
-            transport.requests.map { "\($0.httpMethod!) \($0.path)" }.filter { $0.hasPrefix("DELETE") } == [
-                "DELETE /repos/o/r/keys/1", "DELETE /repos/o/r/autolinks/1",
             ])
     }
 }

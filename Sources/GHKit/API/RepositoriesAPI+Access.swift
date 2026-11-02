@@ -123,8 +123,8 @@ extension RepositoriesAPI {
     // MARK: Autolinks
 
     /// A repository's autolink references. `GET /repos/{owner}/{repo}/autolinks`
-    public func autolinks(_ owner: String, _ name: String) async throws(GitHubError) -> [Autolink] {
-        try await client.value(GitHubRequest(.get, path(owner, name, "/autolinks")))
+    public func autolinks(_ owner: String, _ name: String) -> Paginated<Autolink> {
+        client.paginate(GitHubRequest(.get, path(owner, name, "/autolinks")))
     }
 
     /// One autolink reference. `GET /repos/{owner}/{repo}/autolinks/{autolink_id}`
