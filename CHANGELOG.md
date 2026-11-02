@@ -17,5 +17,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   archiving and ordering over GraphQL.
 - `GHKitUI`: `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value.
 - TODO.md coverage tracker generated from GitHub's OpenAPI description.
+- Users: profile updates, the user directory, hovercards, followers, blocks, emails, GPG keys, SSH keys,
+  SSH signing keys, and social accounts. Check endpoints such as `isFollowing(_:)` return a `Bool`.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next

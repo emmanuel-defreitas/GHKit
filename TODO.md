@@ -4,14 +4,14 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 47 of 1254 endpoints (3%)
+**REST progress:** 86 of 1254 endpoints (6%)
 
 ## Milestones
 
 | Milestone | Scope | Status |
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
-| M2 | Core resources: users, organizations, teams, repositories | ⬜ Next |
+| M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
 | M3 | Collaboration: issues, pull requests, search, activity | ⬜ Planned |
 | M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
@@ -63,7 +63,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [orgs](#orgs) | M2 | 0 | 116 | ⬜ |
 | [repos](#repos) | M2 | 0 | 203 | ⬜ |
 | [teams](#teams) | M2 | 0 | 32 | ⬜ |
-| [users](#users) | M2 | 3 | 47 | 🚧 |
+| [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
 | [issues](#issues) | M3 | 0 | 66 | ⬜ |
@@ -618,55 +618,55 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### users
 
-3/47 done · milestone M2
+42/47 done · milestone M2
 
 - [x] ✅ `GET /user` — Get the authenticated user → `github.users.authenticated()`, `github.verifyAuthentication()`
-- [ ] `PATCH /user` — Update the authenticated user
-- [ ] `GET /user/blocks` — List users blocked by the authenticated user
-- [ ] `GET /user/blocks/{username}` — Check if a user is blocked by the authenticated user
-- [ ] `PUT /user/blocks/{username}` — Block a user
-- [ ] `DELETE /user/blocks/{username}` — Unblock a user
-- [ ] `PATCH /user/email/visibility` — Set primary email visibility for the authenticated user
-- [ ] `GET /user/emails` — List email addresses for the authenticated user
-- [ ] `POST /user/emails` — Add an email address for the authenticated user
-- [ ] `DELETE /user/emails` — Delete an email address for the authenticated user
-- [ ] `GET /user/followers` — List followers of the authenticated user
-- [ ] `GET /user/following` — List the people the authenticated user follows
-- [ ] `GET /user/following/{username}` — Check if a person is followed by the authenticated user
-- [ ] `PUT /user/following/{username}` — Follow a user
-- [ ] `DELETE /user/following/{username}` — Unfollow a user
-- [ ] `GET /user/gpg_keys` — List GPG keys for the authenticated user
-- [ ] `POST /user/gpg_keys` — Create a GPG key for the authenticated user
-- [ ] `GET /user/gpg_keys/{gpg_key_id}` — Get a GPG key for the authenticated user
-- [ ] `DELETE /user/gpg_keys/{gpg_key_id}` — Delete a GPG key for the authenticated user
-- [ ] `GET /user/keys` — List public SSH keys for the authenticated user
-- [ ] `POST /user/keys` — Create a public SSH key for the authenticated user
-- [ ] `GET /user/keys/{key_id}` — Get a public SSH key for the authenticated user
-- [ ] `DELETE /user/keys/{key_id}` — Delete a public SSH key for the authenticated user
-- [ ] `GET /user/public_emails` — List public email addresses for the authenticated user
-- [ ] `GET /user/social_accounts` — List social accounts for the authenticated user
-- [ ] `POST /user/social_accounts` — Add social accounts for the authenticated user
-- [ ] `DELETE /user/social_accounts` — Delete social accounts for the authenticated user
-- [ ] `GET /user/ssh_signing_keys` — List SSH signing keys for the authenticated user
-- [ ] `POST /user/ssh_signing_keys` — Create a SSH signing key for the authenticated user
-- [ ] `GET /user/ssh_signing_keys/{ssh_signing_key_id}` — Get an SSH signing key for the authenticated user
-- [ ] `DELETE /user/ssh_signing_keys/{ssh_signing_key_id}` — Delete an SSH signing key for the authenticated user
+- [x] ✅ `PATCH /user` — Update the authenticated user → `users.updateProfile(_:)`
+- [x] ✅ `GET /user/blocks` — List users blocked by the authenticated user → `users.blockedUsers()`
+- [x] ✅ `GET /user/blocks/{username}` — Check if a user is blocked by the authenticated user → `users.isBlocked(_:)`
+- [x] ✅ `PUT /user/blocks/{username}` — Block a user → `users.block(_:)`
+- [x] ✅ `DELETE /user/blocks/{username}` — Unblock a user → `users.unblock(_:)`
+- [x] ✅ `PATCH /user/email/visibility` — Set primary email visibility for the authenticated user → `users.setPrimaryEmailVisibility(_:)`
+- [x] ✅ `GET /user/emails` — List email addresses for the authenticated user → `users.emails()`
+- [x] ✅ `POST /user/emails` — Add an email address for the authenticated user → `users.addEmails(_:)`
+- [x] ✅ `DELETE /user/emails` — Delete an email address for the authenticated user → `users.deleteEmails(_:)`
+- [x] ✅ `GET /user/followers` — List followers of the authenticated user → `users.followers()`
+- [x] ✅ `GET /user/following` — List the people the authenticated user follows → `users.following()`
+- [x] ✅ `GET /user/following/{username}` — Check if a person is followed by the authenticated user → `users.isFollowing(_:)`
+- [x] ✅ `PUT /user/following/{username}` — Follow a user → `users.follow(_:)`
+- [x] ✅ `DELETE /user/following/{username}` — Unfollow a user → `users.unfollow(_:)`
+- [x] ✅ `GET /user/gpg_keys` — List GPG keys for the authenticated user → `users.gpgKeys()`
+- [x] ✅ `POST /user/gpg_keys` — Create a GPG key for the authenticated user → `users.addGPGKey(armoredPublicKey:name:)`
+- [x] ✅ `GET /user/gpg_keys/{gpg_key_id}` — Get a GPG key for the authenticated user → `users.gpgKey(id:)`
+- [x] ✅ `DELETE /user/gpg_keys/{gpg_key_id}` — Delete a GPG key for the authenticated user → `users.deleteGPGKey(id:)`
+- [x] ✅ `GET /user/keys` — List public SSH keys for the authenticated user → `users.sshKeys()`
+- [x] ✅ `POST /user/keys` — Create a public SSH key for the authenticated user → `users.addSSHKey(_:title:)`
+- [x] ✅ `GET /user/keys/{key_id}` — Get a public SSH key for the authenticated user → `users.sshKey(id:)`
+- [x] ✅ `DELETE /user/keys/{key_id}` — Delete a public SSH key for the authenticated user → `users.deleteSSHKey(id:)`
+- [x] ✅ `GET /user/public_emails` — List public email addresses for the authenticated user → `users.publicEmails()`
+- [x] ✅ `GET /user/social_accounts` — List social accounts for the authenticated user → `users.socialAccounts()`
+- [x] ✅ `POST /user/social_accounts` — Add social accounts for the authenticated user → `users.addSocialAccounts(_:)`
+- [x] ✅ `DELETE /user/social_accounts` — Delete social accounts for the authenticated user → `users.deleteSocialAccounts(_:)`
+- [x] ✅ `GET /user/ssh_signing_keys` — List SSH signing keys for the authenticated user → `users.sshSigningKeys()`
+- [x] ✅ `POST /user/ssh_signing_keys` — Create a SSH signing key for the authenticated user → `users.addSSHSigningKey(_:title:)`
+- [x] ✅ `GET /user/ssh_signing_keys/{ssh_signing_key_id}` — Get an SSH signing key for the authenticated user → `users.sshSigningKey(id:)`
+- [x] ✅ `DELETE /user/ssh_signing_keys/{ssh_signing_key_id}` — Delete an SSH signing key for the authenticated user → `users.deleteSSHSigningKey(id:)`
 - [x] ✅ `GET /user/{account_id}` — Get a user using their ID → `github.users.user(id:)`
-- [ ] `GET /users` — List users
+- [x] ✅ `GET /users` — List users → `users.all(since:perPage:)`
 - [x] ✅ `GET /users/{username}` — Get a user → `github.users.user(_:)`
-- [ ] `POST /users/{username}/attestations/bulk-list` — List attestations by bulk subject digests
-- [ ] `POST /users/{username}/attestations/delete-request` — Delete attestations in bulk
-- [ ] `DELETE /users/{username}/attestations/digest/{subject_digest}` — Delete attestations by subject digest
-- [ ] `DELETE /users/{username}/attestations/{attestation_id}` — Delete attestations by ID
-- [ ] `GET /users/{username}/attestations/{subject_digest}` — List attestations
-- [ ] `GET /users/{username}/followers` — List followers of a user
-- [ ] `GET /users/{username}/following` — List the people a user follows
-- [ ] `GET /users/{username}/following/{target_user}` — Check if a user follows another user
-- [ ] `GET /users/{username}/gpg_keys` — List GPG keys for a user
-- [ ] `GET /users/{username}/hovercard` — Get contextual information for a user
-- [ ] `GET /users/{username}/keys` — List public keys for a user
-- [ ] `GET /users/{username}/social_accounts` — List social accounts for a user
-- [ ] `GET /users/{username}/ssh_signing_keys` — List SSH signing keys for a user
+- [ ] `POST /users/{username}/attestations/bulk-list` — List attestations by bulk subject digests (deferred to milestone 5)
+- [ ] `POST /users/{username}/attestations/delete-request` — Delete attestations in bulk (deferred to milestone 5)
+- [ ] `DELETE /users/{username}/attestations/digest/{subject_digest}` — Delete attestations by subject digest (deferred to milestone 5)
+- [ ] `DELETE /users/{username}/attestations/{attestation_id}` — Delete attestations by ID (deferred to milestone 5)
+- [ ] `GET /users/{username}/attestations/{subject_digest}` — List attestations (deferred to milestone 5)
+- [x] ✅ `GET /users/{username}/followers` — List followers of a user → `users.followers(of:)`
+- [x] ✅ `GET /users/{username}/following` — List the people a user follows → `users.following(of:)`
+- [x] ✅ `GET /users/{username}/following/{target_user}` — Check if a user follows another user → `users.isFollowing(_:by:)`
+- [x] ✅ `GET /users/{username}/gpg_keys` — List GPG keys for a user → `users.gpgKeys(of:)`
+- [x] ✅ `GET /users/{username}/hovercard` — Get contextual information for a user → `users.hovercard(for:about:)`
+- [x] ✅ `GET /users/{username}/keys` — List public keys for a user → `users.sshKeys(of:)`
+- [x] ✅ `GET /users/{username}/social_accounts` — List social accounts for a user → `users.socialAccounts(of:)`
+- [x] ✅ `GET /users/{username}/ssh_signing_keys` — List SSH signing keys for a user → `users.sshSigningKeys(of:)`
 
 ### activity
 
