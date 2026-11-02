@@ -34,5 +34,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   license, CODEOWNERS errors, source archives, forks, syncing a fork, and creating from a template.
 - Repository access: collaborators and their permissions, repository invitations (sent and received),
   deploy keys, and autolink references.
+- Branches: list, get, rename, and merge branches, find branches by head commit, and manage every branch
+  protection rule (status checks, reviews, admin enforcement, signed commits, and who can push).
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next

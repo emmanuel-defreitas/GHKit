@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 242 of 1254 endpoints (19%)
+**REST progress:** 280 of 1254 endpoints (22%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
-| [repos](#repos) | M2 | 50 | 203 | 🚧 |
+| [repos](#repos) | M2 | 88 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-50/203 done · milestone M2
+88/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -397,42 +397,42 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/automated-security-fixes` — Check if Dependabot security updates are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/automated-security-fixes` — Enable Dependabot security updates
 - [ ] `DELETE /repos/{owner}/{repo}/automated-security-fixes` — Disable Dependabot security updates
-- [ ] `GET /repos/{owner}/{repo}/branches` — List branches
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}` — Get a branch
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection` — Get branch protection
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection` — Update branch protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection` — Delete branch protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Get admin branch protection
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Set admin branch protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Delete admin branch protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Get pull request review protection
-- [ ] `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Update pull request review protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Delete pull request review protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Get commit signature protection
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Create commit signature protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Delete commit signature protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Get status checks protection
-- [ ] `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Update status check protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Remove status check protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Get all status check contexts
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Add status check contexts
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Set status check contexts
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Remove status check contexts
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Get access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Delete access restrictions
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Get apps with access to the protected branch
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Add app access restrictions
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Set app access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Remove app access restrictions
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Get teams with access to the protected branch
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Add team access restrictions
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Set team access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Remove team access restrictions
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Get users with access to the protected branch
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Add user access restrictions
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Set user access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Remove user access restrictions
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/rename` — Rename a branch
+- [x] ✅ `GET /repos/{owner}/{repo}/branches` — List branches → `repositories.branches(_:_:protected:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}` — Get a branch → `repositories.branch(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection` — Get branch protection → `repositories.protection(of:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection` — Update branch protection → `repositories.protect(_:in:_:rules:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection` — Delete branch protection → `repositories.removeProtection(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Get admin branch protection → `repositories.adminEnforcement(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Set admin branch protection → `repositories.setAdminEnforcement(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Delete admin branch protection → `repositories.setAdminEnforcement(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Get pull request review protection → `repositories.reviewProtection(of:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Update pull request review protection → `repositories.updateReviewProtection(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Delete pull request review protection → `repositories.removeReviewProtection(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Get commit signature protection → `repositories.signatureRequirement(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Create commit signature protection → `repositories.setSignatureRequirement(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Delete commit signature protection → `repositories.setSignatureRequirement(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Get status checks protection → `repositories.statusChecks(of:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Update status check protection → `repositories.updateStatusChecks(on:in:_:strict:checks:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Remove status check protection → `repositories.removeStatusChecks(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Get all status check contexts → `repositories.statusCheckContexts(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Add status check contexts → `repositories.addStatusCheckContexts(_:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Set status check contexts → `repositories.setStatusCheckContexts(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Remove status check contexts → `repositories.removeStatusCheckContexts(_:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Get access restrictions → `repositories.pushRestrictions(of:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Delete access restrictions → `repositories.removePushRestrictions(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Get apps with access to the protected branch → `repositories.appsWithPushAccess(to:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Add app access restrictions → `repositories.addPushAccess(apps:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Set app access restrictions → `repositories.setPushAccess(apps:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Remove app access restrictions → `repositories.removePushAccess(apps:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Get teams with access to the protected branch → `repositories.teamsWithPushAccess(to:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Add team access restrictions → `repositories.addPushAccess(teams:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Set team access restrictions → `repositories.setPushAccess(teams:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Remove team access restrictions → `repositories.removePushAccess(teams:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Get users with access to the protected branch → `repositories.usersWithPushAccess(to:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Add user access restrictions → `repositories.addPushAccess(users:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Set user access restrictions → `repositories.setPushAccess(users:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Remove user access restrictions → `repositories.removePushAccess(users:from:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/rename` — Rename a branch → `repositories.renameBranch(_:to:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/codeowners/errors` — List CODEOWNERS errors → `repositories.codeownersErrors(_:_:ref:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/collaborators` — List repository collaborators → `repositories.collaborators(_:_:affiliation:role:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/collaborators/{username}` — Check if a user is a repository collaborator → `repositories.isCollaborator(_:on:_:)`
@@ -444,7 +444,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PATCH /repos/{owner}/{repo}/comments/{comment_id}` — Update a commit comment
 - [ ] `DELETE /repos/{owner}/{repo}/comments/{comment_id}` — Delete a commit comment
 - [ ] `GET /repos/{owner}/{repo}/commits` — List commits
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit → `repositories.branches(withHead:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments
 - [ ] `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment
 - [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit
@@ -507,7 +507,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key → `repositories.deleteDeployKey(id:from:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/languages` — List repository languages → `repositories.languages(_:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository → `repositories.syncWithUpstream(_:_:branch:)`
-- [ ] `POST /repos/{owner}/{repo}/merges` — Merge a branch
+- [x] ✅ `POST /repos/{owner}/{repo}/merges` — Merge a branch → `repositories.merge(_:into:in:_:message:)`
 - [ ] `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site
 - [ ] `POST /repos/{owner}/{repo}/pages` — Create a GitHub Pages site
 - [ ] `PUT /repos/{owner}/{repo}/pages` — Update information about a GitHub Pages site
@@ -540,7 +540,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/releases/{release_id}` — Delete a release
 - [ ] `GET /repos/{owner}/{repo}/releases/{release_id}/assets` — List release assets
 - [ ] `POST /repos/{owner}/{repo}/releases/{release_id}/assets` — Upload a release asset
-- [ ] `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch
+- [ ] `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch (deferred to the rulesets work)
 - [ ] `GET /repos/{owner}/{repo}/rulesets` — Get all repository rulesets
 - [ ] `POST /repos/{owner}/{repo}/rulesets` — Create a repository ruleset
 - [ ] `GET /repos/{owner}/{repo}/rulesets/rule-suites` — List repository rule suites
