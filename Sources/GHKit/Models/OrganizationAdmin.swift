@@ -134,7 +134,8 @@ public struct WebhookDelivery: Sendable, Hashable, Codable, Identifiable {
     public var repositoryID: Int?
     public var throttledAt: Date?
 
-    public var succeeded: Bool { (200..<300).contains(statusCode) }
+    /// Whether the status code is 200–399, which GitHub counts as a success.
+    public var succeeded: Bool { (200..<400).contains(statusCode) }
 
     enum CodingKeys: String, CodingKey {
         case id, guid, redelivery, duration, status, event, action

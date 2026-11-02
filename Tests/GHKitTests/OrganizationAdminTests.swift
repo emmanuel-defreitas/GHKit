@@ -28,6 +28,13 @@ struct OrganizationAdminTests {
         #expect(detail.request.payload != nil)
     }
 
+    @Test(arguments: [(199, false), (200, true), (302, true), (399, true), (400, false), (502, false)])
+    func deliverySuccessMatchesGitHubsRange(statusCode: Int, expected: Bool) throws {
+        var delivery = try #require(decoder.decode([WebhookDelivery].self, from: loadFixture("hook-delivery-items")).first)
+        delivery.statusCode = statusCode
+        #expect(delivery.succeeded == expected)
+    }
+
     @Test(arguments: [(#""1""#, true), (#""0""#, false), ("1", true), ("0", false)])
     func insecureSSLAcceptsStringsAndNumbers(json: String, expected: Bool) throws {
         let config = try decoder.decode(WebhookConfiguration.self, from: Data(#"{"insecure_ssl":\#(json)}"#.utf8))
