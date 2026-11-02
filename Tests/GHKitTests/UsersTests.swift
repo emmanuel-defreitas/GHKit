@@ -98,6 +98,7 @@ struct UsersTests {
         _ = try await users.addEmails(["mona@github.com"])
         try await users.deleteEmails(["old@example.com"])
         _ = try await users.setPrimaryEmailVisibility(.private)
+        #expect(transport.requests.map(\.route) == ["POST /user/emails", "DELETE /user/emails", "PATCH /user/email/visibility"])
         #expect(transport.requests[0].jsonBody == ["emails": ["mona@github.com"]])
         #expect(transport.requests[1].httpMethod == "DELETE")
         #expect(transport.requests[1].jsonBody == ["emails": ["old@example.com"]])
@@ -117,26 +118,83 @@ struct UsersTests {
         _ = try await users.addGPGKey(armoredPublicKey: "-----BEGIN PGP…", name: "Laptop")
         _ = try await users.addSSHKey("ssh-ed25519 AAAA", title: "Laptop")
         _ = try await users.addSSHSigningKey("ssh-ed25519 BBBB")
+        #expect(transport.requests.map(\.route) == ["POST /user/gpg_keys", "POST /user/keys", "POST /user/ssh_signing_keys"])
         #expect(transport.requests[0].jsonBody == ["armored_public_key": "-----BEGIN PGP…", "name": "Laptop"])
         #expect(transport.requests[1].jsonBody == ["key": "ssh-ed25519 AAAA", "title": "Laptop"])
         #expect(transport.requests[2].path == "/user/ssh_signing_keys")
         #expect(transport.requests[2].jsonBody == ["key": "ssh-ed25519 BBBB"])
     }
 
-    @Test func keyListsForOtherUsers() async throws {
-        let transport = MockTransport(.json("[]"))
+    @Test func listEndpointsSendRouteAndPageSize() async throws {
+        let transport = MockTransport { request, _ in
+            switch request.path.split(separator: "/").last {
+            case "gpg_keys": .fixtureList("gpg-key")
+            case "keys": .fixture("key-simple-items")
+            case "ssh_signing_keys": .fixtureList("ssh-signing-key")
+            case "emails", "public_emails": .fixture("email-items")
+            case "social_accounts": .fixture("social-account-items")
+            default: .fixture("simple-user-items")
+            }
+        }
         let users = makeClient(transport).users
-        _ = try await users.gpgKeys(of: "octocat").collect()
-        _ = try await users.sshKeys(of: "octocat").collect()
-        _ = try await users.sshSigningKeys(of: "octocat").collect()
-        _ = try await users.socialAccounts(of: "octocat").collect()
-        _ = try await users.followers(of: "octocat").collect()
-        _ = try await users.following(of: "octocat").collect()
+        #expect(try await users.followers(perPage: 30).collect().first?.login == "octocat")
+        #expect(try await users.followers(of: "octocat").collect().first?.login == "octocat")
+        #expect(try await users.following().collect().first?.login == "octocat")
+        #expect(try await users.following(of: "octocat").collect().first?.login == "octocat")
+        #expect(try await users.blockedUsers().collect().first?.login == "octocat")
+        #expect(try await users.emails().collect().count == 3)
+        #expect(try await users.publicEmails().collect().count == 3)
+        #expect(try await users.gpgKeys().collect().first?.keyID == "3262EFF25BA0D270")
+        #expect(try await users.gpgKeys(of: "octocat").collect().first?.keyID == "3262EFF25BA0D270")
+        #expect(try await users.sshKeys().collect().first?.id == 1)
+        #expect(try await users.sshKeys(of: "octocat").collect().first?.id == 1)
+        #expect(try await users.sshSigningKeys().collect().first?.id == 2)
+        #expect(try await users.sshSigningKeys(of: "octocat").collect().first?.id == 2)
+        #expect(try await users.socialAccounts().collect().first?.provider == "twitter")
+        #expect(try await users.socialAccounts(of: "octocat").collect().first?.provider == "twitter")
         #expect(
-            transport.requests.map(\.path) == [
-                "/users/octocat/gpg_keys", "/users/octocat/keys", "/users/octocat/ssh_signing_keys",
-                "/users/octocat/social_accounts", "/users/octocat/followers", "/users/octocat/following",
+            transport.requests.map(\.route) == [
+                "GET /user/followers", "GET /users/octocat/followers",
+                "GET /user/following", "GET /users/octocat/following",
+                "GET /user/blocks",
+                "GET /user/emails", "GET /user/public_emails",
+                "GET /user/gpg_keys", "GET /users/octocat/gpg_keys",
+                "GET /user/keys", "GET /users/octocat/keys",
+                "GET /user/ssh_signing_keys", "GET /users/octocat/ssh_signing_keys",
+                "GET /user/social_accounts", "GET /users/octocat/social_accounts",
             ])
+        #expect(transport.requests[0].queryItems == ["per_page": "30"])
+        #expect(transport.requests.dropFirst().allSatisfy { $0.queryItems == ["per_page": "100"] })
+    }
+
+    @Test func singleKeysGetAndDelete() async throws {
+        let transport = MockTransport { request, _ in
+            if request.httpMethod == "DELETE" { return .noContent() }
+            return switch request.path {
+            case "/user/gpg_keys/3": .fixture("gpg-key")
+            case "/user/keys/2": .fixture("key")
+            default: .fixture("ssh-signing-key")
+            }
+        }
+        let users = makeClient(transport).users
+        #expect(try await users.gpgKey(id: 3).keyID == "3262EFF25BA0D270")
+        #expect(try await users.sshKey(id: 2).readOnly == false)
+        #expect(try await users.sshSigningKey(id: 2).id == 2)
+        try await users.deleteGPGKey(id: 3)
+        try await users.deleteSSHKey(id: 2)
+        try await users.deleteSSHSigningKey(id: 2)
+        #expect(
+            transport.requests.map(\.route) == [
+                "GET /user/gpg_keys/3", "GET /user/keys/2", "GET /user/ssh_signing_keys/2",
+                "DELETE /user/gpg_keys/3", "DELETE /user/keys/2", "DELETE /user/ssh_signing_keys/2",
+            ])
+    }
+
+    @Test func userByID() async throws {
+        let transport = MockTransport(.fixture("private-user"))
+        let user = try await makeClient(transport).users.user(id: 1)
+        #expect(user.login == "octocat")
+        #expect(transport.requests.map(\.route) == ["GET /user/1"])
     }
 
     @Test func socialAccountChanges() async throws {
@@ -147,6 +205,7 @@ struct UsersTests {
         let url = URL(string: "https://mastodon.social/@octocat")!
         _ = try await users.addSocialAccounts([url])
         try await users.deleteSocialAccounts([url])
+        #expect(transport.requests.map(\.route) == ["POST /user/social_accounts", "DELETE /user/social_accounts"])
         #expect(transport.requests[0].jsonBody == ["account_urls": ["https://mastodon.social/@octocat"]])
         #expect(transport.requests[1].httpMethod == "DELETE")
     }

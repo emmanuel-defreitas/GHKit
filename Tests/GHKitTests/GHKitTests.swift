@@ -18,6 +18,11 @@ struct MockResponse: Sendable {
         MockResponse(status: status, headers: headers, body: loadFixture(name))
     }
 
+    /// A single-object fixture wrapped in a one-element array, for list endpoints.
+    static func fixtureList(_ name: String, status: Int = 200, headers: [String: String] = [:]) -> MockResponse {
+        MockResponse(status: status, headers: headers, body: Data("[".utf8) + loadFixture(name) + Data("]".utf8))
+    }
+
     static func noContent() -> MockResponse { MockResponse(status: 204) }
 }
 
@@ -81,6 +86,8 @@ func makeClient(
 
 extension URLRequest {
     var path: String { url?.path() ?? "" }
+    /// The method and path, such as `GET /user`.
+    var route: String { "\(httpMethod ?? "GET") \(path)" }
     var queryItems: [String: String] {
         let items = URLComponents(url: url!, resolvingAgainstBaseURL: false)?.queryItems ?? []
         return Dictionary(items.map { ($0.name, $0.value ?? "") }, uniquingKeysWith: { a, _ in a })
