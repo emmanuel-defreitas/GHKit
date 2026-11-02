@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 280 of 1254 endpoints (22%)
+**REST progress:** 299 of 1254 endpoints (23%)
 
 ## Milestones
 
@@ -60,8 +60,8 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
-| [repos](#repos) | M2 | 88 | 203 | 🚧 |
+| [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
+| [repos](#repos) | M2 | 105 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -252,7 +252,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-89/116 done · milestone M2
+91/116 done · milestone M2
 
 - [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
 - [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
@@ -353,8 +353,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /orgs/{org}/public_members/{username}` — Check public organization membership for a user → `organizations.isPublicMember(_:of:)`
 - [x] ✅ `PUT /orgs/{org}/public_members/{username}` — Set public organization membership for the authenticated user → `organizations.publicizeMembership(of:in:)`
 - [x] ✅ `DELETE /orgs/{org}/public_members/{username}` — Remove public organization membership for the authenticated user → `organizations.concealMembership(of:in:)`
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history (deferred to the rulesets work)
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version (deferred to the rulesets work)
+- [x] ✅ `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history → `rulesets(_:).history(of:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version → `rulesets(_:).version(_:of:)`
 - [ ] ~~`GET /orgs/{org}/security-managers` — List security manager teams~~
 - [ ] ~~`PUT /orgs/{org}/security-managers/teams/{team_slug}` — Add a security manager team~~
 - [ ] ~~`DELETE /orgs/{org}/security-managers/teams/{team_slug}` — Remove a security manager team~~
@@ -373,17 +373,17 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-88/203 done · milestone M2
+105/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
-- [ ] `GET /orgs/{org}/rulesets` — Get all organization repository rulesets
-- [ ] `POST /orgs/{org}/rulesets` — Create an organization repository ruleset
-- [ ] `GET /orgs/{org}/rulesets/rule-suites` — List organization rule suites
-- [ ] `GET /orgs/{org}/rulesets/rule-suites/{rule_suite_id}` — Get an organization rule suite
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}` — Get an organization repository ruleset
-- [ ] `PUT /orgs/{org}/rulesets/{ruleset_id}` — Update an organization repository ruleset
-- [ ] `DELETE /orgs/{org}/rulesets/{ruleset_id}` — Delete an organization repository ruleset
+- [x] ✅ `GET /orgs/{org}/rulesets` — Get all organization repository rulesets → `rulesets(_:).list(targets:includesParents:)`
+- [x] ✅ `POST /orgs/{org}/rulesets` — Create an organization repository ruleset → `rulesets(_:).create(_:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/rule-suites` — List organization rule suites → `rulesets(_:).ruleSuites(ref:repository:period:actor:result:evaluateStatus:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/rule-suites/{rule_suite_id}` — Get an organization rule suite → `rulesets(_:).ruleSuite(id:includeMetadata:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/{ruleset_id}` — Get an organization repository ruleset → `rulesets(_:).ruleset(id:includesParents:)`
+- [x] ✅ `PUT /orgs/{org}/rulesets/{ruleset_id}` — Update an organization repository ruleset → `rulesets(_:).update(id:_:)`
+- [x] ✅ `DELETE /orgs/{org}/rulesets/{ruleset_id}` — Delete an organization repository ruleset → `rulesets(_:).delete(id:)`
 - [x] ✅ `GET /repos/{owner}/{repo}` — Get a repository → `repositories.repository(_:_:)`
 - [x] ✅ `PATCH /repos/{owner}/{repo}` — Update a repository → `repositories.update(_:_:_:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}` — Delete a repository → `repositories.delete(_:_:)`
@@ -540,16 +540,16 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/releases/{release_id}` — Delete a release
 - [ ] `GET /repos/{owner}/{repo}/releases/{release_id}/assets` — List release assets
 - [ ] `POST /repos/{owner}/{repo}/releases/{release_id}/assets` — Upload a release asset
-- [ ] `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch (deferred to the rulesets work)
-- [ ] `GET /repos/{owner}/{repo}/rulesets` — Get all repository rulesets
-- [ ] `POST /repos/{owner}/{repo}/rulesets` — Create a repository ruleset
-- [ ] `GET /repos/{owner}/{repo}/rulesets/rule-suites` — List repository rule suites
-- [ ] `GET /repos/{owner}/{repo}/rulesets/rule-suites/{rule_suite_id}` — Get a repository rule suite
-- [ ] `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Get a repository ruleset
-- [ ] `PUT /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Update a repository ruleset
-- [ ] `DELETE /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Delete a repository ruleset
-- [ ] `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history` — Get repository ruleset history
-- [ ] `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history/{version_id}` — Get repository ruleset version
+- [x] ✅ `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch → `repositories.rules(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets` — Get all repository rulesets → `rulesets(_:).list(targets:includesParents:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/rulesets` — Create a repository ruleset → `rulesets(_:).create(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/rule-suites` — List repository rule suites → `rulesets(_:).ruleSuites(ref:repository:period:actor:result:evaluateStatus:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/rule-suites/{rule_suite_id}` — Get a repository rule suite → `rulesets(_:).ruleSuite(id:includeMetadata:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Get a repository ruleset → `rulesets(_:).ruleset(id:includesParents:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Update a repository ruleset → `rulesets(_:).update(id:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Delete a repository ruleset → `rulesets(_:).delete(id:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history` — Get repository ruleset history → `rulesets(_:).history(of:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history/{version_id}` — Get repository ruleset version → `rulesets(_:).version(_:of:)`
 - [ ] `GET /repos/{owner}/{repo}/stats/code_frequency` — Get the weekly commit activity
 - [ ] `GET /repos/{owner}/{repo}/stats/commit_activity` — Get the last year of commit activity
 - [ ] `GET /repos/{owner}/{repo}/stats/contributors` — Get all contributor commit activity
