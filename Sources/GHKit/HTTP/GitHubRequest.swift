@@ -4,6 +4,9 @@ import Foundation
 ///
 ///     let request = GitHubRequest<[Label]>(.get, "/repos/\(owner)/\(repo)/labels")
 ///     let labels = try await github.send(request).value
+///
+/// Characters a URL path can't hold, such as spaces, are percent-encoded when the request is sent.
+/// Existing `%XX` escapes are kept as they are, so a path may be escaped already or not at all.
 public struct GitHubRequest<Response: Sendable>: Sendable {
     public enum Target: Sendable, Hashable {
         /// A path relative to the server's REST base URL, such as `/user`.
@@ -86,6 +89,32 @@ func escape(_ segment: String) -> String {
     var allowed = CharacterSet.urlPathAllowed
     allowed.remove(charactersIn: "/?#")
     return segment.addingPercentEncoding(withAllowedCharacters: allowed) ?? segment
+}
+
+/// Percent-encodes what a URL path can't hold, keeping `%XX` escapes that are already there.
+///
+/// Wrapped endpoints escape each segment with `escape(_:)`. Custom requests may pass raw text.
+func encodePath(_ path: String) -> String {
+    let scalars = Array(path.unicodeScalars)
+    var result = path.hasPrefix("/") ? "" : "/"
+    var index = 0
+    while index < scalars.count {
+        let scalar = scalars[index]
+        if scalar == "%", index + 2 < scalars.count,
+            scalars[index + 1].properties.isASCIIHexDigit, scalars[index + 2].properties.isASCIIHexDigit
+        {
+            result.unicodeScalars.append(contentsOf: scalars[index...(index + 2)])
+            index += 3
+            continue
+        }
+        if CharacterSet.urlPathAllowed.contains(scalar) {
+            result.unicodeScalars.append(scalar)
+        } else {
+            result += String(scalar).addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        }
+        index += 1
+    }
+    return result
 }
 
 extension Array where Element == URLQueryItem {
