@@ -122,7 +122,7 @@ extension OrganizationsAPI {
     }
 
     /// The chosen repositories, when the policy is `.selected`. `GET /orgs/{org}/settings/immutable-releases/repositories`
-    public func immutableReleasesRepositories(of org: String, perPage: Int = 100) -> Paginated<MinimalRepository> {
+    public func immutableReleasesRepositories(of org: String, perPage: Int = 100) -> Paginated<Repository> {
         client.paginate(
             .wrappedList(
                 path(org, "/settings/immutable-releases/repositories"), key: "repositories", query: .query(("per_page", perPage))))

@@ -27,5 +27,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   API insights (request totals, usage over time, and usage per route, subject, and actor).
 - Teams: create, update, nest, and delete teams; manage members and their roles; and grant, check,
   and remove repository access.
+- Repositories: create (for you or an organization), get, update settings (merge options, security
+  features), delete, transfer, and list; plus topics, languages, tags, teams, contributors, activity,
+  community profile, and hash algorithm. `Repository` is one model for every repository payload.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next

@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 191 of 1254 endpoints (15%)
+**REST progress:** 210 of 1254 endpoints (16%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
-| [repos](#repos) | M2 | 0 | 203 | ⬜ |
+| [repos](#repos) | M2 | 19 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,10 +373,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-0/203 done · milestone M2
+19/203 done · milestone M2
 
-- [ ] `GET /orgs/{org}/repos` — List organization repositories
-- [ ] `POST /orgs/{org}/repos` — Create an organization repository
+- [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
+- [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
 - [ ] `GET /orgs/{org}/rulesets` — Get all organization repository rulesets
 - [ ] `POST /orgs/{org}/rulesets` — Create an organization repository ruleset
 - [ ] `GET /orgs/{org}/rulesets/rule-suites` — List organization rule suites
@@ -384,10 +384,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /orgs/{org}/rulesets/{ruleset_id}` — Get an organization repository ruleset
 - [ ] `PUT /orgs/{org}/rulesets/{ruleset_id}` — Update an organization repository ruleset
 - [ ] `DELETE /orgs/{org}/rulesets/{ruleset_id}` — Delete an organization repository ruleset
-- [ ] `GET /repos/{owner}/{repo}` — Get a repository
-- [ ] `PATCH /repos/{owner}/{repo}` — Update a repository
-- [ ] `DELETE /repos/{owner}/{repo}` — Delete a repository
-- [ ] `GET /repos/{owner}/{repo}/activity` — List repository activities
+- [x] ✅ `GET /repos/{owner}/{repo}` — Get a repository → `repositories.repository(_:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}` — Update a repository → `repositories.update(_:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}` — Delete a repository → `repositories.delete(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/activity` — List repository activities → `repositories.activity(_:_:matching:perPage:)`
 - [ ] `POST /repos/{owner}/{repo}/attestations` — Create an attestation
 - [ ] `GET /repos/{owner}/{repo}/attestations/{subject_digest}` — List attestations
 - [ ] `GET /repos/{owner}/{repo}/autolinks` — Get all autolinks of a repository
@@ -451,12 +451,12 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit
 - [ ] `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference
 - [ ] `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference
-- [ ] `GET /repos/{owner}/{repo}/community/profile` — Get community profile metrics
+- [x] ✅ `GET /repos/{owner}/{repo}/community/profile` — Get community profile metrics → `repositories.communityProfile(_:_:)`
 - [ ] `GET /repos/{owner}/{repo}/compare/{basehead}` — Compare two commits
 - [ ] `GET /repos/{owner}/{repo}/contents/{path}` — Get repository content
 - [ ] `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents
 - [ ] `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file
-- [ ] `GET /repos/{owner}/{repo}/contributors` — List repository contributors
+- [x] ✅ `GET /repos/{owner}/{repo}/contributors` — List repository contributors → `repositories.contributors(_:_:includeAnonymous:perPage:)`
 - [ ] `GET /repos/{owner}/{repo}/deployments` — List deployments
 - [ ] `POST /repos/{owner}/{repo}/deployments` — Create a deployment
 - [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}` — Get a deployment
@@ -481,7 +481,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Disable a custom protection rule for an environment
 - [ ] `GET /repos/{owner}/{repo}/forks` — List forks
 - [ ] `POST /repos/{owner}/{repo}/forks` — Create a fork
-- [ ] `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository
+- [x] ✅ `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository → `repositories.hashAlgorithm(_:_:)`
 - [ ] `GET /repos/{owner}/{repo}/hooks` — List repository webhooks
 - [ ] `POST /repos/{owner}/{repo}/hooks` — Create a repository webhook
 - [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}` — Get a repository webhook
@@ -500,12 +500,12 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/invitations` — List repository invitations
 - [ ] `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation
 - [ ] `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation
-- [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository
+- [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository (deferred to milestone 3)
 - [ ] `GET /repos/{owner}/{repo}/keys` — List deploy keys
 - [ ] `POST /repos/{owner}/{repo}/keys` — Create a deploy key
 - [ ] `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key
 - [ ] `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key
-- [ ] `GET /repos/{owner}/{repo}/languages` — List repository languages
+- [x] ✅ `GET /repos/{owner}/{repo}/languages` — List repository languages → `repositories.languages(_:_:)`
 - [ ] `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository
 - [ ] `POST /repos/{owner}/{repo}/merges` — Merge a branch
 - [ ] `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site
@@ -556,28 +556,28 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/stats/participation` — Get the weekly commit count
 - [ ] `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day
 - [ ] `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status
-- [ ] `GET /repos/{owner}/{repo}/tags` — List repository tags
+- [x] ✅ `GET /repos/{owner}/{repo}/tags` — List repository tags → `repositories.tags(_:_:perPage:)`
 - [ ] `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar)
-- [ ] `GET /repos/{owner}/{repo}/teams` — List repository teams
-- [ ] `GET /repos/{owner}/{repo}/topics` — Get all repository topics
-- [ ] `PUT /repos/{owner}/{repo}/topics` — Replace all repository topics
+- [x] ✅ `GET /repos/{owner}/{repo}/teams` — List repository teams → `repositories.teams(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/topics` — Get all repository topics → `repositories.topics(_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/topics` — Replace all repository topics → `repositories.replaceTopics(_:on:_:)`
 - [ ] `GET /repos/{owner}/{repo}/traffic/clones` — Get repository clones
 - [ ] `GET /repos/{owner}/{repo}/traffic/popular/paths` — Get top referral paths
 - [ ] `GET /repos/{owner}/{repo}/traffic/popular/referrers` — Get top referral sources
 - [ ] `GET /repos/{owner}/{repo}/traffic/views` — Get page views
-- [ ] `POST /repos/{owner}/{repo}/transfer` — Transfer a repository
+- [x] ✅ `POST /repos/{owner}/{repo}/transfer` — Transfer a repository → `repositories.transfer(_:_:to:newName:teamIDs:)`
 - [ ] `GET /repos/{owner}/{repo}/vulnerability-alerts` — Check if vulnerability alerts are enabled for a repository
 - [ ] `PUT /repos/{owner}/{repo}/vulnerability-alerts` — Enable vulnerability alerts
 - [ ] `DELETE /repos/{owner}/{repo}/vulnerability-alerts` — Disable vulnerability alerts
 - [ ] `GET /repos/{owner}/{repo}/zipball/{ref}` — Download a repository archive (zip)
 - [ ] `POST /repos/{template_owner}/{template_repo}/generate` — Create a repository using a template
-- [ ] `GET /repositories` — List public repositories
-- [ ] `GET /user/repos` — List repositories for the authenticated user
-- [ ] `POST /user/repos` — Create a repository for the authenticated user
+- [x] ✅ `GET /repositories` — List public repositories → `repositories.all(since:)`
+- [x] ✅ `GET /user/repos` — List repositories for the authenticated user → `repositories.list(matching:sort:ascending:perPage:)`
+- [x] ✅ `POST /user/repos` — Create a repository for the authenticated user → `repositories.create(_:)`
 - [ ] `GET /user/repository_invitations` — List repository invitations for the authenticated user
 - [ ] `PATCH /user/repository_invitations/{invitation_id}` — Accept a repository invitation
 - [ ] `DELETE /user/repository_invitations/{invitation_id}` — Decline a repository invitation
-- [ ] `GET /users/{username}/repos` — List repositories for a user
+- [x] ✅ `GET /users/{username}/repos` — List repositories for a user → `repositories.list(of:type:sort:ascending:perPage:)`
 
 ### teams
 
