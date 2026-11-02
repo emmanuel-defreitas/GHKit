@@ -220,6 +220,18 @@ DONE = {
     "repos/get-autolink": "`repositories.autolink(id:in:_:)`",
     "repos/create-autolink": "`repositories.createAutolink(prefix:urlTemplate:alphanumeric:in:_:)`",
     "repos/delete-autolink": "`repositories.deleteAutolink(id:from:_:)`",
+    "repos/list-commits": "`repositories.commits(_:_:ref:path:author:committer:since:until:)`",
+    "repos/get-commit": "`repositories.commit(_:in:_:)` / `commitDiff(_:in:_:format:)` / `commitSHA(for:in:_:)`",
+    "repos/compare-commits": "`repositories.compare(_:_:in:_:)` / `compareDiff(_:_:in:_:format:)`",
+    "repos/list-commit-comments-for-repo": "`repositories.commitComments(_:_:)`",
+    "repos/list-comments-for-commit": "`repositories.comments(onCommit:in:_:)`",
+    "repos/get-commit-comment": "`repositories.commitComment(id:in:_:)`",
+    "repos/create-commit-comment": "`repositories.createCommitComment(_:on:in:_:path:position:)`",
+    "repos/update-commit-comment": "`repositories.updateCommitComment(id:in:_:body:)`",
+    "repos/delete-commit-comment": "`repositories.deleteCommitComment(id:in:_:)`",
+    "repos/list-commit-statuses-for-ref": "`repositories.statuses(for:in:_:)`",
+    "repos/get-combined-status-for-ref": "`repositories.combinedStatus(for:in:_:)`",
+    "repos/create-commit-status": "`repositories.createStatus(_:on:in:_:)`",
     "repos/list-releases": "`repositories.releases(_:_:)`",
     "repos/get-release": "`repositories.release(id:in:_:)`",
     "repos/get-latest-release": "`repositories.latestRelease(_:_:)`",
@@ -343,6 +355,7 @@ IN_PROGRESS: dict[str, str] = {}
 
 # operationId -> note, for to-do endpoints scheduled outside their category's milestone
 DEFERRED: dict[str, str] = {
+    "repos/list-pull-requests-associated-with-commit": "the pull requests work",
     # Artifact attestations are supply-chain security, so they ship with the security work.
     "users/list-attestations": "milestone 5",
     "users/list-attestations-bulk": "milestone 5",
