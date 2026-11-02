@@ -139,11 +139,18 @@ extension GitHubClient {
     func makeURLRequest<Response>(for request: GitHubRequest<Response>) throws(GitHubError) -> URLRequest {
         let base: URL =
             switch request.target {
-            case .path(let path): configuration.server.apiURL.appending(path: path)
+            case .path: configuration.server.apiURL
             case .url(let url): url
             }
         guard var components = URLComponents(url: base, resolvingAgainstBaseURL: false) else {
             throw .invalidRequest("Invalid URL: \(base)")
+        }
+        if case .path(let path) = request.target {
+            // Paths arrive already escaped segment by segment, so append them as-is.
+            // `URL.appending(path:)` would encode them a second time.
+            var basePath = components.percentEncodedPath
+            if basePath.hasSuffix("/") { basePath.removeLast() }
+            components.percentEncodedPath = basePath + path
         }
         if !request.query.isEmpty {
             components.queryItems = (components.queryItems ?? []) + request.query
