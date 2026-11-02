@@ -43,6 +43,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - `GitHubServer.uploadsURL` for upload endpoints, set for github.com, Enterprise Server, and ghe.com.
 - Commits: list (by ref, path, author, and date), get as JSON, diff, patch, or SHA, and compare two refs;
   plus commit comments and commit statuses (list, combined status, and create).
+- Deployments and deployment statuses, and environments with their wait timers, required reviewers,
+  deployment branch and tag patterns, and app-based protection rules. The model is `DeploymentEnvironment`
+  so it doesn't clash with SwiftUI's `Environment`.
 
 ### Fixed
 

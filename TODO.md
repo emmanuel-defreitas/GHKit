@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 324 of 1254 endpoints (25%)
+**REST progress:** 345 of 1254 endpoints (27%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
-| [repos](#repos) | M2 | 130 | 203 | 🚧 |
+| [repos](#repos) | M2 | 151 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-130/203 done · milestone M2
+151/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -457,28 +457,28 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents → `repositories.writeFile(_:to:in:_:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file → `repositories.deleteFile(_:sha:message:in:_:branch:committer:author:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/contributors` — List repository contributors → `repositories.contributors(_:_:includeAnonymous:perPage:)`
-- [ ] `GET /repos/{owner}/{repo}/deployments` — List deployments
-- [ ] `POST /repos/{owner}/{repo}/deployments` — Create a deployment
-- [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}` — Get a deployment
-- [ ] `DELETE /repos/{owner}/{repo}/deployments/{deployment_id}` — Delete a deployment
-- [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — List deployment statuses
-- [ ] `POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — Create a deployment status
-- [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}` — Get a deployment status
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments` — List deployments → `repositories.deployments(_:_:sha:ref:task:environment:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/deployments` — Create a deployment → `repositories.createDeployment(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments/{deployment_id}` — Get a deployment → `repositories.deployment(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/deployments/{deployment_id}` — Delete a deployment → `repositories.deleteDeployment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — List deployment statuses → `repositories.deploymentStatuses(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — Create a deployment status → `repositories.createDeploymentStatus(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}` — Get a deployment status → `repositories.deploymentStatus(id:of:in:_:)`
 - [ ] `POST /repos/{owner}/{repo}/dispatches` — Create a repository dispatch event
-- [ ] `GET /repos/{owner}/{repo}/environments` — List environments
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}` — Get an environment
-- [ ] `PUT /repos/{owner}/{repo}/environments/{environment_name}` — Create or update an environment
-- [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}` — Delete an environment
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — List deployment branch policies
-- [ ] `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — Create a deployment branch policy
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Get a deployment branch policy
-- [ ] `PUT /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Update a deployment branch policy
-- [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Delete a deployment branch policy
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Get all deployment protection rules for an environment
-- [ ] `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Create a custom deployment protection rule on an environment
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps` — List custom deployment rule integrations available for an environment
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Get a custom deployment protection rule
-- [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Disable a custom protection rule for an environment
+- [x] ✅ `GET /repos/{owner}/{repo}/environments` — List environments → `repositories.environments(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}` — Get an environment → `repositories.environment(_:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/environments/{environment_name}` — Create or update an environment → `repositories.setEnvironment(_:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/environments/{environment_name}` — Delete an environment → `repositories.deleteEnvironment(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — List deployment branch policies → `repositories.deploymentBranchPatterns(for:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — Create a deployment branch policy → `repositories.addDeploymentBranchPattern(_:type:to:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Get a deployment branch policy → `repositories.deploymentBranchPattern(id:for:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Update a deployment branch policy → `repositories.updateDeploymentBranchPattern(id:to:for:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Delete a deployment branch policy → `repositories.deleteDeploymentBranchPattern(id:for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Get all deployment protection rules for an environment → `repositories.deploymentProtectionRules(for:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Create a custom deployment protection rule on an environment → `repositories.enableProtectionRule(appID:for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps` — List custom deployment rule integrations available for an environment → `repositories.availableProtectionRuleApps(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Get a custom deployment protection rule → `repositories.deploymentProtectionRule(id:for:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Disable a custom protection rule for an environment → `repositories.disableProtectionRule(id:for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/forks` — List forks → `repositories.forks(_:_:sort:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/forks` — Create a fork → `repositories.fork(_:_:into:as:defaultBranchOnly:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository → `repositories.hashAlgorithm(_:_:)`
