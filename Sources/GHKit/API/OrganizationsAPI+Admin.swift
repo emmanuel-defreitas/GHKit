@@ -132,7 +132,7 @@ extension OrganizationsAPI {
     }
 
     /// Repositories a token request asks for. `GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories`
-    public func tokenRequestRepositories(id: Int, in org: String, perPage: Int = 100) -> Paginated<MinimalRepository> {
+    public func tokenRequestRepositories(id: Int, in org: String, perPage: Int = 100) -> Paginated<Repository> {
         client.paginate(
             GitHubRequest(
                 .get, path(org, "/personal-access-token-requests/\(id)/repositories"), query: .query(("per_page", perPage))))
@@ -166,7 +166,7 @@ extension OrganizationsAPI {
     }
 
     /// Repositories a token can reach. `GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories`
-    public func tokenGrantRepositories(id: Int, in org: String, perPage: Int = 100) -> Paginated<MinimalRepository> {
+    public func tokenGrantRepositories(id: Int, in org: String, perPage: Int = 100) -> Paginated<Repository> {
         client.paginate(
             GitHubRequest(.get, path(org, "/personal-access-tokens/\(id)/repositories"), query: .query(("per_page", perPage))))
     }

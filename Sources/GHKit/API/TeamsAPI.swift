@@ -93,7 +93,7 @@ public struct TeamsAPI: Sendable {
     // MARK: Repositories
 
     /// Repositories a team can access. `GET /orgs/{org}/teams/{team_slug}/repos`
-    public func repositories(of team: String, in org: String, perPage: Int = 100) -> Paginated<MinimalRepository> {
+    public func repositories(of team: String, in org: String, perPage: Int = 100) -> Paginated<Repository> {
         client.paginate(GitHubRequest(.get, path(team, org, "/repos"), query: .query(("per_page", perPage))))
     }
 
@@ -103,8 +103,8 @@ public struct TeamsAPI: Sendable {
     /// The repository's `permissions` and `roleName` describe the team's access.
     public func repository(
         _ owner: String, _ repository: String, for team: String, in org: String
-    ) async throws(GitHubError) -> MinimalRepository? {
-        var request = GitHubRequest<MinimalRepository>(.get, path(team, org, "/repos/\(escape(owner))/\(escape(repository))"))
+    ) async throws(GitHubError) -> Repository? {
+        var request = GitHubRequest<Repository>(.get, path(team, org, "/repos/\(escape(owner))/\(escape(repository))"))
         request.headers["Accept"] = "application/vnd.github.v3.repository+json"
         do {
             return try await client.value(request)

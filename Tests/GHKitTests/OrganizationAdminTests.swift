@@ -57,7 +57,7 @@ struct OrganizationAdminTests {
         #expect(requests.first?.permissions.organization?["members"] != nil)
         let grants = try decoder.decode([PersonalAccessTokenGrant].self, from: loadFixture("org-pat-grant-paginated"))
         #expect(grants.first?.tokenExpired == false)
-        let repos = try decoder.decode([MinimalRepository].self, from: loadFixture("minimal-repository-items"))
+        let repos = try decoder.decode([Repository].self, from: loadFixture("minimal-repository-items"))
         #expect(repos.first?.fullName == "octocat/Hello-World")
     }
 

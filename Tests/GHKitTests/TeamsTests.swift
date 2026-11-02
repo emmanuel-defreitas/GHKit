@@ -26,7 +26,7 @@ struct TeamsTests {
         #expect(membership.role == .maintainer)
         #expect(membership.state == .active)
 
-        let repository = try decoder.decode(MinimalRepository.self, from: loadFixture("team-repository"))
+        let repository = try decoder.decode(Repository.self, from: loadFixture("team-repository"))
         #expect(repository.permissions?.admin == false)
         #expect(repository.permissions?.pull == true)
     }
