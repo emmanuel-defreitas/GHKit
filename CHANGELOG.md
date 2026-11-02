@@ -52,6 +52,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   and DNS health checks.
 - Traffic (views, clones, popular content, referrers) and commit statistics (code frequency, commit activity,
   contributors, participation, punch card). Statistics return `nil` while GitHub is still computing them.
+- Repository security settings: check and toggle Dependabot alerts, Dependabot security updates, private
+  vulnerability reporting, and immutable releases. Plus a repository's custom property values and
+  `repository_dispatch` events.
 
 ### Fixed
 

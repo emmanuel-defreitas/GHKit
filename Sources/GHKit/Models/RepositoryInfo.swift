@@ -184,3 +184,27 @@ public struct CommunityProfile: Sendable, Hashable, Codable {
         case contentReportsEnabled = "content_reports_enabled"
     }
 }
+
+/// Whether Dependabot opens pull requests for vulnerable dependencies (`check-automated-security-fixes`).
+public struct DependabotSecurityUpdatesStatus: Sendable, Hashable, Codable {
+    public var isEnabled: Bool
+    /// Whether updates are paused, which happens when a repository is inactive.
+    public var isPaused: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case isEnabled = "enabled"
+        case isPaused = "paused"
+    }
+}
+
+/// Whether a repository's releases are immutable (`check-immutable-releases`).
+public struct ImmutableReleasesStatus: Sendable, Hashable, Codable {
+    public var isEnabled: Bool
+    /// Whether the organization or enterprise requires it, so the repository can't turn it off.
+    public var isEnforcedByOwner: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case isEnabled = "enabled"
+        case isEnforcedByOwner = "enforced_by_owner"
+    }
+}
