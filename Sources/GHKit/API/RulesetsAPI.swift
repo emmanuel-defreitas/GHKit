@@ -132,6 +132,6 @@ extension RepositoriesAPI {
     /// `GET /repos/{owner}/{repo}/rules/branches/{branch}`
     public func rules(for branch: String, in owner: String, _ name: String, perPage: Int = 100) -> Paginated<AppliedRule> {
         client.paginate(
-            GitHubRequest(.get, path(owner, name, "/rules/branches/\(escapePath(branch))"), query: .query(("per_page", perPage))))
+            GitHubRequest(.get, path(owner, name, "/rules/branches/\(escape(branch))"), query: .query(("per_page", perPage))))
     }
 }

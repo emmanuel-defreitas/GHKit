@@ -99,7 +99,7 @@ struct RulesetsTests {
             case "DELETE /repos/o/r/rulesets/42": .noContent()
             case "GET /repos/o/r/rulesets/42/history": .fixture("ruleset-history")
             case "GET /repos/o/r/rulesets/42/history/3": .fixture("repository-ruleset-version-with-state")
-            case "GET /repos/o/r/rules/branches/release/v1": .fixture("repository-rule-items")
+            case "GET /repos/o/r/rules/branches/release%2Fv1": .fixture("repository-rule-items")
             default: .fixture("repository-ruleset", status: request.httpMethod == "POST" ? 201 : 200)
             }
         }
@@ -122,10 +122,12 @@ struct RulesetsTests {
             transport.requests.map(\.route) == [
                 "GET /repos/o/r/rulesets", "GET /repos/o/r/rulesets/42", "POST /repos/o/r/rulesets", "PUT /repos/o/r/rulesets/42",
                 "DELETE /repos/o/r/rulesets/42", "GET /repos/o/r/rulesets/42/history", "GET /repos/o/r/rulesets/42/history/3",
-                "GET /repos/o/r/rules/branches/release/v1",
+                "GET /repos/o/r/rules/branches/release%2Fv1",
             ])
         #expect(transport.requests[0].queryItems == ["targets": "branch,tag", "includes_parents": "true", "per_page": "100"])
         #expect(transport.requests[1].queryItems == ["includes_parents": "false"])
+        // The branch is one path segment, so its slash is escaped.
+        #expect(transport.requests[7].url?.path(percentEncoded: true) == "/repos/o/r/rules/branches/release%2Fv1")
         #expect(
             transport.requests[2].jsonBody == [
                 "name": "main", "enforcement": "active",
