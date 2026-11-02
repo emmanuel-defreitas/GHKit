@@ -41,6 +41,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Releases: list, get (by ID, tag, or latest), create, update, publish, delete, and generate release notes;
   plus release assets: list, get, download, upload, rename, and delete.
 - `GitHubServer.uploadsURL` for upload endpoints, set for github.com, Enterprise Server, and ghe.com.
+- Commits: list (by ref, path, author, and date), get as JSON, diff, patch, or SHA, and compare two refs;
+  plus commit comments and commit statuses (list, combined status, and create).
 
 ### Fixed
 

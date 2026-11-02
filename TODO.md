@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 312 of 1254 endpoints (24%)
+**REST progress:** 324 of 1254 endpoints (25%)
 
 ## Milestones
 
@@ -61,7 +61,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
-| [repos](#repos) | M2 | 118 | 203 | 🚧 |
+| [repos](#repos) | M2 | 130 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-118/203 done · milestone M2
+130/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -439,20 +439,20 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `PUT /repos/{owner}/{repo}/collaborators/{username}` — Add a repository collaborator → `repositories.addCollaborator(_:to:_:role:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/collaborators/{username}` — Remove a repository collaborator → `repositories.removeCollaborator(_:from:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/collaborators/{username}/permission` — Get repository permissions for a user → `repositories.permission(of:on:_:)`
-- [ ] `GET /repos/{owner}/{repo}/comments` — List commit comments for a repository
-- [ ] `GET /repos/{owner}/{repo}/comments/{comment_id}` — Get a commit comment
-- [ ] `PATCH /repos/{owner}/{repo}/comments/{comment_id}` — Update a commit comment
-- [ ] `DELETE /repos/{owner}/{repo}/comments/{comment_id}` — Delete a commit comment
-- [ ] `GET /repos/{owner}/{repo}/commits` — List commits
+- [x] ✅ `GET /repos/{owner}/{repo}/comments` — List commit comments for a repository → `repositories.commitComments(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/comments/{comment_id}` — Get a commit comment → `repositories.commitComment(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/comments/{comment_id}` — Update a commit comment → `repositories.updateCommitComment(id:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/comments/{comment_id}` — Delete a commit comment → `repositories.deleteCommitComment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits` — List commits → `repositories.commits(_:_:ref:path:author:committer:since:until:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit → `repositories.branches(withHead:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments
-- [ ] `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments → `repositories.comments(onCommit:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment → `repositories.createCommitComment(_:on:in:_:path:position:)`
+- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit (deferred to the pull requests work)
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit → `repositories.commit(_:in:_:)` / `commitDiff(_:in:_:format:)` / `commitSHA(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference → `repositories.combinedStatus(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference → `repositories.statuses(for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/community/profile` — Get community profile metrics → `repositories.communityProfile(_:_:)`
-- [ ] `GET /repos/{owner}/{repo}/compare/{basehead}` — Compare two commits
+- [x] ✅ `GET /repos/{owner}/{repo}/compare/{basehead}` — Compare two commits → `repositories.compare(_:_:in:_:)` / `compareDiff(_:_:in:_:format:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/contents/{path}` — Get repository content → `repositories.contents(_:_:at:ref:)` / `rawContents(_:_:at:ref:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents → `repositories.writeFile(_:to:in:_:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file → `repositories.deleteFile(_:sha:message:in:_:branch:committer:author:)`
@@ -555,7 +555,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/stats/contributors` — Get all contributor commit activity
 - [ ] `GET /repos/{owner}/{repo}/stats/participation` — Get the weekly commit count
 - [ ] `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day
-- [ ] `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status
+- [x] ✅ `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status → `repositories.createStatus(_:on:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/tags` — List repository tags → `repositories.tags(_:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar) → `repositories.archive(_:_:format:ref:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/teams` — List repository teams → `repositories.teams(_:_:perPage:)`
