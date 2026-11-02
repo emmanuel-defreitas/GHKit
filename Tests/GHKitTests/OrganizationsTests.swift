@@ -44,6 +44,18 @@ struct OrganizationsTests {
 
     // MARK: Requests
 
+    @Test func organizationGetAndDelete() async throws {
+        let transport = MockTransport { request, _ in
+            request.httpMethod == "DELETE" ? .json("{}", status: 202) : .fixture("organization-full")
+        }
+        let orgs = makeClient(transport).organizations
+        let org = try await orgs.organization("acme")
+        #expect(org.login == "github")
+        #expect(org.plan?.filledSeats == 4)
+        try await orgs.delete("acme")
+        #expect(transport.requests.map(\.route) == ["GET /orgs/acme", "DELETE /orgs/acme"])
+    }
+
     @Test func updateSendsOnlyChangedFields() async throws {
         let transport = MockTransport(.fixture("organization-full"))
         _ = try await makeClient(transport).organizations.update(
