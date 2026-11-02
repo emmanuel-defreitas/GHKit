@@ -71,8 +71,9 @@ struct BranchesTests {
         let transport = MockTransport { request, _ in
             switch request.route {
             case "GET /repos/o/r/branches": .fixture("short-branch-with-protection-items")
-            case "GET /repos/o/r/branches/release/v1": .fixture("branch-get")
-            case "POST /repos/o/r/branches/old/rename": .fixture("branch-with-protection", status: 201)
+            case "GET /repos/o/r/branches/release%2Fv1": .fixture("branch-get")
+            case "POST /repos/o/r/branches/feature%2Fold/rename": .fixture("branch-with-protection", status: 201)
+            case "GET /repos/o/r/branches/release%2Fv1/protection": .fixture("branch-protection")
             case "GET /repos/o/r/commits/abc/branches-where-head": .fixture("branch-short-items")
             default: .json(#"{"message":"Not Found"}"#, status: 404)
             }
@@ -80,14 +81,16 @@ struct BranchesTests {
         let repos = makeClient(transport).repositories
         _ = try await repos.branches("o", "r", protected: true).collect()
         _ = try await repos.branch("release/v1", in: "o", "r")
-        _ = try await repos.renameBranch("old", to: "new", in: "o", "r")
+        _ = try await repos.renameBranch("feature/old", to: "feature/new", in: "o", "r")
         _ = try await repos.branches(withHead: "abc", in: "o", "r")
+        _ = try await repos.protection(of: "release/v1", in: "o", "r")
         #expect(transport.requests[0].queryItems == ["protected": "true", "per_page": "100"])
-        #expect(transport.requests[2].jsonBody == ["new_name": "new"])
+        #expect(transport.requests[2].jsonBody == ["new_name": "feature/new"])
         #expect(
             transport.requests.map(\.route) == [
-                "GET /repos/o/r/branches", "GET /repos/o/r/branches/release/v1", "POST /repos/o/r/branches/old/rename",
-                "GET /repos/o/r/commits/abc/branches-where-head",
+                "GET /repos/o/r/branches", "GET /repos/o/r/branches/release%2Fv1",
+                "POST /repos/o/r/branches/feature%2Fold/rename", "GET /repos/o/r/commits/abc/branches-where-head",
+                "GET /repos/o/r/branches/release%2Fv1/protection",
             ])
     }
 
@@ -156,13 +159,16 @@ struct BranchesTests {
         try await repos.setSignatureRequirement(false, on: "main", in: "o", "r")
         _ = try await repos.reviewProtection(of: "main", in: "o", "r")
         _ = try await repos.updateReviewProtection(
-            RequiredReviews(requiredApprovingReviewCount: nil, requireCodeOwnerReviews: true), on: "main", in: "o", "r")
+            RequiredReviews(requireCodeOwnerReviews: true), on: "main", in: "o", "r")
         try await repos.removeReviewProtection(from: "main", in: "o", "r")
         _ = try await repos.statusChecks(of: "main", in: "o", "r")
         _ = try await repos.updateStatusChecks(on: "main", in: "o", "r", strict: false)
         try await repos.removeStatusChecks(from: "main", in: "o", "r")
         _ = try await repos.pushRestrictions(of: "main", in: "o", "r")
         try await repos.removePushRestrictions(from: "main", in: "o", "r")
+
+        // A partial update sends only the rule it names, so the approval count is left alone.
+        #expect(transport.requests[9].jsonBody == ["require_code_owner_reviews": true])
 
         let base = "/repos/o/r/branches/main/protection"
         #expect(

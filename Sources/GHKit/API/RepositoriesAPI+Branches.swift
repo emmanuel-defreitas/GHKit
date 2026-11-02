@@ -3,8 +3,8 @@ import Foundation
 // Branches, merges, and branch protection.
 extension RepositoriesAPI {
     func branchPath(_ owner: String, _ name: String, _ branch: String, _ rest: String = "") -> String {
-        // Branch names keep their slashes, as in `/branches/release/v1/protection`.
-        path(owner, name, "/branches/\(escapePath(branch))\(rest)")
+        // A branch name is one path segment, so `release/v1` goes out as `release%2Fv1`.
+        path(owner, name, "/branches/\(escape(branch))\(rest)")
     }
 
     func protectionPath(_ owner: String, _ name: String, _ branch: String, _ rest: String = "") -> String {

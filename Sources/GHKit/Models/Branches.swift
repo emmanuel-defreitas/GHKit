@@ -350,12 +350,12 @@ public struct RequiredReviews: Sendable, Hashable, Encodable {
     public var bypassPullRequestAllowances: PushAllowances?
     public var dismissStaleReviews: Bool?
     public var requireCodeOwnerReviews: Bool?
-    /// From 0 to 6.
+    /// From 0 to 6. Leave `nil` to keep the current count when updating, or to use GitHub's default when protecting.
     public var requiredApprovingReviewCount: Int?
     public var requireLastPushApproval: Bool?
 
     public init(
-        requiredApprovingReviewCount: Int? = 1, dismissStaleReviews: Bool? = nil, requireCodeOwnerReviews: Bool? = nil,
+        requiredApprovingReviewCount: Int? = nil, dismissStaleReviews: Bool? = nil, requireCodeOwnerReviews: Bool? = nil,
         requireLastPushApproval: Bool? = nil, dismissalRestrictions: PushAllowances? = nil,
         bypassPullRequestAllowances: PushAllowances? = nil
     ) {
