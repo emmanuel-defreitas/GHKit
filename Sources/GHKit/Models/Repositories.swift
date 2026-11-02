@@ -38,6 +38,10 @@ public struct MinimalRepository: Sendable, Hashable, Codable, Identifiable {
     public var pushedAt: Date?
     public var createdAt: Date?
     public var updatedAt: Date?
+    /// What the caller, or the team being checked, can do. Only set in some responses.
+    public var permissions: RepositoryPermissions?
+    /// The role name behind `permissions`, such as `write` or a custom role.
+    public var roleName: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name, owner, url, description, homepage, language, visibility, topics, size
@@ -64,5 +68,16 @@ public struct MinimalRepository: Sendable, Hashable, Codable, Identifiable {
         case pushedAt = "pushed_at"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
+        case permissions
+        case roleName = "role_name"
     }
+}
+
+/// Permission levels on a repository, from `pull` (read) up to `admin`.
+public struct RepositoryPermissions: Sendable, Hashable, Codable {
+    public var admin: Bool
+    public var maintain: Bool?
+    public var push: Bool
+    public var triage: Bool?
+    public var pull: Bool
 }

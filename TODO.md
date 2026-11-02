@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 175 of 1254 endpoints (13%)
+**REST progress:** 191 of 1254 endpoints (15%)
 
 ## Milestones
 
@@ -62,7 +62,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 89 | 116 | 🚧 |
 | [repos](#repos) | M2 | 0 | 203 | ⬜ |
-| [teams](#teams) | M2 | 0 | 32 | ⬜ |
+| [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
@@ -581,23 +581,23 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### teams
 
-0/32 done · milestone M2
+16/32 done · milestone M2
 
-- [ ] `GET /orgs/{org}/teams` — List teams
-- [ ] `POST /orgs/{org}/teams` — Create a team
-- [ ] `GET /orgs/{org}/teams/{team_slug}` — Get a team by name
-- [ ] `PATCH /orgs/{org}/teams/{team_slug}` — Update a team
-- [ ] `DELETE /orgs/{org}/teams/{team_slug}` — Delete a team
-- [ ] `GET /orgs/{org}/teams/{team_slug}/invitations` — List pending team invitations
-- [ ] `GET /orgs/{org}/teams/{team_slug}/members` — List team members
-- [ ] `GET /orgs/{org}/teams/{team_slug}/memberships/{username}` — Get team membership for a user
-- [ ] `PUT /orgs/{org}/teams/{team_slug}/memberships/{username}` — Add or update team membership for a user
-- [ ] `DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}` — Remove team membership for a user
-- [ ] `GET /orgs/{org}/teams/{team_slug}/repos` — List team repositories
-- [ ] `GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Check team permissions for a repository
-- [ ] `PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Add or update team repository permissions
-- [ ] `DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Remove a repository from a team
-- [ ] `GET /orgs/{org}/teams/{team_slug}/teams` — List child teams
+- [x] ✅ `GET /orgs/{org}/teams` — List teams → `teams.list(in:type:perPage:)`
+- [x] ✅ `POST /orgs/{org}/teams` — Create a team → `teams.create(_:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}` — Get a team by name → `teams.team(_:in:)`
+- [x] ✅ `PATCH /orgs/{org}/teams/{team_slug}` — Update a team → `teams.update(_:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/teams/{team_slug}` — Delete a team → `teams.delete(_:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/invitations` — List pending team invitations → `teams.invitations(for:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/members` — List team members → `teams.members(of:in:role:perPage:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/memberships/{username}` — Get team membership for a user → `teams.membership(of:on:in:)`
+- [x] ✅ `PUT /orgs/{org}/teams/{team_slug}/memberships/{username}` — Add or update team membership for a user → `teams.setMembership(of:on:in:role:)`
+- [x] ✅ `DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}` — Remove team membership for a user → `teams.removeMembership(of:from:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/repos` — List team repositories → `teams.repositories(of:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Check team permissions for a repository → `teams.repository(_:_:for:in:)`
+- [x] ✅ `PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Add or update team repository permissions → `teams.setRepositoryRole(_:on:_:for:in:)`
+- [x] ✅ `DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Remove a repository from a team → `teams.removeRepository(_:_:from:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/teams` — List child teams → `teams.childTeams(of:in:perPage:)`
 - [ ] ~~`GET /teams/{team_id}` — Get a team (Legacy)~~
 - [ ] ~~`PATCH /teams/{team_id}` — Update a team (Legacy)~~
 - [ ] ~~`DELETE /teams/{team_id}` — Delete a team (Legacy)~~
@@ -614,7 +614,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] ~~`PUT /teams/{team_id}/repos/{owner}/{repo}` — Add or update team repository permissions (Legacy)~~
 - [ ] ~~`DELETE /teams/{team_id}/repos/{owner}/{repo}` — Remove a repository from a team (Legacy)~~
 - [ ] ~~`GET /teams/{team_id}/teams` — List child teams (Legacy)~~
-- [ ] `GET /user/teams` — List teams for the authenticated user
+- [x] ✅ `GET /user/teams` — List teams for the authenticated user → `teams.mine(perPage:)`
 
 ### users
 

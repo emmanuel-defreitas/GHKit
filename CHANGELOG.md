@@ -25,5 +25,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   roles for teams and users, and approval and revocation of fine-grained personal access tokens.
 - Organization settings: custom and external repository properties, immutable releases policy, and
   API insights (request totals, usage over time, and usage per route, subject, and actor).
+- Teams: create, update, nest, and delete teams; manage members and their roles; and grant, check,
+  and remove repository access.
 
 [Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next
