@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-03
+
 ### Added
 
 - `GHKitMCP`, a new product that offers GitHub as Model Context Protocol tools, so apps can let AI assistants
@@ -36,6 +38,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Changed
 
 - `RateLimit` and `RateLimitOverview` are `Codable`, like the other models.
+
+### Fixed
+
+- The read-only `github_graphql` tool lets operations named `mutation` run, and its guard scans Unicode
+  scalars, as GraphQL's lexer does, so combining marks can't hide a mutation.
+- The `ghkit-mcp` server reports `GHKitVersion.current` as its version.
 
 ## [0.2.0] - 2026-11-03
 
@@ -137,7 +145,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...next
+[0.3.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/emmanuel-defreitas/GHKit/releases/tag/0.1.0
