@@ -36,10 +36,17 @@ rm -rf "$work" "$output"
 mkdir -p "$work"
 
 echo "==> Extracting symbol graphs"
+# SwiftPM in Xcode 26 also tries the test module, fails on it, and exits non-zero after writing
+# the library graphs. Ignore the exit code and check for each module's graph instead.
 log="$(swift package --scratch-path "$scratch" dump-symbol-graph \
-    --minimum-access-level public --skip-synthesized-members 2>&1 | tee /dev/stderr)"
+    --minimum-access-level public --skip-synthesized-members 2>&1 | tee /dev/stderr || true)"
 graphs="$(sed -n 's/^Files written to //p' <<<"$log" | tail -n 1)"
-[ -d "$graphs" ] || { echo "error: couldn't find the symbol graph directory" >&2; exit 1; }
+for module in "${modules[@]}"; do
+    [ -f "$graphs/$module.symbols.json" ] || {
+        echo "error: no symbol graph for $module in '$graphs'" >&2
+        exit 1
+    }
+done
 
 common=(
     --transform-for-static-hosting
