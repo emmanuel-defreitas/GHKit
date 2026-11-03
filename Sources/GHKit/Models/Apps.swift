@@ -186,10 +186,12 @@ public struct OAuthAuthorization: Sendable, Hashable, Codable, Identifiable {
 }
 
 /// Every rate limit bucket, from `GET /rate_limit`.
-public struct RateLimitOverview: Sendable, Hashable, Decodable {
+public struct RateLimitOverview: Sendable, Hashable, Codable {
     /// Buckets keyed by name: `core`, `search`, `graphql`, `code_search`, and others.
     public var resources: [String: RateLimit]
     public var rate: RateLimit
+
+    private enum CodingKeys: String, CodingKey { case resources, rate }
 
     public var core: RateLimit? { resources["core"] }
     public var graphQL: RateLimit? { resources["graphql"] }

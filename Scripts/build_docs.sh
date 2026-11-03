@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds the GHKit and GHKitUI DocC documentation as one static website.
+# Builds the GHKit, GHKitUI, and GHKitMCP DocC documentation as one static website.
 #
 #   Scripts/build_docs.sh [output-dir]          # default: .build/docs/site
 #
@@ -20,7 +20,7 @@ shopt -s nullglob
 
 cd "$(dirname "$0")/.."
 root="$PWD"
-modules=(GHKit GHKitUI)
+modules=(GHKit GHKitUI GHKitMCP)
 scratch=".build/docs"
 work="$scratch/work"
 output="${1:-$scratch/site}"
@@ -90,7 +90,7 @@ for module in "${modules[@]}"; do
     cp "$graphs/$module.symbols.json" "$graphs/$module@"*.symbols.json "$work/graphs/$module/"
 
     extra=(--enable-experimental-external-link-support)
-    # Let later modules link to the ones before them, e.g. GHKitUI to GHKit.
+    # Let later modules link to the ones before them, e.g. GHKitUI and GHKitMCP to GHKit.
     for archive in ${archives[@]+"${archives[@]}"}; do extra+=(--dependency "$archive"); done
 
     docc convert "Sources/$module/$module.docc" \

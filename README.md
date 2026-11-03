@@ -6,8 +6,8 @@
   [![Swift 6.2+](https://img.shields.io/badge/Swift-6.2%2B-F05138?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
   [![Platforms](https://img.shields.io/badge/platforms-iOS%2017%20%7C%20macOS%2014%20%7C%20tvOS%2017%20%7C%20watchOS%2010%20%7C%20visionOS%201-0d1117?style=flat-square)](#-requirements)
   [![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-FFB02E?style=flat-square)](#-installation)
-  [![API coverage](https://img.shields.io/badge/REST%20coverage-393%20%2F%201254-blue?style=flat-square)](TODO.md)
-  [![Milestone](https://img.shields.io/badge/milestone-1%20of%206-brightgreen?style=flat-square)](TODO.md#milestones)
+  [![API coverage](https://img.shields.io/badge/REST%20coverage-580%20%2F%201254-blue?style=flat-square)](TODO.md)
+  [![Milestone](https://img.shields.io/badge/milestone-2%20of%206-brightgreen?style=flat-square)](TODO.md#milestones)
   [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)](LICENSE)
   [![Documentation](https://img.shields.io/badge/docs-DocC-F05138?style=flat-square)](https://emmanuel-defreitas.github.io/GHKit/documentation/)
 
@@ -51,6 +51,7 @@ No completion handlers, no `Result` juggling, no hand-rolled pagination. Iterate
 - [Errors](#-errors)
 - [Pagination](#-pagination)
 - [Beyond the wrapped API](#-beyond-the-wrapped-api)
+- [AI assistants (MCP)](#-ai-assistants-mcp)
 - [GitHub Enterprise](#-github-enterprise)
 - [How it fits together](#-how-it-fits-together)
 - [Roadmap](#-roadmap)
@@ -80,6 +81,7 @@ targets: [
     .target(name: "MyApp", dependencies: [
         .product(name: "GHKit", package: "GHKit"),
         .product(name: "GHKitUI", package: "GHKit"),   // optional SwiftUI helpers
+        .product(name: "GHKitMCP", package: "GHKit"),  // optional MCP tools for AI assistants
     ]),
 ]
 ```
@@ -88,6 +90,7 @@ targets: [
 |---|---|
 | `GHKit` | The client, authentication, models, and API wrappers. No UI. |
 | `GHKitUI` | `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value. |
+| `GHKitMCP` | `GitHubToolbox`: GitHub tools for a Model Context Protocol server. Adds the [MCP Swift SDK](https://github.com/modelcontextprotocol/swift-sdk). |
 
 ## 📚 Documentation
 
@@ -317,6 +320,22 @@ struct Viewer: Decodable, Sendable {
 let viewer = try await github.graphQL("query { viewer { login } }", as: Viewer.self)
 ```
 
+## 🤖 AI assistants (MCP)
+
+Let Claude and other AI assistants use GitHub through your app, as the signed-in user:
+
+```swift
+import GHKitMCP
+import MCP
+
+let toolbox = GitHubToolbox(client: github, toolsets: [.context, .repositories])  // read-only by default
+let server = await toolbox.makeServer(name: "MyApp", version: "1.0")
+try await server.start(transport: StdioTransport())
+```
+
+Pick toolsets, pass `access: .readWrite` to allow changes, or follow a `GitHubSession` with
+`GitHubToolbox { await session.client }`. Try it with `GITHUB_TOKEN=… npx @modelcontextprotocol/inspector swift run ghkit-mcp`.
+
 ## 🏢 GitHub Enterprise
 
 ```swift
@@ -345,13 +364,13 @@ Swap the `HTTPTransport` to add logging or caching, or to stub responses in test
 
 ## 🗺️ Roadmap
 
-GHKit is growing in milestones. [TODO.md](TODO.md) tracks every one of GitHub's 1,254 REST endpoints (393 done, 31%), plus the GraphQL-only features.
+GHKit is growing in milestones. [TODO.md](TODO.md) tracks every one of GitHub's 1,254 REST endpoints (580 done, 46%), plus the GraphQL-only features.
 
 | Milestone | Scope | Status |
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
 | M2 | Users, organizations, teams, repositories | 🚧 In progress |
-| M3 | Issues, pull requests, search, activity | Planned |
+| M3 | Issues, pull requests, search, activity | ✅ Done |
 | M4 | Actions, checks, packages, app webhooks | Planned |
 | M5 | Code scanning, secret scanning, Dependabot | Planned |
 | M6 | Copilot, Codespaces, billing, migrations | Planned |
