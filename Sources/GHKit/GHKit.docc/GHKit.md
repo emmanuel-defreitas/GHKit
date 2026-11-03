@@ -42,7 +42,7 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``GitHubConfiguration``
 - ``GitHubServer``
 
-### Authentication
+### Signing in
 
 - <doc:Authentication>
 - ``Authenticator``
@@ -92,7 +92,7 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``AppsAPI``
 - ``OAuthApplicationAPI``
 
-### Pagination
+### Paging through lists
 
 - <doc:Pagination>
 - ``Paginated``
