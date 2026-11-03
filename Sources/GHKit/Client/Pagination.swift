@@ -15,6 +15,11 @@ public struct Page<Element: Sendable>: Sendable {
 /// cursor pagination because it follows GitHub's `Link` header.
 public struct PageCursor: Sendable, Hashable {
     public let url: URL
+
+    /// A cursor for a page URL, such as one saved from an earlier ``url``.
+    public init(url: URL) {
+        self.url = url
+    }
 }
 
 extension GitHubClient {

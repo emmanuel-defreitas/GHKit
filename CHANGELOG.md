@@ -29,6 +29,16 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
 - Gists: list (yours, a user's, public, or starred), get (or an earlier revision), create, update (edit, add,
   rename, or delete files), delete, fork, star, revisions, forks, and comments.
+- `GHKitMCP`, a new product that offers GitHub as Model Context Protocol tools, so apps can let AI assistants
+  use GitHub as the signed-in user. `GitHubToolbox` lists and runs the tools, groups them into toolsets, and
+  is read-only unless you pass `.readWrite`. It starts with `get_me`, `get_rate_limit`, and the
+  `github_rest` and `github_graphql` tools for any endpoint. Adds the official MCP Swift SDK, for this
+  product only. The package also has a `ghkit-mcp` stdio server for trying the tools on macOS.
+- `PageCursor(url:)`, to rebuild a cursor from a saved URL.
+
+### Changed
+
+- `RateLimit` and `RateLimitOverview` are `Codable`, like the other models.
 
 ## [0.1.1] - 2026-11-03
 

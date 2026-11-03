@@ -6,6 +6,8 @@ DerivedData/
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
+# A library's lock file is ignored by the apps that depend on it.
+Package.resolved
 
 # Local tooling (not part of the package)
 .swiftpm/

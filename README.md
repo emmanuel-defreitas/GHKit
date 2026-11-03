@@ -51,6 +51,7 @@ No completion handlers, no `Result` juggling, no hand-rolled pagination. Iterate
 - [Errors](#-errors)
 - [Pagination](#-pagination)
 - [Beyond the wrapped API](#-beyond-the-wrapped-api)
+- [AI assistants (MCP)](#-ai-assistants-mcp)
 - [GitHub Enterprise](#-github-enterprise)
 - [How it fits together](#-how-it-fits-together)
 - [Roadmap](#-roadmap)
@@ -80,6 +81,7 @@ targets: [
     .target(name: "MyApp", dependencies: [
         .product(name: "GHKit", package: "GHKit"),
         .product(name: "GHKitUI", package: "GHKit"),   // optional SwiftUI helpers
+        .product(name: "GHKitMCP", package: "GHKit"),  // optional MCP tools for AI assistants
     ]),
 ]
 ```
@@ -88,6 +90,7 @@ targets: [
 |---|---|
 | `GHKit` | The client, authentication, models, and API wrappers. No UI. |
 | `GHKitUI` | `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value. |
+| `GHKitMCP` | `GitHubToolbox`: GitHub tools for a Model Context Protocol server. Adds the [MCP Swift SDK](https://github.com/modelcontextprotocol/swift-sdk). |
 
 ## 📚 Documentation
 
@@ -316,6 +319,22 @@ struct Viewer: Decodable, Sendable {
 
 let viewer = try await github.graphQL("query { viewer { login } }", as: Viewer.self)
 ```
+
+## 🤖 AI assistants (MCP)
+
+Let Claude and other AI assistants use GitHub through your app, as the signed-in user:
+
+```swift
+import GHKitMCP
+import MCP
+
+let toolbox = GitHubToolbox(client: github, toolsets: [.context, .rawRequests])  // read-only by default
+let server = await toolbox.makeServer(name: "MyApp", version: "1.0")
+try await server.start(transport: StdioTransport())
+```
+
+Pick toolsets, pass `access: .readWrite` to allow changes, or follow a `GitHubSession` with
+`GitHubToolbox { await session.client }`. Try it with `GITHUB_TOKEN=… npx @modelcontextprotocol/inspector swift run ghkit-mcp`.
 
 ## 🏢 GitHub Enterprise
 
