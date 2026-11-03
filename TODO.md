@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 467 of 1254 endpoints (37%)
+**REST progress:** 504 of 1254 endpoints (40%)
 
 ## Milestones
 
@@ -61,13 +61,13 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
 | [orgs](#orgs) | M2 | 99 | 116 | 🚧 |
-| [repos](#repos) | M2 | 200 | 203 | 🚧 |
+| [repos](#repos) | M2 | 201 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
-| [issues](#issues) | M3 | 65 | 66 | 🚧 |
-| [pulls](#pulls) | M3 | 0 | 35 | ⬜ |
+| [issues](#issues) | M3 | 66 | 66 | ✅ |
+| [pulls](#pulls) | M3 | 35 | 35 | ✅ |
 | [reactions](#reactions) | M3 | 0 | 15 | ⬜ |
 | [search](#search) | M3 | 0 | 7 | ⬜ |
 | [actions](#actions) | M4 | 0 | 200 | ⬜ |
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-200/203 done · milestone M2
+201/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -447,7 +447,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit → `repositories.branches(withHead:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments → `repositories.comments(onCommit:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment → `repositories.createCommitComment(_:on:in:_:path:position:)`
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit (deferred to the pull requests work)
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit → `pullRequests.pullRequests(containing:in:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit → `repositories.commit(_:in:_:)` / `commitDiff(_:in:_:format:)` / `commitSHA(for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference → `repositories.combinedStatus(for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference → `repositories.statuses(for:in:_:)`
@@ -734,7 +734,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### issues
 
-65/66 done · milestone M3
+66/66 done · milestone M3
 
 - [x] ✅ `GET /issues` — List issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.everywhere`
 - [x] ✅ `GET /orgs/{org}/issues` — List organization issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.organization(_:)`
@@ -789,7 +789,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/suggestions` — List issue suggestions → `issues.suggestions(for:in:_:state:action:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/approve` — Approve an issue suggestion → `issues.approveSuggestion(id:on:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/dismiss` — Dismiss an issue suggestion → `issues.dismissSuggestion(id:on:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/timeline` — List timeline events for an issue
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/timeline` — List timeline events for an issue → `issues.timeline(of:in:_:excluding:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/labels` — List labels for a repository → `issues.labels(_:_:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/labels` — Create a label → `issues.createLabel(_:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/labels/{name}` — Get a label → `issues.label(named:in:_:)`
@@ -805,43 +805,43 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### pulls
 
-0/35 done · milestone M3
+35/35 done · milestone M3
 
-- [ ] `GET /repos/{owner}/{repo}/pulls` — List pull requests
-- [ ] `POST /repos/{owner}/{repo}/pulls` — Create a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/comments` — List review comments in a repository
-- [ ] `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Get a review comment for a pull request
-- [ ] `PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Update a review comment for a pull request
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Delete a review comment for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}` — Get a pull request
-- [ ] `PATCH /repos/{owner}/{repo}/pulls/{pull_number}` — Update a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/comments` — List review comments on a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments` — Create a review comment for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies` — Create a reply for a review comment
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/commits` — List commits on a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/files` — List pull requests files
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Check if a pull request has been merged
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Merge a pull request
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge-async` — Merge a pull request asynchronously
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge-async/{uuid}` — Get the result of an asynchronous merge
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Get all requested reviewers for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Request reviewers for a pull request
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Remove requested reviewers from a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers/rerequest` — Rerequest reviewers for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — List reviews for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — Create a review for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Get a review for a pull request
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Update a review for a pull request
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Delete a pending review for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments` — List comments for a pull request review
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals` — Dismiss a review for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events` — Submit a review for a pull request
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch` — Update a pull request branch
-- [ ] `GET /repos/{owner}/{repo}/stacks` — List pull request stacks
-- [ ] `POST /repos/{owner}/{repo}/stacks` — Create a pull request stack
-- [ ] `GET /repos/{owner}/{repo}/stacks/{stack_number}` — Get a pull request stack
-- [ ] `POST /repos/{owner}/{repo}/stacks/{stack_number}/add` — Add pull requests to a pull request stack
-- [ ] `POST /repos/{owner}/{repo}/stacks/{stack_number}/unstack` — Remove pull requests from a pull request stack
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls` — List pull requests → `pullRequests.list(_:_:state:head:base:sort:ascending:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls` — Create a pull request → `pullRequests.create(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/comments` — List review comments in a repository → `pullRequests.reviewComments(_:_:sort:ascending:updatedSince:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Get a review comment for a pull request → `pullRequests.reviewComment(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Update a review comment for a pull request → `pullRequests.updateReviewComment(id:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Delete a review comment for a pull request → `pullRequests.deleteReviewComment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}` — Get a pull request → `pullRequests.pullRequest(_:in:_:)` / `diff(_:in:_:format:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/pulls/{pull_number}` — Update a pull request → `pullRequests.update(_:in:_:_:)`, `close(_:in:_:)`, `reopen(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/comments` — List review comments on a pull request → `pullRequests.reviewComments(on:in:_:sort:ascending:updatedSince:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments` — Create a review comment for a pull request → `pullRequests.createReviewComment(_:on:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies` — Create a reply for a review comment → `pullRequests.replyToReviewComment(id:on:in:_:body:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/commits` — List commits on a pull request → `pullRequests.commits(of:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/files` — List pull requests files → `pullRequests.files(of:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Check if a pull request has been merged → `pullRequests.isMerged(_:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Merge a pull request → `pullRequests.merge(_:in:_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge-async` — Merge a pull request asynchronously → `pullRequests.mergeInBackground(_:in:_:_:action:bypassRules:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge-async/{uuid}` — Get the result of an asynchronous merge → `pullRequests.backgroundMerge(_:of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Get all requested reviewers for a pull request → `pullRequests.requestedReviewers(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Request reviewers for a pull request → `pullRequests.requestReviewers(_:teams:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Remove requested reviewers from a pull request → `pullRequests.removeRequestedReviewers(_:teams:from:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers/rerequest` — Rerequest reviewers for a pull request → `pullRequests.rerequestReviewers(_:teams:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — List reviews for a pull request → `pullRequests.reviews(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — Create a review for a pull request → `pullRequests.createReview(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Get a review for a pull request → `pullRequests.review(id:of:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Update a review for a pull request → `pullRequests.updateReview(id:of:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Delete a pending review for a pull request → `pullRequests.deletePendingReview(id:of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments` — List comments for a pull request review → `pullRequests.comments(inReview:of:in:_:perPage:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals` — Dismiss a review for a pull request → `pullRequests.dismissReview(id:of:in:_:message:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events` — Submit a review for a pull request → `pullRequests.submitReview(id:of:in:_:event:body:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch` — Update a pull request branch → `pullRequests.updateBranch(_:in:_:expectedHeadSHA:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stacks` — List pull request stacks → `pullRequests.stacks(_:_:containing:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/stacks` — Create a pull request stack → `pullRequests.createStack(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stacks/{stack_number}` — Get a pull request stack → `pullRequests.stack(_:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/stacks/{stack_number}/add` — Add pull requests to a pull request stack → `pullRequests.addToStack(_:stack:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/stacks/{stack_number}/unstack` — Remove pull requests from a pull request stack → `pullRequests.unstack(_:in:_:)`
 
 ### reactions
 
