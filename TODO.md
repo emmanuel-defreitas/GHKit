@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 560 of 1254 endpoints (44%)
+**REST progress:** 580 of 1254 endpoints (46%)
 
 ## Milestones
 
@@ -12,7 +12,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
 | M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
-| M3 | Collaboration: issues, pull requests, search, activity | 🚧 In progress |
+| M3 | Collaboration: issues, pull requests, search, activity | ✅ Done |
 | M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
 | M6 | Platform & admin: Copilot, Codespaces, billing, migrations | ⬜ Planned |
@@ -65,7 +65,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 34 | 34 | ✅ |
-| [gists](#gists) | M3 | 0 | 20 | ⬜ |
+| [gists](#gists) | M3 | 20 | 20 | ✅ |
 | [issues](#issues) | M3 | 66 | 66 | ✅ |
 | [pulls](#pulls) | M3 | 35 | 35 | ✅ |
 | [reactions](#reactions) | M3 | 15 | 15 | ✅ |
@@ -709,28 +709,28 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### gists
 
-0/20 done · milestone M3
+20/20 done · milestone M3
 
-- [ ] `GET /gists` — List gists for the authenticated user
-- [ ] `POST /gists` — Create a gist
-- [ ] `GET /gists/public` — List public gists
-- [ ] `GET /gists/starred` — List starred gists
-- [ ] `GET /gists/{gist_id}` — Get a gist
-- [ ] `PATCH /gists/{gist_id}` — Update a gist
-- [ ] `DELETE /gists/{gist_id}` — Delete a gist
-- [ ] `GET /gists/{gist_id}/comments` — List gist comments
-- [ ] `POST /gists/{gist_id}/comments` — Create a gist comment
-- [ ] `GET /gists/{gist_id}/comments/{comment_id}` — Get a gist comment
-- [ ] `PATCH /gists/{gist_id}/comments/{comment_id}` — Update a gist comment
-- [ ] `DELETE /gists/{gist_id}/comments/{comment_id}` — Delete a gist comment
-- [ ] `GET /gists/{gist_id}/commits` — List gist commits
-- [ ] `GET /gists/{gist_id}/forks` — List gist forks
-- [ ] `POST /gists/{gist_id}/forks` — Fork a gist
-- [ ] `GET /gists/{gist_id}/star` — Check if a gist is starred
-- [ ] `PUT /gists/{gist_id}/star` — Star a gist
-- [ ] `DELETE /gists/{gist_id}/star` — Unstar a gist
-- [ ] `GET /gists/{gist_id}/{sha}` — Get a gist revision
-- [ ] `GET /users/{username}/gists` — List gists for a user
+- [x] ✅ `GET /gists` — List gists for the authenticated user → `gists.list(_:since:perPage:)`
+- [x] ✅ `POST /gists` — Create a gist → `gists.create(_:)`
+- [x] ✅ `GET /gists/public` — List public gists → `gists.list(_:since:perPage:)`
+- [x] ✅ `GET /gists/starred` — List starred gists → `gists.list(_:since:perPage:)`
+- [x] ✅ `GET /gists/{gist_id}` — Get a gist → `gists.gist(id:revision:)`
+- [x] ✅ `PATCH /gists/{gist_id}` — Update a gist → `gists.update(id:_:)`
+- [x] ✅ `DELETE /gists/{gist_id}` — Delete a gist → `gists.delete(id:)`
+- [x] ✅ `GET /gists/{gist_id}/comments` — List gist comments → `gists.comments(on:perPage:)`
+- [x] ✅ `POST /gists/{gist_id}/comments` — Create a gist comment → `gists.createComment(_:on:)`
+- [x] ✅ `GET /gists/{gist_id}/comments/{comment_id}` — Get a gist comment → `gists.comment(id:on:)`
+- [x] ✅ `PATCH /gists/{gist_id}/comments/{comment_id}` — Update a gist comment → `gists.updateComment(id:on:body:)`
+- [x] ✅ `DELETE /gists/{gist_id}/comments/{comment_id}` — Delete a gist comment → `gists.deleteComment(id:on:)`
+- [x] ✅ `GET /gists/{gist_id}/commits` — List gist commits → `gists.commits(of:perPage:)`
+- [x] ✅ `GET /gists/{gist_id}/forks` — List gist forks → `gists.forks(of:perPage:)`
+- [x] ✅ `POST /gists/{gist_id}/forks` — Fork a gist → `gists.fork(id:)`
+- [x] ✅ `GET /gists/{gist_id}/star` — Check if a gist is starred → `gists.isStarred(id:)`
+- [x] ✅ `PUT /gists/{gist_id}/star` — Star a gist → `gists.star(id:)`
+- [x] ✅ `DELETE /gists/{gist_id}/star` — Unstar a gist → `gists.unstar(id:)`
+- [x] ✅ `GET /gists/{gist_id}/{sha}` — Get a gist revision → `gists.gist(id:revision:)`
+- [x] ✅ `GET /users/{username}/gists` — List gists for a user → `gists.list(_:since:perPage:)`
 
 ### issues
 

@@ -27,6 +27,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Activity: events from every source (`EventSource`), Atom feeds, notifications (list, mark read or done,
   and follow or mute threads), stars (with star dates, counts, and weekly history), and watching.
   Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
+- Gists: list (yours, a user's, public, or starred), get (or an earlier revision), create, update (edit, add,
+  rename, or delete files), delete, fork, star, revisions, forks, and comments.
 
 ## [0.1.1] - 2026-11-03
 
