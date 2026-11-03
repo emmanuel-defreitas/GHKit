@@ -550,13 +550,53 @@ public struct NewReview: Sendable, Hashable, Encodable {
     public var event: ReviewEvent?
     /// The commit to review. Defaults to the head.
     public var commitID: String?
-    public var comments: [NewReviewComment]
+    public var comments: [Comment]
 
-    public init(body: String? = nil, event: ReviewEvent? = nil, commitID: String? = nil, comments: [NewReviewComment] = []) {
+    public init(body: String? = nil, event: ReviewEvent? = nil, commitID: String? = nil, comments: [Comment] = []) {
         self.body = body
         self.event = event
         self.commitID = commitID
         self.comments = comments
+    }
+
+    /// A comment on a line or range of lines, added with a review.
+    ///
+    /// A review can't hold comments on a whole file. Add those with
+    /// ``PullRequestsAPI/createReviewComment(_:on:in:_:)`` and ``ReviewCommentLocation/file``.
+    public struct Comment: Sendable, Hashable, Encodable {
+        /// Markdown.
+        public var body: String
+        /// The file to comment on.
+        public var path: String
+        public var location: Location
+
+        public init(_ body: String, path: String, at location: Location) {
+            self.body = body
+            self.path = path
+            self.location = location
+        }
+
+        /// Where a review's comment goes in the diff.
+        public enum Location: Sendable, Hashable {
+            /// One line. `side` is `.right` for added or unchanged lines.
+            case line(Int, side: DiffSide = .right)
+            /// A range of lines, from `start` to `end`.
+            case lines(start: Int, startSide: DiffSide = .right, end: Int, side: DiffSide = .right)
+            /// A line's index in the diff, counting from the first `@@` hunk header. Use `.line` where you can.
+            case position(Int)
+
+            var location: ReviewCommentLocation {
+                switch self {
+                case .line(let line, let side): .line(line, side: side)
+                case .lines(let start, let startSide, let end, let side): .lines(start: start, startSide: startSide, end: end, side: side)
+                case .position(let position): .position(position)
+                }
+            }
+        }
+
+        public func encode(to encoder: any Encoder) throws {
+            try NewReviewComment(body, path: path, at: location.location).encode(to: encoder)
+        }
     }
 
     enum CodingKeys: String, CodingKey {

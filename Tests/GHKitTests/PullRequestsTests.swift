@@ -240,10 +240,9 @@ struct PullRequestsTests {
             NewReview(
                 body: "Looks good", event: .approve, commitID: "ecdd80b",
                 comments: [
-                    NewReviewComment("Typo", path: "README.md", at: .line(12)),
-                    NewReviewComment("Split this", path: "main.swift", at: .lines(start: 3, end: 9, side: .left)),
-                    NewReviewComment("Whole file", path: "LICENSE", at: .file),
-                    NewReviewComment("Old style", path: "old.swift", at: .position(4)),
+                    NewReview.Comment("Typo", path: "README.md", at: .line(12)),
+                    NewReview.Comment("Split this", path: "main.swift", at: .lines(start: 3, end: 9, side: .left)),
+                    NewReview.Comment("Old style", path: "old.swift", at: .position(4)),
                 ]),
             on: 1347, in: "octocat", "Hello-World")
         _ = try await pulls.createReview(NewReview(), on: 1347, in: "octocat", "Hello-World")
@@ -265,7 +264,6 @@ struct PullRequestsTests {
                 "comments": [
                     ["body": "Typo", "path": "README.md", "line": 12, "side": "RIGHT"],
                     ["body": "Split this", "path": "main.swift", "start_line": 3, "start_side": "RIGHT", "line": 9, "side": "LEFT"],
-                    ["body": "Whole file", "path": "LICENSE", "subject_type": "file"],
                     ["body": "Old style", "path": "old.swift", "position": 4],
                 ],
             ])
@@ -294,18 +292,22 @@ struct PullRequestsTests {
         _ = try await pulls.replyToReviewComment(id: 10, on: 1347, in: "octocat", "Hello-World", body: "Done")
         _ = try await pulls.updateReviewComment(id: 10, in: "octocat", "Hello-World", body: "Edited")
         try await pulls.deleteReviewComment(id: 10, in: "octocat", "Hello-World")
+        _ = try await pulls.createReviewComment(
+            NewReviewComment("Whole file", path: "LICENSE", at: .file, commitID: "6dcb09b"), on: 1347, in: "octocat", "Hello-World")
         #expect(
             transport.requests.map(\.route) == [
                 "GET /repos/octocat/Hello-World/pulls/1347/comments", "GET /repos/octocat/Hello-World/pulls/comments",
                 "GET /repos/octocat/Hello-World/pulls/comments/10", "POST /repos/octocat/Hello-World/pulls/1347/comments",
                 "POST /repos/octocat/Hello-World/pulls/1347/comments/10/replies", "PATCH /repos/octocat/Hello-World/pulls/comments/10",
-                "DELETE /repos/octocat/Hello-World/pulls/comments/10",
+                "DELETE /repos/octocat/Hello-World/pulls/comments/10", "POST /repos/octocat/Hello-World/pulls/1347/comments",
             ])
         #expect(transport.requests[0].queryItems == ["since": "2023-11-14T22:13:20Z", "sort": "updated", "per_page": "100"])
         #expect(transport.requests[1].queryItems == ["per_page": "100"])
         #expect(
             transport.requests[3].jsonBody == ["body": "Nit", "path": "file1.txt", "line": 2, "side": "LEFT", "commit_id": "6dcb09b"])
         #expect(transport.requests[4].jsonBody == ["body": "Done"])
+        #expect(
+            transport.requests[7].jsonBody == ["body": "Whole file", "path": "LICENSE", "subject_type": "file", "commit_id": "6dcb09b"])
     }
 
     // MARK: Stacks and timeline
