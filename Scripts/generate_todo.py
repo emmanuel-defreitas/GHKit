@@ -530,6 +530,22 @@ DONE = {
     "pull-request-stacks/create": "`pullRequests.createStack(_:in:_:)`",
     "pull-request-stacks/add": "`pullRequests.addToStack(_:stack:in:_:)`",
     "pull-request-stacks/unstack": "`pullRequests.unstack(_:in:_:)`",
+    # Reactions (milestone 3)
+    "reactions/list-for-commit-comment": "`reactions.list(on:in:_:content:perPage:)`",
+    "reactions/create-for-commit-comment": "`reactions.add(_:to:in:_:)`",
+    "reactions/delete-for-commit-comment": "`reactions.delete(id:from:in:_:)`",
+    "reactions/list-for-issue-comment": "`reactions.list(on:in:_:content:perPage:)`",
+    "reactions/create-for-issue-comment": "`reactions.add(_:to:in:_:)`",
+    "reactions/delete-for-issue-comment": "`reactions.delete(id:from:in:_:)`",
+    "reactions/list-for-issue": "`reactions.list(on:in:_:content:perPage:)`",
+    "reactions/create-for-issue": "`reactions.add(_:to:in:_:)`",
+    "reactions/delete-for-issue": "`reactions.delete(id:from:in:_:)`",
+    "reactions/list-for-pull-request-review-comment": "`reactions.list(on:in:_:content:perPage:)`",
+    "reactions/create-for-pull-request-review-comment": "`reactions.add(_:to:in:_:)`",
+    "reactions/delete-for-pull-request-comment": "`reactions.delete(id:from:in:_:)`",
+    "reactions/list-for-release": "`reactions.list(on:in:_:content:perPage:)`",
+    "reactions/create-for-release": "`reactions.add(_:to:in:_:)`",
+    "reactions/delete-for-release": "`reactions.delete(id:from:in:_:)`",
 }
 
 # operationId -> note
