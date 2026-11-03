@@ -143,11 +143,12 @@ enum RawRequestTools {
 enum GraphQLDocument {
     /// Whether any operation in `document` is a mutation or a subscription.
     ///
-    /// Operation keywords only appear outside braces and parentheses, so names there are checked
-    /// after skipping comments and strings.
+    /// The operation keyword is the first word of a top-level definition. Later words, such as an
+    /// operation or fragment name, are names even when they read `mutation`.
     static func hasMutation(_ document: String) -> Bool {
         var braces = 0
         var parentheses = 0
+        var atDefinitionStart = true
         var index = document.startIndex
         while index < document.endIndex {
             let character = document[index]
@@ -159,18 +160,21 @@ enum GraphQLDocument {
             case "\"":
                 index = endOfString(in: document, from: index)
                 continue
-            case "{": braces += 1
-            case "}": braces -= 1
+            case "{":
+                braces += 1
+                atDefinitionStart = false
+            case "}":
+                braces -= 1
+                // Closing a top-level selection set ends the definition.
+                if braces == 0 { atDefinitionStart = true }
             case "(": parentheses += 1
             case ")": parentheses -= 1
             case _ where character.isLetter || character == "_":
                 let end = document[index...].firstIndex { !($0.isLetter || $0.isNumber || $0 == "_") } ?? document.endIndex
-                let preceding = index > document.startIndex ? document[document.index(before: index)] : " "
-                let word = document[index..<end]
-                if braces == 0, parentheses == 0, preceding != "$", preceding != "@",
-                    word == "mutation" || word == "subscription"
-                {
-                    return true
+                if braces == 0, parentheses == 0, atDefinitionStart {
+                    let word = document[index..<end]
+                    if word == "mutation" || word == "subscription" { return true }
+                    atDefinitionStart = false
                 }
                 index = end
                 continue

@@ -101,6 +101,12 @@ struct RawRequestToolsTests {
         ("# comment\rmutation { x }", true),
         ("query { a(t: \"\"\" \\\"\"\" \"\"\") } mutation { x }", true),
         ("query { a(t: \"\"\" \\\"\"\" mutation { x } \"\"\") }", false),
+        ("query mutation { viewer { login } }", false),
+        ("query subscription($id: ID!) { node(id: $id) { id } }", false),
+        ("fragment mutation on User { login } query { viewer { ...mutation } }", false),
+        ("query Q @mutation { a }", false),
+        ("query mutation { a } mutation { b }", true),
+        ("{ a } subscription S { b }", true),
     ])
     func detectsMutations(document: String, isMutation: Bool) {
         #expect(GraphQLDocument.hasMutation(document) == isMutation)
