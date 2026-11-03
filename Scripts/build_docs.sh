@@ -38,8 +38,11 @@ mkdir -p "$work"
 echo "==> Extracting symbol graphs"
 # SwiftPM in Xcode 26 also tries the test module, fails on it, and exits non-zero after writing
 # the library graphs. Ignore the exit code and check for each module's graph instead.
+# Extension block symbols give GHKitUI's extensions of SwiftUI and GHKit types their own pages.
+# They're on by default from Swift 6.4 but off in 6.2, so ask for them explicitly.
 log="$(swift package --scratch-path "$scratch" dump-symbol-graph \
-    --minimum-access-level public --skip-synthesized-members 2>&1 | tee /dev/stderr || true)"
+    --minimum-access-level public --skip-synthesized-members --emit-extension-block-symbols \
+    2>&1 | tee /dev/stderr || true)"
 graphs="$(sed -n 's/^Files written to //p' <<<"$log" | tail -n 1)"
 for module in "${modules[@]}"; do
     [ -f "$graphs/$module.symbols.json" ] || {
