@@ -9,10 +9,11 @@
   [![API coverage](https://img.shields.io/badge/REST%20coverage-393%20%2F%201254-blue?style=flat-square)](TODO.md)
   [![Milestone](https://img.shields.io/badge/milestone-1%20of%206-brightgreen?style=flat-square)](TODO.md#milestones)
   [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)](LICENSE)
+  [![Documentation](https://img.shields.io/badge/docs-DocC-F05138?style=flat-square)](https://emmanuel-defreitas.github.io/GHKit/documentation/)
 
   **🐙⚡ The GitHub API for SwiftUI apps: async/await, typed throws, and sign-in that just works.**
 
-  [Quick start](#-quick-start) · [Authentication](#-authentication) · [Projects](#-projects) · [SwiftUI](#-swiftui) · [Roadmap](TODO.md)
+  [Quick start](#-quick-start) · [Authentication](#-authentication) · [Projects](#-projects) · [SwiftUI](#-swiftui) · [Documentation](https://emmanuel-defreitas.github.io/GHKit/documentation/) · [Roadmap](TODO.md)
 </div>
 
 ---
@@ -42,6 +43,7 @@ No completion handlers, no `Result` juggling, no hand-rolled pagination. Iterate
 
 - [Requirements](#-requirements)
 - [Installation](#-installation)
+- [Documentation](#-documentation)
 - [Quick start](#-quick-start)
 - [Authentication](#-authentication)
 - [SwiftUI](#-swiftui)
@@ -86,6 +88,11 @@ targets: [
 |---|---|
 | `GHKit` | The client, authentication, models, and API wrappers. No UI. |
 | `GHKitUI` | `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value. |
+
+## 📚 Documentation
+
+The full API reference and guides are at **[emmanuel-defreitas.github.io/GHKit](https://emmanuel-defreitas.github.io/GHKit/documentation/)**,
+built with DocC and published on every release.
 
 ## 🚀 Quick start
 

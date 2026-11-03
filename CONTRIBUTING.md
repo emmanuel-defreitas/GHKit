@@ -66,6 +66,7 @@ Releases are driven by GitHub Actions. Run them from the **Actions** tab.
    - Anything else: patch version.
 3. **Promote:** marks the release PR ready and has Claude review it. If Claude finds problems, it opens a `fix(hotfix): …` PR into `next`; merge it and run Promote again. Otherwise the release PR is queued to merge when checks pass.
 4. **Release** (runs on merge): tags the merge commit with the version (for example `0.2.0`), creates a GitHub release, and checks the Swift Package Index listing. SPI picks up new tags on its own.
+   The **Docs** workflow also runs on the merge into `main` and publishes the DocC documentation to GitHub Pages.
 5. **Update** (starts automatically): opens an `update(doc): …` PR into `next` that refreshes README.md, CHANGELOG.md, TODO.md, AGENTS.md, and CLAUDE.md, and bumps `GHKitVersion.current`. It merges when checks pass.
 6. **Rebase** (runs when the update PR merges): opens a `next` → `dev` PR and merges it, so `dev` has the release docs and any hotfixes. `dev` can't be force-pushed, so this is a merge rather than a history rewrite.
 
@@ -101,6 +102,26 @@ jq '.components.examples["issue"].value' /tmp/api.json > Tests/GHKitTests/Fixtur
 
 Use Swift Testing (`@Test`, `#expect`), `MockTransport`, and `makeClient(_:)` from `GHKitTests.swift`.
 
+## Documentation
+
+The API reference is built with DocC from doc comments plus the catalogs in `Sources/GHKit/GHKit.docc` and
+`Sources/GHKitUI/GHKitUI.docc`. Each catalog has a landing page that groups the main types into topics, and
+articles for the main features.
+
+```sh
+Scripts/build_docs.sh                                        # builds .build/docs/site for GitHub Pages
+DOCS_BASE_PATH= Scripts/build_docs.sh                        # builds it to serve from the root, then:
+python3 -m http.server --directory .build/docs/site 8000     # open http://localhost:8000
+```
+
+The build fails on broken symbol links and other DocC warnings, except incomplete `- Parameters:` lists.
+The **Docs** workflow runs the same script on every pull request and publishes to GitHub Pages from `main`.
+
+- Link symbols with double backticks, for example ``` ``GitHubClient/paginate(_:)`` ```.
+  From GHKitUI, link GHKit symbols with an absolute path: ``` ``/GHKit/OAuthWebFlow`` ```.
+- When you add an important public type, list it under a topic in the module's landing page.
+  Types you don't list are grouped by kind automatically.
+
 ## Updating TODO.md
 
 After adding endpoints, add their `operationId`s to `DONE` in `Scripts/generate_todo.py` and regenerate:
@@ -117,6 +138,7 @@ Don't edit TODO.md by hand. The script overwrites it.
 - [ ] `swift test` passes
 - [ ] It builds for iOS: `xcodebuild -scheme GHKit-Package -destination "generic/platform=iOS" build`
 - [ ] New public APIs have doc comments
+- [ ] `Scripts/build_docs.sh` succeeds (no broken doc links)
 - [ ] TODO.md is regenerated
 - [ ] The README is updated if you added something users will reach for first
 

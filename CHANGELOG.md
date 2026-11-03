@@ -6,6 +6,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- DocC documentation for `GHKit` and `GHKitUI`, with getting-started, authentication, pagination, error-handling,
+  and sign-in articles, published to GitHub Pages by the new Docs workflow on every release.
+
 ## [0.1.0] - 2026-11-03
 
 ### Added

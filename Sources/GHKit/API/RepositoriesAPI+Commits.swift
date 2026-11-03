@@ -7,7 +7,7 @@ extension RepositoriesAPI {
     /// A repository's commits, newest first. `GET /repos/{owner}/{repo}/commits`
     /// - Parameters:
     ///   - ref: A branch, tag, or SHA to start from. Defaults to the default branch.
-    ///   - path: Only commits that touch this file or directory.
+    ///   - filePath: Only commits that touch this file or directory.
     ///   - author: Only commits by this login or email.
     ///   - committer: Only commits committed by this login or email.
     public func commits(
@@ -96,7 +96,7 @@ extension RepositoriesAPI {
 
     /// Comments on a commit, or on one line of its diff. `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments`
     /// - Parameters:
-    ///   - path: The file to comment on.
+    ///   - filePath: The file to comment on.
     ///   - position: The line's index in the diff. Needs `path`.
     @discardableResult
     public func createCommitComment(
