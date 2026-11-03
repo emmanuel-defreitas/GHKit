@@ -25,13 +25,17 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
 
     /// Every toolset, in the order their tools are listed.
     static let everyToolset: [GitHubToolset] = [
-        .context, .repositories, .issues, .pullRequests, .search, .activity, .gists, .reactions, .rawRequests,
+        .context, .users, .repositories, .issues, .pullRequests, .search, .activity, .gists, .reactions, .organizations, .teams,
+        .projects, .rawRequests,
     ]
 }
 
 extension GitHubToolset {
     /// The signed-in user and the current rate limits.
     public static let context = GitHubToolset("context", tools: ContextTools.tools)
+
+    /// User profiles, followers, and following.
+    public static let users = GitHubToolset("users", tools: UserTools.tools)
 
     /// Repositories, files, branches, commits, tags, and releases.
     public static let repositories = GitHubToolset("repositories", tools: RepositoryTools.tools)
@@ -53,6 +57,15 @@ extension GitHubToolset {
 
     /// Emoji reactions on issues, pull requests, comments, and releases.
     public static let reactions = GitHubToolset("reactions", tools: ReactionTools.tools)
+
+    /// Organizations, their members, outside collaborators, and invitations.
+    public static let organizations = GitHubToolset("organizations", tools: OrganizationTools.tools)
+
+    /// Teams, their members and child teams, and their repository access.
+    public static let teams = GitHubToolset("teams", tools: TeamTools.tools)
+
+    /// Projects, their fields and items, and status updates.
+    public static let projects = GitHubToolset("projects", tools: ProjectTools.tools)
 
     /// `github_rest` and `github_graphql`, for anything the other toolsets don't cover.
     ///

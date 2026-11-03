@@ -50,6 +50,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - `GHKitMCP` search tools, on by default, for code, issues and pull requests, repositories, users, and commits.
   Opt-in toolsets: `activity` (notifications, events, starred repositories, and starring), `gists` (list, get,
   create, update, delete), and `reactions` (list and add).
+- `GHKitMCP` opt-in toolsets for `users` (profiles, followers, following, and following people),
+  `organizations` (profiles, members, memberships, outside collaborators, and invitations), `teams` (members,
+  child teams, repository access, and managing all three), and `projects` (projects, fields, items, drafts,
+  field values, and status updates).
 - `PageCursor(url:)`, to rebuild a cursor from a saved URL.
 
 ### Changed

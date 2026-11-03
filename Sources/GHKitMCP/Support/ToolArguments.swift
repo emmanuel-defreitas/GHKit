@@ -92,6 +92,22 @@ struct ToolArguments: Sendable {
         throw ToolFailure("`\(key)` must be an integer.")
     }
 
+    /// A list of integers, or a single integer taken as a list of one.
+    func ints(_ key: String) throws(ToolFailure) -> [Int] {
+        switch values[key] {
+        case nil: return []
+        case .array(let items)?:
+            return try items.map { item throws(ToolFailure) in
+                guard let number = try ToolArguments(["item": item]).optionalInt("item") else {
+                    throw ToolFailure("`\(key)` must be an array of integers.")
+                }
+                return number
+            }
+        default:
+            do { return [try int(key)] } catch { throw ToolFailure("`\(key)` must be an array of integers.") }
+        }
+    }
+
     func bool(_ key: String, default fallback: Bool) throws(ToolFailure) -> Bool {
         try optionalBool(key) ?? fallback
     }
@@ -122,6 +138,13 @@ struct ToolArguments: Sendable {
         if let date = try? Date(text, strategy: Date.ISO8601FormatStyle(includingFractionalSeconds: true)) { return date }
         if let date = try? Date(text, strategy: Date.ISO8601FormatStyle().year().month().day()) { return date }
         throw ToolFailure("`\(key)` must be an ISO 8601 date, such as `2026-01-31` or `2026-01-31T12:00:00Z`.")
+    }
+
+    /// A `YYYY-MM-DD` calendar date with no time or time zone.
+    func optionalCalendarDate(_ key: String) throws(ToolFailure) -> CalendarDate? {
+        guard let text = try optionalString(key) else { return nil }
+        guard let date = CalendarDate(text) else { throw ToolFailure("`\(key)` must be a date such as `2026-01-31`.") }
+        return date
     }
 
     func object(_ key: String) throws(ToolFailure) -> [String: MCP.Value]? {
