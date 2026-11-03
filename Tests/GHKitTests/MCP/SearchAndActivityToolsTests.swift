@@ -107,4 +107,10 @@ struct SearchAndActivityToolsTests {
         #expect(transport.requests.isEmpty)
     }
 
+    @Test func emptyDescriptionClearsAGist() async throws {
+        let transport = MockTransport(.fixture("gist"))
+        let (text, isError) = try await callTool("update_gist", ["id": "aa5a315d", "description": ""], on: transport)
+        #expect(!isError, "\(text)")
+        #expect(transport.requests.first?.jsonBody == ["description": ""])
+    }
 }

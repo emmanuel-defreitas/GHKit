@@ -85,7 +85,7 @@ enum GistTools {
                     guard let text = value.stringValue else { throw ToolFailure("Each file in `files` must be a string or null.") }
                     return .content(text)
                 }
-                let update = GistUpdate(description: try arguments.optionalString("description"), files: files)
+                let update = GistUpdate(description: try arguments.optionalText("description"), files: files)
                 return try .json(await context.client.gists.update(id: arguments.string("id"), update))
             },
             GitHubTool(
