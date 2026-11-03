@@ -169,8 +169,8 @@ enum ProjectTools {
         ) { arguments, context in
             let api = try projects(arguments, context.client)
             let number = try arguments.int("project")
-            let (title, shortDescription) = (try arguments.optionalString("title"), try arguments.optionalString("shortDescription"))
-            let (readme, isPublic) = (try arguments.optionalString("readme"), try arguments.optionalBool("public"))
+            let (title, shortDescription) = (try arguments.optionalString("title"), try arguments.optionalText("shortDescription"))
+            let (readme, isPublic) = (try arguments.optionalText("readme"), try arguments.optionalBool("public"))
             let closed = try arguments.optionalBool("closed")
             var result: Project?
             if title != nil || shortDescription != nil || readme != nil || isPublic != nil {

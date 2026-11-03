@@ -131,11 +131,11 @@ enum OrganizationTools {
         ) { arguments, context in
             let changes = OrganizationUpdate(
                 name: try arguments.optionalString("name"),
-                description: try arguments.optionalString("description"),
-                company: try arguments.optionalString("company"),
-                blog: try arguments.optionalString("blog"),
-                location: try arguments.optionalString("location"),
-                email: try arguments.optionalString("email"),
+                description: try arguments.optionalText("description"),
+                company: try arguments.optionalText("company"),
+                blog: try arguments.optionalText("blog"),
+                location: try arguments.optionalText("location"),
+                email: try arguments.optionalText("email"),
                 billingEmail: try arguments.optionalString("billingEmail")
             )
             guard changes != OrganizationUpdate() else { throw ToolFailure("Pass at least one field to change.") }

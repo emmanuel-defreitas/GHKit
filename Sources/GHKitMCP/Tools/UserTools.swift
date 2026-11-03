@@ -79,14 +79,14 @@ enum UserTools {
             ])
         ) { arguments, context in
             let changes = UserProfileUpdate(
-                name: try arguments.optionalString("name"),
-                email: try arguments.optionalString("email"),
-                blog: try arguments.optionalString("blog"),
-                twitterUsername: try arguments.optionalString("twitterUsername"),
-                company: try arguments.optionalString("company"),
-                location: try arguments.optionalString("location"),
+                name: try arguments.optionalText("name"),
+                email: try arguments.optionalText("email"),
+                blog: try arguments.optionalText("blog"),
+                twitterUsername: try arguments.optionalText("twitterUsername"),
+                company: try arguments.optionalText("company"),
+                location: try arguments.optionalText("location"),
                 hireable: try arguments.optionalBool("hireable"),
-                bio: try arguments.optionalString("bio")
+                bio: try arguments.optionalText("bio")
             )
             guard changes != UserProfileUpdate() else { throw ToolFailure("Pass at least one field to change.") }
             return try .json(await context.client.users.updateProfile(changes))

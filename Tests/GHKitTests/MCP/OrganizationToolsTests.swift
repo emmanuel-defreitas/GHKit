@@ -255,4 +255,14 @@ struct OrganizationToolsTests {
             #expect(transport.requests.first?.jsonBody == ["fields": [["id": 4, "value": expected]]])
         }
     }
+
+    @Test func emptyStringsClearFields() async throws {
+        let profile = MockTransport(.fixture("private-user"))
+        _ = try await callTool("update_profile", ["bio": ""], on: profile)
+        #expect(profile.requests.first?.jsonBody == ["bio": ""])
+
+        let team = MockTransport(.fixture("team-full"))
+        _ = try await callTool("update_team", Self.with(Self.team, ["description": ""]), on: team)
+        #expect(team.requests.first?.jsonBody == ["description": ""])
+    }
 }

@@ -153,7 +153,7 @@ enum TeamTools {
             }
             let changes = TeamUpdate(
                 name: try arguments.optionalString("name"),
-                description: try arguments.optionalString("description"),
+                description: try arguments.optionalText("description"),
                 privacy: try arguments.choice("privacy", from: privacies),
                 parent: parent
             )
