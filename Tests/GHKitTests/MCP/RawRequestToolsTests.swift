@@ -107,6 +107,12 @@ struct RawRequestToolsTests {
         ("query Q @mutation { a }", false),
         ("query mutation { a } mutation { b }", true),
         ("{ a } subscription S { b }", true),
+        ("#\u{0301} comment\nmutation { x }", true),
+        ("\u{0301}mutation { x }", true),
+        ("query { a(t: \"\u{0301}\") } mutation { x }", true),
+        ("query { a(t: \"\\\u{0301}\") } mutation { x }", true),
+        ("# comment\u{2028}mutation { x }", true),
+        ("{ a } \"open\nmutation { x }", true),
     ])
     func detectsMutations(document: String, isMutation: Bool) {
         #expect(GraphQLDocument.hasMutation(document) == isMutation)

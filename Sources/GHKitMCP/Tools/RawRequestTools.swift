@@ -145,20 +145,25 @@ enum GraphQLDocument {
     ///
     /// The operation keyword is the first word of a top-level definition. Later words, such as an
     /// operation or fragment name, are names even when they read `mutation`.
+    ///
+    /// The scan reads Unicode scalars, as GraphQL's lexer does. Swift's `Character` would merge a
+    /// combining mark into the `#` or `"` before it and hide a comment or string from the scan.
     static func hasMutation(_ document: String) -> Bool {
+        let scalars = Array(document.unicodeScalars)
         var braces = 0
         var parentheses = 0
         var atDefinitionStart = true
-        var index = document.startIndex
-        while index < document.endIndex {
-            let character = document[index]
-            switch character {
+        var index = 0
+        while index < scalars.count {
+            let scalar = scalars[index]
+            switch scalar {
             case "#":
-                // Comments end at LF, CR, or CRLF. Swift reads CRLF as one `Character`, so match any newline.
-                index = document[index...].firstIndex(where: \.isNewline) ?? document.endIndex
+                // GraphQL comments end at LF or CR. Stop at any newline, so a server that also breaks
+                // lines at U+2028 can't run a mutation this scan took for a comment.
+                while index < scalars.count, !isNewline(scalars[index]) { index += 1 }
                 continue
             case "\"":
-                index = endOfString(in: document, from: index)
+                index = endOfString(in: scalars, from: index)
                 continue
             case "{":
                 braces += 1
@@ -169,10 +174,11 @@ enum GraphQLDocument {
                 if braces == 0 { atDefinitionStart = true }
             case "(": parentheses += 1
             case ")": parentheses -= 1
-            case _ where character.isLetter || character == "_":
-                let end = document[index...].firstIndex { !($0.isLetter || $0.isNumber || $0 == "_") } ?? document.endIndex
+            case _ where isNameStart(scalar):
+                var end = index + 1
+                while end < scalars.count, isNameStart(scalars[end]) || ("0"..."9").contains(scalars[end]) { end += 1 }
                 if braces == 0, parentheses == 0, atDefinitionStart {
-                    let word = document[index..<end]
+                    let word = String(String.UnicodeScalarView(scalars[index..<end]))
                     if word == "mutation" || word == "subscription" { return true }
                     atDefinitionStart = false
                 }
@@ -180,35 +186,50 @@ enum GraphQLDocument {
                 continue
             default: break
             }
-            index = document.index(after: index)
+            index += 1
         }
         return false
     }
 
+    private static func isNewline(_ scalar: Unicode.Scalar) -> Bool {
+        Character(scalar).isNewline
+    }
+
+    /// GraphQL names are ASCII: `[_A-Za-z][_0-9A-Za-z]*`.
+    private static func isNameStart(_ scalar: Unicode.Scalar) -> Bool {
+        scalar == "_" || ("a"..."z").contains(scalar) || ("A"..."Z").contains(scalar)
+    }
+
     /// The index just past the string that starts at `start`, handling escapes and `"""` blocks.
-    private static func endOfString(in document: String, from start: String.Index) -> String.Index {
-        if document[start...].hasPrefix("\"\"\"") {
+    private static func endOfString(in scalars: [Unicode.Scalar], from start: Int) -> Int {
+        func hasPrefix(_ prefix: String, at index: Int) -> Bool {
+            let prefix = Array(prefix.unicodeScalars)
+            return index + prefix.count <= scalars.count && Array(scalars[index..<index + prefix.count]) == prefix
+        }
+        if hasPrefix("\"\"\"", at: start) {
             // Block strings end at the first `"""` that isn't escaped as `\"""`.
-            var index = document.index(start, offsetBy: 3)
-            while index < document.endIndex {
-                if document[index...].hasPrefix("\\\"\"\"") {
-                    index = document.index(index, offsetBy: 4)
-                } else if document[index...].hasPrefix("\"\"\"") {
-                    return document.index(index, offsetBy: 3)
+            var index = start + 3
+            while index < scalars.count {
+                if hasPrefix("\\\"\"\"", at: index) {
+                    index += 4
+                } else if hasPrefix("\"\"\"", at: index) {
+                    return index + 3
                 } else {
-                    index = document.index(after: index)
+                    index += 1
                 }
             }
-            return document.endIndex
+            return scalars.count
         }
-        var index = document.index(after: start)
-        while index < document.endIndex {
-            switch document[index] {
-            case "\\": index = document.index(index, offsetBy: 2, limitedBy: document.endIndex) ?? document.endIndex
-            case "\"": return document.index(after: index)
-            default: index = document.index(after: index)
+        var index = start + 1
+        while index < scalars.count {
+            switch scalars[index] {
+            case "\\": index = min(index + 2, scalars.count)
+            case "\"": return index + 1
+            // A plain string can't span lines, so a newline ends it here.
+            case _ where isNewline(scalars[index]): return index
+            default: index += 1
             }
         }
-        return document.endIndex
+        return scalars.count
     }
 }
