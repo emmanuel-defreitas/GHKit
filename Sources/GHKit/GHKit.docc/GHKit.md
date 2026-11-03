@@ -92,6 +92,17 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``AppsAPI``
 - ``OAuthApplicationAPI``
 
+### Issues
+
+- ``IssuesAPI``
+- ``GitHubIssue``
+- ``NewIssue``
+- ``IssueUpdate``
+- ``IssueFilter``
+- ``IssueComment``
+- ``IssueLabel``
+- ``Milestone``
+
 ### Paging through lists
 
 - <doc:Pagination>

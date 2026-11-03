@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- Issues: list issues across repositories, in an organization, or in one repository; open, update, close,
+  reopen, lock, and unlock them; manage assignees, conversation comments (including pinning), labels, and
+  milestones. Issues are `GitHubIssue`, so they don't clash with Swift Testing's `Issue`.
+
 ## [0.1.1] - 2026-11-03
 
 ### Added
