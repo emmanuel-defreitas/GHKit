@@ -226,7 +226,7 @@ enum IssueTools {
             if try arguments.bool("removeMilestone", default: false) { milestone = .remove }
             let changes = IssueUpdate(
                 title: try arguments.optionalString("title"),
-                body: try arguments.optionalString("body"),
+                body: try arguments.optionalText("body"),
                 state: try arguments.choice("state", from: ["open": IssueState.open, "closed": .closed]),
                 stateReason: try arguments.choice("stateReason", from: closeReasons),
                 assignees: try arguments.optionalStrings("assignees"),
