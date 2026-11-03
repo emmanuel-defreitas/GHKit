@@ -338,6 +338,15 @@ struct PullRequestsTests {
         #expect(transport.requests[3].jsonBody == ["pull_requests": [103]])
     }
 
+    @Test func stacksPageByNumberWithoutLinkHeaders() async throws {
+        let transport = MockTransport { request, _ in
+            request.queryItems["page"] == nil ? .fixtureList("pull-request-stack") : .json("[]")
+        }
+        let stacks = try await makeClient(transport).pullRequests.stacks("octocat", "hello-world", perPage: 1).collect()
+        #expect(stacks.count == 1)
+        #expect(transport.requests.map { $0.queryItems["page"] } == [nil, "2"])
+    }
+
     @Test func timeline() async throws {
         let transport = MockTransport(.fixture("timeline-issue-events"))
         let issues = makeClient(transport).issues

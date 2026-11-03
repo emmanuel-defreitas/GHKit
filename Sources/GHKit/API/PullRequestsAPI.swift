@@ -347,8 +347,11 @@ public struct PullRequestsAPI: Sendable {
     public func stacks(
         _ owner: String, _ name: String, containing pullRequest: Int? = nil, perPage: Int = 100
     ) -> Paginated<PullRequestStack> {
-        client.paginate(
-            GitHubRequest(.get, path(owner, name, "/stacks"), query: .query(("pull_request", pullRequest), ("per_page", perPage))))
+        // This endpoint sends no `Link` header, so pages are counted instead.
+        var request = GitHubRequest<[PullRequestStack]>(
+            .get, path(owner, name, "/stacks"), query: .query(("pull_request", pullRequest), ("per_page", perPage)))
+        request.numberedPageSize = perPage
+        return client.paginate(request)
     }
 
     /// One stack, with its pull requests. `GET /repos/{owner}/{repo}/stacks/{stack_number}`
