@@ -6,10 +6,19 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-03
+
 ### Added
 
+- Swift Package Index configuration so the index can build and host the DocC documentation.
 - DocC documentation for `GHKit` and `GHKitUI`, with getting-started, authentication, pagination, error-handling,
   and sign-in articles, published to GitHub Pages by the new Docs workflow on every release.
+
+### Fixed
+
+- DocC builds emit extension block symbols on every Swift version, tolerate the Xcode 26 symbol graph failure
+  on the test module, and no longer rely on diagnostic flags missing from Xcode 26.
+- Renamed DocC topic headings that clashed with article names.
 
 ## [0.1.0] - 2026-11-03
 
@@ -67,5 +76,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...next
+[0.1.1]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/emmanuel-defreitas/GHKit/releases/tag/0.1.0
