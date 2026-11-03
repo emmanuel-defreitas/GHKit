@@ -58,6 +58,8 @@ public struct GitHubIssue: Sendable, Hashable, Codable, Identifiable {
     public var dependenciesSummary: IssueDependenciesSummary?
     public var parentIssueURL: URL?
     public var pinnedComment: IssueComment?
+    /// The organization's custom field values, such as Priority.
+    public var fieldValues: [IssueFieldValue]?
     /// The repository, in lists that span several repositories.
     public var repository: Repository?
     /// The GitHub App that opened the issue for someone.
@@ -88,6 +90,7 @@ public struct GitHubIssue: Sendable, Hashable, Codable, Identifiable {
         case dependenciesSummary = "issue_dependencies_summary"
         case parentIssueURL = "parent_issue_url"
         case pinnedComment = "pinned_comment"
+        case fieldValues = "issue_field_values"
         case performedViaGitHubApp = "performed_via_github_app"
         case htmlURL = "html_url"
         case repositoryURL = "repository_url"

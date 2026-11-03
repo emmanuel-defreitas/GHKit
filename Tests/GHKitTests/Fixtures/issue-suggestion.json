@@ -1,0 +1,15 @@
+{
+  "id": 12,
+  "issue_id": 4567,
+  "action": "add_label",
+  "state": "approved",
+  "target_id": 208045946,
+  "target_value": null,
+  "rationale": "This looks like a bug report based on the stack trace in the description.",
+  "confidence": "HIGH",
+  "actor_id": 41898282,
+  "issue_event_id": 6430295168,
+  "resolved_by": 583231,
+  "created_at": "2026-06-01T14:20:00Z",
+  "updated_at": "2026-06-01T15:05:00Z"
+}

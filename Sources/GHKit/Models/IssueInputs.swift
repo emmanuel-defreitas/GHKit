@@ -15,10 +15,12 @@ public struct NewIssue: Sendable, Hashable, Encodable {
     public var type: String?
     /// Opens the issue as a sub-issue of this issue. Takes the parent's ``GitHubIssue/id``, not its number.
     public var parentIssueID: Int?
+    /// Values for the organization's issue fields.
+    public var fieldValues: [NewIssueFieldValue]
 
     public init(
         title: String, body: String? = nil, assignees: [String] = [], milestone: Int? = nil, labels: [String] = [],
-        type: String? = nil, parentIssueID: Int? = nil
+        type: String? = nil, parentIssueID: Int? = nil, fieldValues: [NewIssueFieldValue] = []
     ) {
         self.title = title
         self.body = body
@@ -27,11 +29,13 @@ public struct NewIssue: Sendable, Hashable, Encodable {
         self.labels = labels
         self.type = type
         self.parentIssueID = parentIssueID
+        self.fieldValues = fieldValues
     }
 
     enum CodingKeys: String, CodingKey {
         case title, body, assignees, milestone, labels, type
         case parentIssueID = "parent_issue_id"
+        case fieldValues = "issue_field_values"
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -43,6 +47,7 @@ public struct NewIssue: Sendable, Hashable, Encodable {
         if !labels.isEmpty { try c.encode(labels, forKey: .labels) }
         try c.encodeIfPresent(type, forKey: .type)
         try c.encodeIfPresent(parentIssueID, forKey: .parentIssueID)
+        if !fieldValues.isEmpty { try c.encode(fieldValues, forKey: .fieldValues) }
     }
 }
 
@@ -69,11 +74,13 @@ public struct IssueUpdate: Sendable, Hashable, Encodable {
     public var milestone: Change<Int>?
     /// An issue type's name.
     public var type: Change<String>?
+    /// Sets these issue field values. Fields left out keep their values.
+    public var fieldValues: [NewIssueFieldValue]?
 
     public init(
         title: String? = nil, body: String? = nil, state: IssueState? = nil, stateReason: IssueStateReason? = nil,
         duplicateOf: Int? = nil, assignees: [String]? = nil, labels: [String]? = nil, milestone: Change<Int>? = nil,
-        type: Change<String>? = nil
+        type: Change<String>? = nil, fieldValues: [NewIssueFieldValue]? = nil
     ) {
         self.title = title
         self.body = body
@@ -84,12 +91,14 @@ public struct IssueUpdate: Sendable, Hashable, Encodable {
         self.labels = labels
         self.milestone = milestone
         self.type = type
+        self.fieldValues = fieldValues
     }
 
     enum CodingKeys: String, CodingKey {
         case title, body, state, assignees, labels, milestone, type
         case stateReason = "state_reason"
         case duplicateOf = "duplicate_issue_id"
+        case fieldValues = "issue_field_values"
     }
 
     public func encode(to encoder: any Encoder) throws {
@@ -101,6 +110,7 @@ public struct IssueUpdate: Sendable, Hashable, Encodable {
         try c.encodeIfPresent(duplicateOf, forKey: .duplicateOf)
         try c.encodeIfPresent(assignees, forKey: .assignees)
         try c.encodeIfPresent(labels, forKey: .labels)
+        try c.encodeIfPresent(fieldValues, forKey: .fieldValues)
         switch milestone {
         case .set(let number)?: try c.encode(number, forKey: .milestone)
         case .remove?: try c.encodeNil(forKey: .milestone)

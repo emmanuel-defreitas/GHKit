@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 431 of 1254 endpoints (34%)
+**REST progress:** 467 of 1254 endpoints (37%)
 
 ## Milestones
 
@@ -60,13 +60,13 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
-| [repos](#repos) | M2 | 199 | 203 | 🚧 |
+| [orgs](#orgs) | M2 | 99 | 116 | 🚧 |
+| [repos](#repos) | M2 | 200 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
-| [issues](#issues) | M3 | 38 | 66 | 🚧 |
+| [issues](#issues) | M3 | 65 | 66 | 🚧 |
 | [pulls](#pulls) | M3 | 0 | 35 | ⬜ |
 | [reactions](#reactions) | M3 | 0 | 15 | ⬜ |
 | [search](#search) | M3 | 0 | 7 | ⬜ |
@@ -252,7 +252,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-91/116 done · milestone M2
+99/116 done · milestone M2
 
 - [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
 - [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
@@ -301,14 +301,14 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `POST /orgs/{org}/invitations` — Create an organization invitation → `organizations.invite(_:to:)`
 - [x] ✅ `DELETE /orgs/{org}/invitations/{invitation_id}` — Cancel an organization invitation → `organizations.cancelInvitation(id:in:)`
 - [x] ✅ `GET /orgs/{org}/invitations/{invitation_id}/teams` — List organization invitation teams → `organizations.invitationTeams(id:in:perPage:)`
-- [ ] `GET /orgs/{org}/issue-fields` — List issue fields for an organization (deferred to milestone 3)
-- [ ] `POST /orgs/{org}/issue-fields` — Create issue field for an organization (deferred to milestone 3)
-- [ ] `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization (deferred to milestone 3)
-- [ ] `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization (deferred to milestone 3)
-- [ ] `GET /orgs/{org}/issue-types` — List issue types for an organization (deferred to milestone 3)
-- [ ] `POST /orgs/{org}/issue-types` — Create issue type for an organization (deferred to milestone 3)
-- [ ] `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization (deferred to milestone 3)
-- [ ] `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization (deferred to milestone 3)
+- [x] ✅ `GET /orgs/{org}/issue-fields` — List issue fields for an organization → `issues.fields(in:)`
+- [x] ✅ `POST /orgs/{org}/issue-fields` — Create issue field for an organization → `issues.createField(_:in:)`
+- [x] ✅ `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization → `issues.updateField(id:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization → `issues.deleteField(id:in:)`
+- [x] ✅ `GET /orgs/{org}/issue-types` — List issue types for an organization → `issues.types(in:)`
+- [x] ✅ `POST /orgs/{org}/issue-types` — Create issue type for an organization → `issues.createType(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization → `issues.updateType(id:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization → `issues.deleteType(id:in:)`
 - [x] ✅ `GET /orgs/{org}/members` — List organization members → `organizations.members(of:filter:role:perPage:)`
 - [x] ✅ `GET /orgs/{org}/members/{username}` — Check organization membership for a user → `organizations.isMember(_:of:)`
 - [x] ✅ `DELETE /orgs/{org}/members/{username}` — Remove an organization member → `organizations.removeMember(_:from:)`
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-199/203 done · milestone M2
+200/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -500,7 +500,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/invitations` — List repository invitations → `repositories.invitations(_:_:perPage:)`
 - [x] ✅ `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation → `repositories.updateInvitation(id:on:_:permission:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation → `repositories.cancelInvitation(id:on:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository (deferred to milestone 3)
+- [x] ✅ `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository → `issues.types(_:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/keys` — List deploy keys → `repositories.deployKeys(_:_:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/keys` — Create a deploy key → `repositories.addDeployKey(_:title:readOnly:to:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key → `repositories.deployKey(id:in:_:)`
@@ -734,7 +734,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### issues
 
-38/66 done · milestone M3
+65/66 done · milestone M3
 
 - [x] ✅ `GET /issues` — List issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.everywhere`
 - [x] ✅ `GET /orgs/{org}/issues` — List organization issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.organization(_:)`
@@ -748,29 +748,29 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}` — Delete an issue comment → `issues.deleteComment(id:in:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/issues/comments/{comment_id}/pin` — Pin an issue comment → `issues.pinComment(id:in:_:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/pin` — Unpin an issue comment → `issues.unpinComment(id:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issues/events` — List issue events for a repository
-- [ ] `GET /repos/{owner}/{repo}/issues/events/{event_id}` — Get an issue event
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/events` — List issue events for a repository → `issues.events(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/events/{event_id}` — Get an issue event → `issues.event(id:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}` — Get an issue → `issues.issue(_:in:_:)`
 - [x] ✅ `PATCH /repos/{owner}/{repo}/issues/{issue_number}` — Update an issue → `issues.update(_:in:_:_:)`, `close(_:in:_:reason:)`, `reopen(_:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — List issue artifacts
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — Create an issue artifact
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Get an issue artifact
-- [ ] `PATCH /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Update an issue artifact
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Delete an issue artifact
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — List issue artifacts → `issues.artifacts(on:in:_:type:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — Create an issue artifact → `issues.createArtifact(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Get an issue artifact → `issues.artifact(_:on:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Update an issue artifact → `issues.updateArtifact(_:on:in:_:name:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Delete an issue artifact → `issues.deleteArtifact(_:on:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/assignees` — Add assignees to an issue → `issues.addAssignees(_:to:in:_:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees` — Remove assignees from an issue → `issues.removeAssignees(_:from:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/assignees/{assignee}` — Check if a user can be assigned to a issue → `issues.canAssign(_:to:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/comments` — List issue comments → `issues.comments(on:in:_:updatedSince:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/comments` — Create an issue comment → `issues.createComment(_:on:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — List dependencies an issue is blocked by
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — Add a dependency an issue is blocked by
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by/{issue_id}` — Remove dependency an issue is blocked by
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocking` — List dependencies an issue is blocking
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/events` — List issue events
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — List issue field values for an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Add issue field values to an issue
-- [ ] `PUT /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Set issue field values for an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values/{issue_field_id}` — Delete an issue field value from an issue
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — List dependencies an issue is blocked by → `issues.blockers(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — Add a dependency an issue is blocked by → `issues.addBlocker(id:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by/{issue_id}` — Remove dependency an issue is blocked by → `issues.removeBlocker(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocking` — List dependencies an issue is blocking → `issues.blockedIssues(by:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/events` — List issue events → `issues.events(on:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — List issue field values for an issue → `issues.fieldValues(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Add issue field values to an issue → `issues.addFieldValues(_:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Set issue field values for an issue → `issues.setFieldValues(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values/{issue_field_id}` — Delete an issue field value from an issue → `issues.deleteFieldValue(fieldID:from:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/labels` — List labels for an issue → `issues.labels(on:in:_:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/labels` — Add labels to an issue → `issues.addLabels(_:to:in:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/issues/{issue_number}/labels` — Set labels for an issue → `issues.setLabels(_:on:in:_:)`
@@ -778,17 +778,17 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}` — Remove a label from an issue → `issues.removeLabel(named:from:in:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/issues/{issue_number}/lock` — Lock an issue → `issues.lock(_:in:_:reason:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock` — Unlock an issue → `issues.unlock(_:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/parent` — Get parent issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — List issues related to an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — Add a related issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/relates_to/{issue_id}` — Remove a related issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/sub_issue` — Remove sub-issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — List sub-issues
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — Add sub-issue
-- [ ] `PATCH /repos/{owner}/{repo}/issues/{issue_number}/sub_issues/priority` — Reprioritize sub-issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/suggestions` — List issue suggestions
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/approve` — Approve an issue suggestion
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/dismiss` — Dismiss an issue suggestion
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/parent` — Get parent issue → `issues.parent(of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — List issues related to an issue → `issues.relatedIssues(to:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — Add a related issue → `issues.addRelatedIssue(id:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/relates_to/{issue_id}` — Remove a related issue → `issues.removeRelatedIssue(id:from:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/sub_issue` — Remove sub-issue → `issues.removeSubIssue(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — List sub-issues → `issues.subIssues(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — Add sub-issue → `issues.addSubIssue(id:to:in:_:replaceParent:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/issues/{issue_number}/sub_issues/priority` — Reprioritize sub-issue → `issues.moveSubIssue(id:_:of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/suggestions` — List issue suggestions → `issues.suggestions(for:in:_:state:action:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/approve` — Approve an issue suggestion → `issues.approveSuggestion(id:on:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/dismiss` — Dismiss an issue suggestion → `issues.dismissSuggestion(id:on:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/timeline` — List timeline events for an issue
 - [x] ✅ `GET /repos/{owner}/{repo}/labels` — List labels for a repository → `issues.labels(_:_:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/labels` — Create a label → `issues.createLabel(_:in:_:)`

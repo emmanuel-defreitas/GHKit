@@ -1,0 +1,40 @@
+[
+  {
+    "id": 42,
+    "number": 1,
+    "type": "plan",
+    "name": "Implementation plan",
+    "body": "## Plan\n\nBuild the feature in two phases.",
+    "body_html": "<h2>Plan</h2>\n<p>Build the feature in two phases.</p>",
+    "description": "Build the feature in two phases.",
+    "creator": {
+      "login": "octocat",
+      "id": 1
+    },
+    "updated_by_actor": {
+      "login": "monalisa",
+      "id": 2
+    },
+    "created_at": "2026-09-21T15:00:00Z",
+    "updated_at": "2026-09-21T15:30:00Z"
+  },
+  {
+    "id": 43,
+    "number": 2,
+    "type": "link",
+    "name": "Design discussion",
+    "body": "https://github.com/octo-org/example/discussions/1",
+    "body_html": "<p>https://github.com/octo-org/example/discussions/1</p>",
+    "description": "",
+    "creator": {
+      "login": "octocat",
+      "id": 1
+    },
+    "updated_by_actor": {
+      "login": "octocat",
+      "id": 1
+    },
+    "created_at": "2026-09-21T16:00:00Z",
+    "updated_at": "2026-09-21T16:00:00Z"
+  }
+]
