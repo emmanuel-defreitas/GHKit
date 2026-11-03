@@ -14,6 +14,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Issue details: issue events, sub-issues (add, remove, reorder, parent), blocking dependencies, related
   issues, custom field values, GitHub's suggestions, and artifacts. Organizations can manage issue types and
   custom issue fields, and new or updated issues can set field values.
+- Pull requests: list, get (or fetch as a diff or patch), open (also from an issue), update, close, reopen,
+  commits, files, and the pull requests that contain a commit. Merge directly or in the background
+  (including through the merge queue), update the branch, request and re-request reviewers, create, submit,
+  update, dismiss, and delete reviews, manage review comments and replies, and build pull request stacks.
+- Issue timelines as `TimelineEvent`, with typed comments, commits, reviews, cross-references, and line comments.
 
 ## [0.1.1] - 2026-11-03
 

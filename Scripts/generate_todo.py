@@ -492,6 +492,44 @@ DONE = {
     "orgs/create-issue-field": "`issues.createField(_:in:)`",
     "orgs/update-issue-field": "`issues.updateField(id:in:_:)`",
     "orgs/delete-issue-field": "`issues.deleteField(id:in:)`",
+    "issues/list-events-for-timeline": "`issues.timeline(of:in:_:excluding:perPage:)`",
+    # Pull requests (milestone 3)
+    "pulls/list": "`pullRequests.list(_:_:state:head:base:sort:ascending:perPage:)`",
+    "pulls/get": "`pullRequests.pullRequest(_:in:_:)` / `diff(_:in:_:format:)`",
+    "pulls/create": "`pullRequests.create(_:in:_:)`",
+    "pulls/update": "`pullRequests.update(_:in:_:_:)`, `close(_:in:_:)`, `reopen(_:in:_:)`",
+    "pulls/list-commits": "`pullRequests.commits(of:in:_:perPage:)`",
+    "pulls/list-files": "`pullRequests.files(of:in:_:perPage:)`",
+    "repos/list-pull-requests-associated-with-commit": "`pullRequests.pullRequests(containing:in:_:perPage:)`",
+    "pulls/check-if-merged": "`pullRequests.isMerged(_:in:_:)`",
+    "pulls/merge": "`pullRequests.merge(_:in:_:_:)`",
+    "pulls/merge-async": "`pullRequests.mergeInBackground(_:in:_:_:action:bypassRules:)`",
+    "pulls/get-merge-async-result": "`pullRequests.backgroundMerge(_:of:in:_:)`",
+    "pulls/update-branch": "`pullRequests.updateBranch(_:in:_:expectedHeadSHA:)`",
+    "pulls/list-requested-reviewers": "`pullRequests.requestedReviewers(of:in:_:)`",
+    "pulls/request-reviewers": "`pullRequests.requestReviewers(_:teams:on:in:_:)`",
+    "pulls/remove-requested-reviewers": "`pullRequests.removeRequestedReviewers(_:teams:from:in:_:)`",
+    "pulls/rerequest-reviewers": "`pullRequests.rerequestReviewers(_:teams:on:in:_:)`",
+    "pulls/list-reviews": "`pullRequests.reviews(of:in:_:perPage:)`",
+    "pulls/get-review": "`pullRequests.review(id:of:in:_:)`",
+    "pulls/create-review": "`pullRequests.createReview(_:on:in:_:)`",
+    "pulls/submit-review": "`pullRequests.submitReview(id:of:in:_:event:body:)`",
+    "pulls/update-review": "`pullRequests.updateReview(id:of:in:_:body:)`",
+    "pulls/delete-pending-review": "`pullRequests.deletePendingReview(id:of:in:_:)`",
+    "pulls/dismiss-review": "`pullRequests.dismissReview(id:of:in:_:message:)`",
+    "pulls/list-comments-for-review": "`pullRequests.comments(inReview:of:in:_:perPage:)`",
+    "pulls/list-review-comments": "`pullRequests.reviewComments(on:in:_:sort:ascending:updatedSince:perPage:)`",
+    "pulls/list-review-comments-for-repo": "`pullRequests.reviewComments(_:_:sort:ascending:updatedSince:perPage:)`",
+    "pulls/get-review-comment": "`pullRequests.reviewComment(id:in:_:)`",
+    "pulls/create-review-comment": "`pullRequests.createReviewComment(_:on:in:_:)`",
+    "pulls/create-reply-for-review-comment": "`pullRequests.replyToReviewComment(id:on:in:_:body:)`",
+    "pulls/update-review-comment": "`pullRequests.updateReviewComment(id:in:_:body:)`",
+    "pulls/delete-review-comment": "`pullRequests.deleteReviewComment(id:in:_:)`",
+    "pull-request-stacks/list": "`pullRequests.stacks(_:_:containing:perPage:)`",
+    "pull-request-stacks/get": "`pullRequests.stack(_:in:_:)`",
+    "pull-request-stacks/create": "`pullRequests.createStack(_:in:_:)`",
+    "pull-request-stacks/add": "`pullRequests.addToStack(_:stack:in:_:)`",
+    "pull-request-stacks/unstack": "`pullRequests.unstack(_:in:_:)`",
 }
 
 # operationId -> note
@@ -499,7 +537,6 @@ IN_PROGRESS: dict[str, str] = {}
 
 # operationId -> note, for to-do endpoints scheduled outside their category's milestone
 DEFERRED: dict[str, str] = {
-    "repos/list-pull-requests-associated-with-commit": "the pull requests work",
     # Artifact attestations are supply-chain security, so they ship with the security work.
     "users/list-attestations": "milestone 5",
     "users/list-attestations-bulk": "milestone 5",

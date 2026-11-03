@@ -114,6 +114,24 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``IssueSuggestion``
 - ``IssueArtifact``
 - ``IssueArtifactHistory``
+- ``TimelineEvent``
+
+### Pull requests
+
+- ``PullRequestsAPI``
+- ``PullRequest``
+- ``NewPullRequest``
+- ``PullRequestUpdate``
+- ``MergeOptions``
+- ``MergeResult``
+- ``BackgroundMerge``
+- ``PullRequestReview``
+- ``NewReview``
+- ``ReviewComment``
+- ``NewReviewComment``
+- ``ReviewCommentLocation``
+- ``ReviewRequests``
+- ``PullRequestStack``
 
 ### Paging through lists
 
