@@ -39,6 +39,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - `GHKitMCP` repository tools, on by default: get, list, create, update, and fork repositories; read files as
   text and the README; create, update, and delete files; branches, merges, tags, commits, comparisons, commit
   status, contributors, languages, forks, topics, and releases (including generated release notes).
+- `GHKitMCP` issue tools, on by default: list issues in a repository or across repositories, get an issue, its
+  comments, timeline, and sub-issues; labels, milestones, assignable users, and issue types; create and update
+  issues, comment, edit and delete comments, add and remove labels and assignees, create labels, and add
+  sub-issues by number.
 - `PageCursor(url:)`, to rebuild a cursor from a saved URL.
 
 ### Changed
