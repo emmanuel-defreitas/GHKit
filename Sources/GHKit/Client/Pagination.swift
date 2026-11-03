@@ -29,9 +29,15 @@ extension GitHubClient {
         let target = cursor.map { request.redirected(to: $0.url) } ?? request
         let response = try await send(target)
         let links = response.metadata.links
+        var next = links.next.map(PageCursor.init)
+        if next == nil, let size = target.numberedPageSize, response.value.count >= size,
+            let url = try makeURLRequest(for: target).url?.nextPage()
+        {
+            next = PageCursor(url: url)
+        }
         return Page(
             items: response.value,
-            next: links.next.map(PageCursor.init),
+            next: next,
             previous: links.previous.map(PageCursor.init),
             metadata: response.metadata
         )
@@ -146,5 +152,20 @@ struct LossyArray<Element: Decodable>: Decodable {
     var elements: [Element]?
     init(from decoder: any Decoder) throws {
         elements = try? decoder.singleValueContainer().decode([Element].self)
+    }
+}
+
+extension URL {
+    /// The same URL with its `page` query item one higher, starting from page 1.
+    func nextPage() -> URL? {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
+        var items = components.queryItems ?? []
+        let current = items.first { $0.name == "page" }?.value.flatMap(Int.init) ?? 1
+        items.removeAll { $0.name == "page" }
+        items.append(URLQueryItem(name: "page", value: String(current + 1)))
+        components.queryItems = items
+        // URLComponents leaves "+" alone, but GitHub reads it as a space.
+        components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
+        return components.url
     }
 }

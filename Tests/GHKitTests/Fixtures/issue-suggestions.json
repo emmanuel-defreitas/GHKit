@@ -1,0 +1,32 @@
+[
+  {
+    "id": 12,
+    "issue_id": 4567,
+    "action": "add_label",
+    "state": "pending",
+    "target_id": 208045946,
+    "target_value": null,
+    "rationale": "This looks like a bug report based on the stack trace in the description.",
+    "confidence": "HIGH",
+    "actor_id": 41898282,
+    "issue_event_id": null,
+    "resolved_by": null,
+    "created_at": "2026-06-01T14:20:00Z",
+    "updated_at": "2026-06-01T14:20:00Z"
+  },
+  {
+    "id": 13,
+    "issue_id": 4567,
+    "action": "set_type",
+    "state": "pending",
+    "target_id": 3,
+    "target_value": "Bug",
+    "rationale": "The report describes unexpected behaviour with reproduction steps.",
+    "confidence": "MEDIUM",
+    "actor_id": 41898282,
+    "issue_event_id": null,
+    "resolved_by": null,
+    "created_at": "2026-06-01T14:21:00Z",
+    "updated_at": "2026-06-01T14:21:00Z"
+  }
+]

@@ -92,6 +92,88 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``AppsAPI``
 - ``OAuthApplicationAPI``
 
+### Issues
+
+- ``IssuesAPI``
+- ``GitHubIssue``
+- ``NewIssue``
+- ``IssueUpdate``
+- ``IssueFilter``
+- ``IssueComment``
+- ``IssueLabel``
+- ``Milestone``
+- ``IssueEvent``
+- ``IssueReference``
+- ``SubIssuePosition``
+- ``IssueType``
+- ``IssueTypeInput``
+- ``IssueField``
+- ``NewIssueField``
+- ``IssueFieldValue``
+- ``NewIssueFieldValue``
+- ``IssueSuggestion``
+- ``IssueArtifact``
+- ``IssueArtifactHistory``
+- ``TimelineEvent``
+
+### Pull requests
+
+- ``PullRequestsAPI``
+- ``PullRequest``
+- ``NewPullRequest``
+- ``PullRequestUpdate``
+- ``MergeOptions``
+- ``MergeResult``
+- ``BackgroundMerge``
+- ``PullRequestReview``
+- ``NewReview``
+- ``NewReview/Comment``
+- ``ReviewComment``
+- ``NewReviewComment``
+- ``ReviewCommentLocation``
+- ``ReviewRequests``
+- ``PullRequestStack``
+
+### Reactions
+
+- ``ReactionsAPI``
+- ``Reaction``
+- ``ReactionContent``
+- ``ReactionSubject``
+
+### Search
+
+- ``SearchAPI``
+- ``SearchResult``
+- ``SearchSummary``
+- ``TextMatch``
+- ``CodeFile``
+- ``Topic``
+
+### Activity
+
+- ``ActivityAPI``
+- ``GitHubEvent``
+- ``EventSource``
+- ``Feeds``
+- ``NotificationThread``
+- ``NotificationFilter``
+- ``ThreadSubscription``
+- ``Stargazer``
+- ``StarredRepository``
+- ``StarHistoryWeek``
+- ``RepositorySubscription``
+
+### Gists
+
+- ``GistsAPI``
+- ``Gist``
+- ``GistCollection``
+- ``NewGist``
+- ``GistUpdate``
+- ``GistCommit``
+- ``GistComment``
+
 ### Paging through lists
 
 - <doc:Pagination>

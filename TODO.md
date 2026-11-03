@@ -1,10 +1,10 @@
 # GHKit API coverage
 
-Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-03 by `Scripts/generate_todo.py`.
+Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-02 by `Scripts/generate_todo.py`.
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 393 of 1254 endpoints (31%)
+**REST progress:** 580 of 1254 endpoints (46%)
 
 ## Milestones
 
@@ -12,7 +12,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
 | M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
-| M3 | Collaboration: issues, pull requests, search, activity | ⬜ Planned |
+| M3 | Collaboration: issues, pull requests, search, activity | ✅ Done |
 | M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
 | M6 | Platform & admin: Copilot, Codespaces, billing, migrations | ⬜ Planned |
@@ -60,16 +60,16 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
-| [repos](#repos) | M2 | 199 | 203 | 🚧 |
+| [orgs](#orgs) | M2 | 99 | 116 | 🚧 |
+| [repos](#repos) | M2 | 201 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
-| [activity](#activity) | M3 | 0 | 34 | ⬜ |
-| [gists](#gists) | M3 | 0 | 20 | ⬜ |
-| [issues](#issues) | M3 | 0 | 66 | ⬜ |
-| [pulls](#pulls) | M3 | 0 | 35 | ⬜ |
-| [reactions](#reactions) | M3 | 0 | 15 | ⬜ |
-| [search](#search) | M3 | 0 | 7 | ⬜ |
+| [activity](#activity) | M3 | 34 | 34 | ✅ |
+| [gists](#gists) | M3 | 20 | 20 | ✅ |
+| [issues](#issues) | M3 | 66 | 66 | ✅ |
+| [pulls](#pulls) | M3 | 35 | 35 | ✅ |
+| [reactions](#reactions) | M3 | 15 | 15 | ✅ |
+| [search](#search) | M3 | 7 | 7 | ✅ |
 | [actions](#actions) | M4 | 0 | 200 | ⬜ |
 | [agent-automations](#agent-automations) | M4 | 0 | 10 | ⬜ |
 | [agent-merge](#agent-merge) | M4 | 0 | 3 | ⬜ |
@@ -252,7 +252,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-91/116 done · milestone M2
+99/116 done · milestone M2
 
 - [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
 - [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
@@ -301,14 +301,14 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `POST /orgs/{org}/invitations` — Create an organization invitation → `organizations.invite(_:to:)`
 - [x] ✅ `DELETE /orgs/{org}/invitations/{invitation_id}` — Cancel an organization invitation → `organizations.cancelInvitation(id:in:)`
 - [x] ✅ `GET /orgs/{org}/invitations/{invitation_id}/teams` — List organization invitation teams → `organizations.invitationTeams(id:in:perPage:)`
-- [ ] `GET /orgs/{org}/issue-fields` — List issue fields for an organization (deferred to milestone 3)
-- [ ] `POST /orgs/{org}/issue-fields` — Create issue field for an organization (deferred to milestone 3)
-- [ ] `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization (deferred to milestone 3)
-- [ ] `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization (deferred to milestone 3)
-- [ ] `GET /orgs/{org}/issue-types` — List issue types for an organization (deferred to milestone 3)
-- [ ] `POST /orgs/{org}/issue-types` — Create issue type for an organization (deferred to milestone 3)
-- [ ] `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization (deferred to milestone 3)
-- [ ] `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization (deferred to milestone 3)
+- [x] ✅ `GET /orgs/{org}/issue-fields` — List issue fields for an organization → `issues.fields(in:)`
+- [x] ✅ `POST /orgs/{org}/issue-fields` — Create issue field for an organization → `issues.createField(_:in:)`
+- [x] ✅ `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization → `issues.updateField(id:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization → `issues.deleteField(id:in:)`
+- [x] ✅ `GET /orgs/{org}/issue-types` — List issue types for an organization → `issues.types(in:)`
+- [x] ✅ `POST /orgs/{org}/issue-types` — Create issue type for an organization → `issues.createType(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization → `issues.updateType(id:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization → `issues.deleteType(id:in:)`
 - [x] ✅ `GET /orgs/{org}/members` — List organization members → `organizations.members(of:filter:role:perPage:)`
 - [x] ✅ `GET /orgs/{org}/members/{username}` — Check organization membership for a user → `organizations.isMember(_:of:)`
 - [x] ✅ `DELETE /orgs/{org}/members/{username}` — Remove an organization member → `organizations.removeMember(_:from:)`
@@ -373,7 +373,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-199/203 done · milestone M2
+201/203 done · milestone M2
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -447,7 +447,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit → `repositories.branches(withHead:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments → `repositories.comments(onCommit:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment → `repositories.createCommitComment(_:on:in:_:path:position:)`
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit (deferred to the pull requests work)
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit → `pullRequests.pullRequests(containing:in:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit → `repositories.commit(_:in:_:)` / `commitDiff(_:in:_:format:)` / `commitSHA(for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference → `repositories.combinedStatus(for:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference → `repositories.statuses(for:in:_:)`
@@ -500,7 +500,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/invitations` — List repository invitations → `repositories.invitations(_:_:perPage:)`
 - [x] ✅ `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation → `repositories.updateInvitation(id:on:_:permission:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation → `repositories.cancelInvitation(id:on:_:)`
-- [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository (deferred to milestone 3)
+- [x] ✅ `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository → `issues.types(_:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/keys` — List deploy keys → `repositories.deployKeys(_:_:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/keys` — Create a deploy key → `repositories.addDeployKey(_:title:readOnly:to:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key → `repositories.deployKey(id:in:_:)`
@@ -670,210 +670,210 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### activity
 
-0/34 done · milestone M3
+34/34 done · milestone M3
 
-- [ ] `GET /events` — List public events
-- [ ] `GET /feeds` — Get feeds
-- [ ] `GET /networks/{owner}/{repo}/events` — List public events for a network of repositories
-- [ ] `GET /notifications` — List notifications for the authenticated user
-- [ ] `PUT /notifications` — Mark notifications as read
-- [ ] `GET /notifications/threads/{thread_id}` — Get a thread
-- [ ] `PATCH /notifications/threads/{thread_id}` — Mark a thread as read
-- [ ] `DELETE /notifications/threads/{thread_id}` — Mark a thread as done
-- [ ] `GET /notifications/threads/{thread_id}/subscription` — Get a thread subscription for the authenticated user
-- [ ] `PUT /notifications/threads/{thread_id}/subscription` — Set a thread subscription
-- [ ] `DELETE /notifications/threads/{thread_id}/subscription` — Delete a thread subscription
-- [ ] `GET /orgs/{org}/events` — List public organization events
-- [ ] `GET /repos/{owner}/{repo}/events` — List repository events
-- [ ] `GET /repos/{owner}/{repo}/notifications` — List repository notifications for the authenticated user
-- [ ] `PUT /repos/{owner}/{repo}/notifications` — Mark repository notifications as read
-- [ ] `GET /repos/{owner}/{repo}/stargazers` — List stargazers
-- [ ] `GET /repos/{owner}/{repo}/stargazers/count` — Get stargazer count
-- [ ] `GET /repos/{owner}/{repo}/stargazers/history` — Get repository star history
-- [ ] `GET /repos/{owner}/{repo}/subscribers` — List watchers
-- [ ] `GET /repos/{owner}/{repo}/subscription` — Get a repository subscription
-- [ ] `PUT /repos/{owner}/{repo}/subscription` — Set a repository subscription
-- [ ] `DELETE /repos/{owner}/{repo}/subscription` — Delete a repository subscription
-- [ ] `GET /user/starred` — List repositories starred by the authenticated user
-- [ ] `GET /user/starred/{owner}/{repo}` — Check if a repository is starred by the authenticated user
-- [ ] `PUT /user/starred/{owner}/{repo}` — Star a repository for the authenticated user
-- [ ] `DELETE /user/starred/{owner}/{repo}` — Unstar a repository for the authenticated user
-- [ ] `GET /user/subscriptions` — List repositories watched by the authenticated user
-- [ ] `GET /users/{username}/events` — List events for the authenticated user
-- [ ] `GET /users/{username}/events/orgs/{org}` — List organization events for the authenticated user
-- [ ] `GET /users/{username}/events/public` — List public events for a user
-- [ ] `GET /users/{username}/received_events` — List events received by the authenticated user
-- [ ] `GET /users/{username}/received_events/public` — List public events received by a user
-- [ ] `GET /users/{username}/starred` — List repositories starred by a user
-- [ ] `GET /users/{username}/subscriptions` — List repositories watched by a user
+- [x] ✅ `GET /events` — List public events → `activity.events(_:perPage:)`
+- [x] ✅ `GET /feeds` — Get feeds → `activity.feeds()`
+- [x] ✅ `GET /networks/{owner}/{repo}/events` — List public events for a network of repositories → `activity.events(_:perPage:)`
+- [x] ✅ `GET /notifications` — List notifications for the authenticated user → `activity.notifications(matching:perPage:)`
+- [x] ✅ `PUT /notifications` — Mark notifications as read → `activity.markNotificationsRead(before:)`
+- [x] ✅ `GET /notifications/threads/{thread_id}` — Get a thread → `activity.thread(id:)`
+- [x] ✅ `PATCH /notifications/threads/{thread_id}` — Mark a thread as read → `activity.markThreadRead(id:)`
+- [x] ✅ `DELETE /notifications/threads/{thread_id}` — Mark a thread as done → `activity.markThreadDone(id:)`
+- [x] ✅ `GET /notifications/threads/{thread_id}/subscription` — Get a thread subscription for the authenticated user → `activity.threadSubscription(id:)`
+- [x] ✅ `PUT /notifications/threads/{thread_id}/subscription` — Set a thread subscription → `activity.subscribeToThread(id:ignored:)`
+- [x] ✅ `DELETE /notifications/threads/{thread_id}/subscription` — Delete a thread subscription → `activity.unsubscribeFromThread(id:)`
+- [x] ✅ `GET /orgs/{org}/events` — List public organization events → `activity.events(_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/events` — List repository events → `activity.events(_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/notifications` — List repository notifications for the authenticated user → `activity.notifications(in:_:matching:perPage:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/notifications` — Mark repository notifications as read → `activity.markNotificationsRead(in:_:before:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stargazers` — List stargazers → `activity.stargazers(of:_:perPage:)` and `activity.stars(on:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stargazers/count` — Get stargazer count → `activity.stargazerCount(of:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stargazers/history` — Get repository star history → `activity.starHistory(of:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/subscribers` — List watchers → `activity.watchers(of:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/subscription` — Get a repository subscription → `activity.subscription(to:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/subscription` — Set a repository subscription → `activity.watch(_:_:ignored:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/subscription` — Delete a repository subscription → `activity.unwatch(_:_:)`
+- [x] ✅ `GET /user/starred` — List repositories starred by the authenticated user → `activity.starredRepositories(by:sort:ascending:perPage:)` and `activity.stars(by:sort:ascending:perPage:)`
+- [x] ✅ `GET /user/starred/{owner}/{repo}` — Check if a repository is starred by the authenticated user → `activity.isStarred(_:_:)`
+- [x] ✅ `PUT /user/starred/{owner}/{repo}` — Star a repository for the authenticated user → `activity.star(_:_:)`
+- [x] ✅ `DELETE /user/starred/{owner}/{repo}` — Unstar a repository for the authenticated user → `activity.unstar(_:_:)`
+- [x] ✅ `GET /user/subscriptions` — List repositories watched by the authenticated user → `activity.watchedRepositories(by:perPage:)`
+- [x] ✅ `GET /users/{username}/events` — List events for the authenticated user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/events/orgs/{org}` — List organization events for the authenticated user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/events/public` — List public events for a user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/received_events` — List events received by the authenticated user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/received_events/public` — List public events received by a user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/starred` — List repositories starred by a user → `activity.starredRepositories(by:sort:ascending:perPage:)` and `activity.stars(by:sort:ascending:perPage:)`
+- [x] ✅ `GET /users/{username}/subscriptions` — List repositories watched by a user → `activity.watchedRepositories(by:perPage:)`
 
 ### gists
 
-0/20 done · milestone M3
+20/20 done · milestone M3
 
-- [ ] `GET /gists` — List gists for the authenticated user
-- [ ] `POST /gists` — Create a gist
-- [ ] `GET /gists/public` — List public gists
-- [ ] `GET /gists/starred` — List starred gists
-- [ ] `GET /gists/{gist_id}` — Get a gist
-- [ ] `PATCH /gists/{gist_id}` — Update a gist
-- [ ] `DELETE /gists/{gist_id}` — Delete a gist
-- [ ] `GET /gists/{gist_id}/comments` — List gist comments
-- [ ] `POST /gists/{gist_id}/comments` — Create a gist comment
-- [ ] `GET /gists/{gist_id}/comments/{comment_id}` — Get a gist comment
-- [ ] `PATCH /gists/{gist_id}/comments/{comment_id}` — Update a gist comment
-- [ ] `DELETE /gists/{gist_id}/comments/{comment_id}` — Delete a gist comment
-- [ ] `GET /gists/{gist_id}/commits` — List gist commits
-- [ ] `GET /gists/{gist_id}/forks` — List gist forks
-- [ ] `POST /gists/{gist_id}/forks` — Fork a gist
-- [ ] `GET /gists/{gist_id}/star` — Check if a gist is starred
-- [ ] `PUT /gists/{gist_id}/star` — Star a gist
-- [ ] `DELETE /gists/{gist_id}/star` — Unstar a gist
-- [ ] `GET /gists/{gist_id}/{sha}` — Get a gist revision
-- [ ] `GET /users/{username}/gists` — List gists for a user
+- [x] ✅ `GET /gists` — List gists for the authenticated user → `gists.list(_:since:perPage:)`
+- [x] ✅ `POST /gists` — Create a gist → `gists.create(_:)`
+- [x] ✅ `GET /gists/public` — List public gists → `gists.list(_:since:perPage:)`
+- [x] ✅ `GET /gists/starred` — List starred gists → `gists.list(_:since:perPage:)`
+- [x] ✅ `GET /gists/{gist_id}` — Get a gist → `gists.gist(id:revision:)`
+- [x] ✅ `PATCH /gists/{gist_id}` — Update a gist → `gists.update(id:_:)`
+- [x] ✅ `DELETE /gists/{gist_id}` — Delete a gist → `gists.delete(id:)`
+- [x] ✅ `GET /gists/{gist_id}/comments` — List gist comments → `gists.comments(on:perPage:)`
+- [x] ✅ `POST /gists/{gist_id}/comments` — Create a gist comment → `gists.createComment(_:on:)`
+- [x] ✅ `GET /gists/{gist_id}/comments/{comment_id}` — Get a gist comment → `gists.comment(id:on:)`
+- [x] ✅ `PATCH /gists/{gist_id}/comments/{comment_id}` — Update a gist comment → `gists.updateComment(id:on:body:)`
+- [x] ✅ `DELETE /gists/{gist_id}/comments/{comment_id}` — Delete a gist comment → `gists.deleteComment(id:on:)`
+- [x] ✅ `GET /gists/{gist_id}/commits` — List gist commits → `gists.commits(of:perPage:)`
+- [x] ✅ `GET /gists/{gist_id}/forks` — List gist forks → `gists.forks(of:perPage:)`
+- [x] ✅ `POST /gists/{gist_id}/forks` — Fork a gist → `gists.fork(id:)`
+- [x] ✅ `GET /gists/{gist_id}/star` — Check if a gist is starred → `gists.isStarred(id:)`
+- [x] ✅ `PUT /gists/{gist_id}/star` — Star a gist → `gists.star(id:)`
+- [x] ✅ `DELETE /gists/{gist_id}/star` — Unstar a gist → `gists.unstar(id:)`
+- [x] ✅ `GET /gists/{gist_id}/{sha}` — Get a gist revision → `gists.gist(id:revision:)`
+- [x] ✅ `GET /users/{username}/gists` — List gists for a user → `gists.list(_:since:perPage:)`
 
 ### issues
 
-0/66 done · milestone M3
+66/66 done · milestone M3
 
-- [ ] `GET /issues` — List issues assigned to the authenticated user
-- [ ] `GET /orgs/{org}/issues` — List organization issues assigned to the authenticated user
-- [ ] `GET /repos/{owner}/{repo}/assignees` — List assignees
-- [ ] `GET /repos/{owner}/{repo}/assignees/{assignee}` — Check if a user can be assigned
-- [ ] `GET /repos/{owner}/{repo}/issues` — List repository issues
-- [ ] `POST /repos/{owner}/{repo}/issues` — Create an issue
-- [ ] `GET /repos/{owner}/{repo}/issues/comments` — List issue comments for a repository
-- [ ] `GET /repos/{owner}/{repo}/issues/comments/{comment_id}` — Get an issue comment
-- [ ] `PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}` — Update an issue comment
-- [ ] `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}` — Delete an issue comment
-- [ ] `PUT /repos/{owner}/{repo}/issues/comments/{comment_id}/pin` — Pin an issue comment
-- [ ] `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/pin` — Unpin an issue comment
-- [ ] `GET /repos/{owner}/{repo}/issues/events` — List issue events for a repository
-- [ ] `GET /repos/{owner}/{repo}/issues/events/{event_id}` — Get an issue event
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}` — Get an issue
-- [ ] `PATCH /repos/{owner}/{repo}/issues/{issue_number}` — Update an issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — List issue artifacts
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — Create an issue artifact
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Get an issue artifact
-- [ ] `PATCH /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Update an issue artifact
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Delete an issue artifact
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/assignees` — Add assignees to an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees` — Remove assignees from an issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/assignees/{assignee}` — Check if a user can be assigned to a issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/comments` — List issue comments
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/comments` — Create an issue comment
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — List dependencies an issue is blocked by
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — Add a dependency an issue is blocked by
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by/{issue_id}` — Remove dependency an issue is blocked by
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocking` — List dependencies an issue is blocking
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/events` — List issue events
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — List issue field values for an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Add issue field values to an issue
-- [ ] `PUT /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Set issue field values for an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values/{issue_field_id}` — Delete an issue field value from an issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/labels` — List labels for an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/labels` — Add labels to an issue
-- [ ] `PUT /repos/{owner}/{repo}/issues/{issue_number}/labels` — Set labels for an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels` — Remove all labels from an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}` — Remove a label from an issue
-- [ ] `PUT /repos/{owner}/{repo}/issues/{issue_number}/lock` — Lock an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock` — Unlock an issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/parent` — Get parent issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — List issues related to an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — Add a related issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/relates_to/{issue_id}` — Remove a related issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/sub_issue` — Remove sub-issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — List sub-issues
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — Add sub-issue
-- [ ] `PATCH /repos/{owner}/{repo}/issues/{issue_number}/sub_issues/priority` — Reprioritize sub-issue
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/suggestions` — List issue suggestions
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/approve` — Approve an issue suggestion
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/dismiss` — Dismiss an issue suggestion
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/timeline` — List timeline events for an issue
-- [ ] `GET /repos/{owner}/{repo}/labels` — List labels for a repository
-- [ ] `POST /repos/{owner}/{repo}/labels` — Create a label
-- [ ] `GET /repos/{owner}/{repo}/labels/{name}` — Get a label
-- [ ] `PATCH /repos/{owner}/{repo}/labels/{name}` — Update a label
-- [ ] `DELETE /repos/{owner}/{repo}/labels/{name}` — Delete a label
-- [ ] `GET /repos/{owner}/{repo}/milestones` — List milestones
-- [ ] `POST /repos/{owner}/{repo}/milestones` — Create a milestone
-- [ ] `GET /repos/{owner}/{repo}/milestones/{milestone_number}` — Get a milestone
-- [ ] `PATCH /repos/{owner}/{repo}/milestones/{milestone_number}` — Update a milestone
-- [ ] `DELETE /repos/{owner}/{repo}/milestones/{milestone_number}` — Delete a milestone
-- [ ] `GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels` — List labels for issues in a milestone
-- [ ] `GET /user/issues` — List user account issues assigned to the authenticated user
+- [x] ✅ `GET /issues` — List issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.everywhere`
+- [x] ✅ `GET /orgs/{org}/issues` — List organization issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.organization(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/assignees` — List assignees → `issues.assignees(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/assignees/{assignee}` — Check if a user can be assigned → `issues.canAssign(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues` — List repository issues → `issues.list(_:_:matching:sort:ascending:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues` — Create an issue → `issues.create(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/comments` — List issue comments for a repository → `issues.comments(_:_:sort:ascending:updatedSince:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/comments/{comment_id}` — Get an issue comment → `issues.comment(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}` — Update an issue comment → `issues.updateComment(id:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}` — Delete an issue comment → `issues.deleteComment(id:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/issues/comments/{comment_id}/pin` — Pin an issue comment → `issues.pinComment(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/pin` — Unpin an issue comment → `issues.unpinComment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/events` — List issue events for a repository → `issues.events(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/events/{event_id}` — Get an issue event → `issues.event(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}` — Get an issue → `issues.issue(_:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/issues/{issue_number}` — Update an issue → `issues.update(_:in:_:_:)`, `close(_:in:_:reason:)`, `reopen(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — List issue artifacts → `issues.artifacts(on:in:_:type:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/artifacts` — Create an issue artifact → `issues.createArtifact(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Get an issue artifact → `issues.artifact(_:on:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Update an issue artifact → `issues.updateArtifact(_:on:in:_:name:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/artifacts/{artifact_number}` — Delete an issue artifact → `issues.deleteArtifact(_:on:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/assignees` — Add assignees to an issue → `issues.addAssignees(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees` — Remove assignees from an issue → `issues.removeAssignees(_:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/assignees/{assignee}` — Check if a user can be assigned to a issue → `issues.canAssign(_:to:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/comments` — List issue comments → `issues.comments(on:in:_:updatedSince:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/comments` — Create an issue comment → `issues.createComment(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — List dependencies an issue is blocked by → `issues.blockers(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by` — Add a dependency an issue is blocked by → `issues.addBlocker(id:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocked_by/{issue_id}` — Remove dependency an issue is blocked by → `issues.removeBlocker(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/dependencies/blocking` — List dependencies an issue is blocking → `issues.blockedIssues(by:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/events` — List issue events → `issues.events(on:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — List issue field values for an issue → `issues.fieldValues(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Add issue field values to an issue → `issues.addFieldValues(_:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values` — Set issue field values for an issue → `issues.setFieldValues(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/issue-field-values/{issue_field_id}` — Delete an issue field value from an issue → `issues.deleteFieldValue(fieldID:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/labels` — List labels for an issue → `issues.labels(on:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/labels` — Add labels to an issue → `issues.addLabels(_:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/issues/{issue_number}/labels` — Set labels for an issue → `issues.setLabels(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels` — Remove all labels from an issue → `issues.removeAllLabels(from:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}` — Remove a label from an issue → `issues.removeLabel(named:from:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/issues/{issue_number}/lock` — Lock an issue → `issues.lock(_:in:_:reason:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock` — Unlock an issue → `issues.unlock(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/parent` — Get parent issue → `issues.parent(of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — List issues related to an issue → `issues.relatedIssues(to:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/relates_to` — Add a related issue → `issues.addRelatedIssue(id:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/relates_to/{issue_id}` — Remove a related issue → `issues.removeRelatedIssue(id:from:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/sub_issue` — Remove sub-issue → `issues.removeSubIssue(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — List sub-issues → `issues.subIssues(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/sub_issues` — Add sub-issue → `issues.addSubIssue(id:to:in:_:replaceParent:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/issues/{issue_number}/sub_issues/priority` — Reprioritize sub-issue → `issues.moveSubIssue(id:_:of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/suggestions` — List issue suggestions → `issues.suggestions(for:in:_:state:action:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/approve` — Approve an issue suggestion → `issues.approveSuggestion(id:on:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/suggestions/{suggestion_id}/dismiss` — Dismiss an issue suggestion → `issues.dismissSuggestion(id:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/timeline` — List timeline events for an issue → `issues.timeline(of:in:_:excluding:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/labels` — List labels for a repository → `issues.labels(_:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/labels` — Create a label → `issues.createLabel(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/labels/{name}` — Get a label → `issues.label(named:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/labels/{name}` — Update a label → `issues.updateLabel(named:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/labels/{name}` — Delete a label → `issues.deleteLabel(named:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/milestones` — List milestones → `issues.milestones(_:_:state:sort:ascending:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/milestones` — Create a milestone → `issues.createMilestone(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/milestones/{milestone_number}` — Get a milestone → `issues.milestone(_:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/milestones/{milestone_number}` — Update a milestone → `issues.updateMilestone(_:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/milestones/{milestone_number}` — Delete a milestone → `issues.deleteMilestone(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels` — List labels for issues in a milestone → `issues.labels(inMilestone:in:_:perPage:)`
+- [x] ✅ `GET /user/issues` — List user account issues assigned to the authenticated user → `issues.list(_:in:matching:sort:ascending:perPage:)` with `.personalRepositories`
 
 ### pulls
 
-0/35 done · milestone M3
+35/35 done · milestone M3
 
-- [ ] `GET /repos/{owner}/{repo}/pulls` — List pull requests
-- [ ] `POST /repos/{owner}/{repo}/pulls` — Create a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/comments` — List review comments in a repository
-- [ ] `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Get a review comment for a pull request
-- [ ] `PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Update a review comment for a pull request
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Delete a review comment for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}` — Get a pull request
-- [ ] `PATCH /repos/{owner}/{repo}/pulls/{pull_number}` — Update a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/comments` — List review comments on a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments` — Create a review comment for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies` — Create a reply for a review comment
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/commits` — List commits on a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/files` — List pull requests files
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Check if a pull request has been merged
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Merge a pull request
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge-async` — Merge a pull request asynchronously
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge-async/{uuid}` — Get the result of an asynchronous merge
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Get all requested reviewers for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Request reviewers for a pull request
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Remove requested reviewers from a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers/rerequest` — Rerequest reviewers for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — List reviews for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — Create a review for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Get a review for a pull request
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Update a review for a pull request
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Delete a pending review for a pull request
-- [ ] `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments` — List comments for a pull request review
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals` — Dismiss a review for a pull request
-- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events` — Submit a review for a pull request
-- [ ] `PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch` — Update a pull request branch
-- [ ] `GET /repos/{owner}/{repo}/stacks` — List pull request stacks
-- [ ] `POST /repos/{owner}/{repo}/stacks` — Create a pull request stack
-- [ ] `GET /repos/{owner}/{repo}/stacks/{stack_number}` — Get a pull request stack
-- [ ] `POST /repos/{owner}/{repo}/stacks/{stack_number}/add` — Add pull requests to a pull request stack
-- [ ] `POST /repos/{owner}/{repo}/stacks/{stack_number}/unstack` — Remove pull requests from a pull request stack
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls` — List pull requests → `pullRequests.list(_:_:state:head:base:sort:ascending:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls` — Create a pull request → `pullRequests.create(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/comments` — List review comments in a repository → `pullRequests.reviewComments(_:_:sort:ascending:updatedSince:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Get a review comment for a pull request → `pullRequests.reviewComment(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Update a review comment for a pull request → `pullRequests.updateReviewComment(id:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}` — Delete a review comment for a pull request → `pullRequests.deleteReviewComment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}` — Get a pull request → `pullRequests.pullRequest(_:in:_:)` / `diff(_:in:_:format:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/pulls/{pull_number}` — Update a pull request → `pullRequests.update(_:in:_:_:)`, `close(_:in:_:)`, `reopen(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/comments` — List review comments on a pull request → `pullRequests.reviewComments(on:in:_:sort:ascending:updatedSince:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments` — Create a review comment for a pull request → `pullRequests.createReviewComment(_:on:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies` — Create a reply for a review comment → `pullRequests.replyToReviewComment(id:on:in:_:body:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/commits` — List commits on a pull request → `pullRequests.commits(of:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/files` — List pull requests files → `pullRequests.files(of:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Check if a pull request has been merged → `pullRequests.isMerged(_:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Merge a pull request → `pullRequests.merge(_:in:_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge-async` — Merge a pull request asynchronously → `pullRequests.mergeInBackground(_:in:_:_:action:bypassRules:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge-async/{uuid}` — Get the result of an asynchronous merge → `pullRequests.backgroundMerge(_:of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Get all requested reviewers for a pull request → `pullRequests.requestedReviewers(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Request reviewers for a pull request → `pullRequests.requestReviewers(_:teams:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers` — Remove requested reviewers from a pull request → `pullRequests.removeRequestedReviewers(_:teams:from:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers/rerequest` — Rerequest reviewers for a pull request → `pullRequests.rerequestReviewers(_:teams:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — List reviews for a pull request → `pullRequests.reviews(of:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` — Create a review for a pull request → `pullRequests.createReview(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Get a review for a pull request → `pullRequests.review(id:of:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Update a review for a pull request → `pullRequests.updateReview(id:of:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}` — Delete a pending review for a pull request → `pullRequests.deletePendingReview(id:of:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments` — List comments for a pull request review → `pullRequests.comments(inReview:of:in:_:perPage:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals` — Dismiss a review for a pull request → `pullRequests.dismissReview(id:of:in:_:message:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events` — Submit a review for a pull request → `pullRequests.submitReview(id:of:in:_:event:body:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch` — Update a pull request branch → `pullRequests.updateBranch(_:in:_:expectedHeadSHA:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stacks` — List pull request stacks → `pullRequests.stacks(_:_:containing:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/stacks` — Create a pull request stack → `pullRequests.createStack(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stacks/{stack_number}` — Get a pull request stack → `pullRequests.stack(_:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/stacks/{stack_number}/add` — Add pull requests to a pull request stack → `pullRequests.addToStack(_:stack:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/stacks/{stack_number}/unstack` — Remove pull requests from a pull request stack → `pullRequests.unstack(_:in:_:)`
 
 ### reactions
 
-0/15 done · milestone M3
+15/15 done · milestone M3
 
-- [ ] `GET /repos/{owner}/{repo}/comments/{comment_id}/reactions` — List reactions for a commit comment
-- [ ] `POST /repos/{owner}/{repo}/comments/{comment_id}/reactions` — Create reaction for a commit comment
-- [ ] `DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}` — Delete a commit comment reaction
-- [ ] `GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — List reactions for an issue comment
-- [ ] `POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — Create reaction for an issue comment
-- [ ] `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}` — Delete an issue comment reaction
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/reactions` — List reactions for an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/reactions` — Create reaction for an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}` — Delete an issue reaction
-- [ ] `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — List reactions for a pull request review comment
-- [ ] `POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — Create reaction for a pull request review comment
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}` — Delete a pull request comment reaction
-- [ ] `GET /repos/{owner}/{repo}/releases/{release_id}/reactions` — List reactions for a release
-- [ ] `POST /repos/{owner}/{repo}/releases/{release_id}/reactions` — Create reaction for a release
-- [ ] `DELETE /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}` — Delete a release reaction
+- [x] ✅ `GET /repos/{owner}/{repo}/comments/{comment_id}/reactions` — List reactions for a commit comment → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/comments/{comment_id}/reactions` — Create reaction for a commit comment → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}` — Delete a commit comment reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — List reactions for an issue comment → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — Create reaction for an issue comment → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}` — Delete an issue comment reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/reactions` — List reactions for an issue → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/reactions` — Create reaction for an issue → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}` — Delete an issue reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — List reactions for a pull request review comment → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — Create reaction for a pull request review comment → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}` — Delete a pull request comment reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/{release_id}/reactions` — List reactions for a release → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases/{release_id}/reactions` — Create reaction for a release → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}` — Delete a release reaction → `reactions.delete(id:from:in:_:)`
 
 ### search
 
-0/7 done · milestone M3
+7/7 done · milestone M3
 
-- [ ] `GET /search/code` — Search code
-- [ ] `GET /search/commits` — Search commits
-- [ ] `GET /search/issues` — Search issues and pull requests
-- [ ] `GET /search/labels` — Search labels
-- [ ] `GET /search/repositories` — Search repositories
-- [ ] `GET /search/topics` — Search topics
-- [ ] `GET /search/users` — Search users
+- [x] ✅ `GET /search/code` — Search code → `search.code(_:textMatches:perPage:)`
+- [x] ✅ `GET /search/commits` — Search commits → `search.commits(_:sort:ascending:textMatches:perPage:)`
+- [x] ✅ `GET /search/issues` — Search issues and pull requests → `search.issues(_:sort:ascending:advanced:mode:textMatches:perPage:)`
+- [x] ✅ `GET /search/labels` — Search labels → `search.labels(_:inRepository:sort:ascending:textMatches:perPage:)`
+- [x] ✅ `GET /search/repositories` — Search repositories → `search.repositories(_:sort:ascending:textMatches:perPage:)`
+- [x] ✅ `GET /search/topics` — Search topics → `search.topics(_:textMatches:perPage:)`
+- [x] ✅ `GET /search/users` — Search users → `search.users(_:sort:ascending:textMatches:perPage:)`
 
 ### actions
 
