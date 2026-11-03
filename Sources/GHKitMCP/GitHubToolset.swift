@@ -24,7 +24,9 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
     }
 
     /// Every toolset, in the order their tools are listed.
-    static let everyToolset: [GitHubToolset] = [.context, .repositories, .issues, .pullRequests, .rawRequests]
+    static let everyToolset: [GitHubToolset] = [
+        .context, .repositories, .issues, .pullRequests, .search, .activity, .gists, .reactions, .rawRequests,
+    ]
 }
 
 extension GitHubToolset {
@@ -40,6 +42,18 @@ extension GitHubToolset {
     /// Pull requests, their diffs and files, reviews, review comments, and merging.
     public static let pullRequests = GitHubToolset("pull_requests", tools: PullRequestTools.tools)
 
+    /// Search code, issues and pull requests, repositories, users, and commits.
+    public static let search = GitHubToolset("search", tools: SearchTools.tools)
+
+    /// Notifications, events, stars, and watching.
+    public static let activity = GitHubToolset("activity", tools: ActivityTools.tools)
+
+    /// Gists: list, read, create, update, and delete.
+    public static let gists = GitHubToolset("gists", tools: GistTools.tools)
+
+    /// Emoji reactions on issues, pull requests, comments, and releases.
+    public static let reactions = GitHubToolset("reactions", tools: ReactionTools.tools)
+
     /// `github_rest` and `github_graphql`, for anything the other toolsets don't cover.
     ///
     /// With ``GitHubToolAccess/readOnly``, `github_rest` only sends `GET` requests and
@@ -49,7 +63,7 @@ extension GitHubToolset {
 
 extension Set where Element == GitHubToolset {
     /// The toolsets most assistants need.
-    public static var defaults: Set<GitHubToolset> { [.context, .repositories, .issues, .pullRequests] }
+    public static var defaults: Set<GitHubToolset> { [.context, .repositories, .issues, .pullRequests, .search] }
 
     /// Every toolset.
     public static var all: Set<GitHubToolset> { Set(GitHubToolset.everyToolset) }
