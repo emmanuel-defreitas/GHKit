@@ -24,7 +24,7 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
     }
 
     /// Every toolset, in the order their tools are listed.
-    static let everyToolset: [GitHubToolset] = [.context, .repositories, .rawRequests]
+    static let everyToolset: [GitHubToolset] = [.context, .repositories, .issues, .rawRequests]
 }
 
 extension GitHubToolset {
@@ -33,6 +33,9 @@ extension GitHubToolset {
 
     /// Repositories, files, branches, commits, tags, and releases.
     public static let repositories = GitHubToolset("repositories", tools: RepositoryTools.tools)
+
+    /// Issues and their comments, timelines, labels, assignees, milestones, and sub-issues.
+    public static let issues = GitHubToolset("issues", tools: IssueTools.tools)
 
     /// `github_rest` and `github_graphql`, for anything the other toolsets don't cover.
     ///
@@ -43,7 +46,7 @@ extension GitHubToolset {
 
 extension Set where Element == GitHubToolset {
     /// The toolsets most assistants need.
-    public static var defaults: Set<GitHubToolset> { [.context, .repositories] }
+    public static var defaults: Set<GitHubToolset> { [.context, .repositories, .issues] }
 
     /// Every toolset.
     public static var all: Set<GitHubToolset> { Set(GitHubToolset.everyToolset) }
