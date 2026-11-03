@@ -150,6 +150,20 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``CodeFile``
 - ``Topic``
 
+### Activity
+
+- ``ActivityAPI``
+- ``GitHubEvent``
+- ``EventSource``
+- ``Feeds``
+- ``NotificationThread``
+- ``NotificationFilter``
+- ``ThreadSubscription``
+- ``Stargazer``
+- ``StarredRepository``
+- ``StarHistoryWeek``
+- ``RepositorySubscription``
+
 ### Paging through lists
 
 - <doc:Pagination>

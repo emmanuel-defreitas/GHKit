@@ -24,6 +24,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Search: code, commits, issues and pull requests (including advanced and semantic search), labels,
   repositories, topics, and users. Results are `SearchResult` values that read like the matched item and add
   the score and optional text matches; `summary()` gives the total count.
+- Activity: events from every source (`EventSource`), Atom feeds, notifications (list, mark read or done,
+  and follow or mute threads), stars (with star dates, counts, and weekly history), and watching.
+  Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
 
 ## [0.1.1] - 2026-11-03
 
