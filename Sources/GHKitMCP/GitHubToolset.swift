@@ -24,7 +24,7 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
     }
 
     /// Every toolset, in the order their tools are listed.
-    static let everyToolset: [GitHubToolset] = [.context, .repositories, .issues, .rawRequests]
+    static let everyToolset: [GitHubToolset] = [.context, .repositories, .issues, .pullRequests, .rawRequests]
 }
 
 extension GitHubToolset {
@@ -37,6 +37,9 @@ extension GitHubToolset {
     /// Issues and their comments, timelines, labels, assignees, milestones, and sub-issues.
     public static let issues = GitHubToolset("issues", tools: IssueTools.tools)
 
+    /// Pull requests, their diffs and files, reviews, review comments, and merging.
+    public static let pullRequests = GitHubToolset("pull_requests", tools: PullRequestTools.tools)
+
     /// `github_rest` and `github_graphql`, for anything the other toolsets don't cover.
     ///
     /// With ``GitHubToolAccess/readOnly``, `github_rest` only sends `GET` requests and
@@ -46,7 +49,7 @@ extension GitHubToolset {
 
 extension Set where Element == GitHubToolset {
     /// The toolsets most assistants need.
-    public static var defaults: Set<GitHubToolset> { [.context, .repositories, .issues] }
+    public static var defaults: Set<GitHubToolset> { [.context, .repositories, .issues, .pullRequests] }
 
     /// Every toolset.
     public static var all: Set<GitHubToolset> { Set(GitHubToolset.everyToolset) }

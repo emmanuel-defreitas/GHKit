@@ -43,6 +43,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   comments, timeline, and sub-issues; labels, milestones, assignable users, and issue types; create and update
   issues, comment, edit and delete comments, add and remove labels and assignees, create labels, and add
   sub-issues by number.
+- `GHKitMCP` pull request tools, on by default: list and get pull requests, their diffs, changed files,
+  commits, reviews, review comments, and requested reviewers, and find the pull requests for a commit; open,
+  update, and merge pull requests, update their branch, request reviewers, review with line comments, comment
+  on lines or files, and reply to review threads.
 - `PageCursor(url:)`, to rebuild a cursor from a saved URL.
 
 ### Changed
