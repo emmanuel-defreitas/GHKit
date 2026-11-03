@@ -111,7 +111,11 @@ struct RawRequestToolsTests {
         ("\u{0301}mutation { x }", true),
         ("query { a(t: \"\u{0301}\") } mutation { x }", true),
         ("query { a(t: \"\\\u{0301}\") } mutation { x }", true),
-        ("# comment\u{2028}mutation { x }", true),
+        ("# comment\u{2028}mutation { x }", false),
+        ("# x\u{2028}\"\"\"\nmutation { x }\n#\"\"\"", true),
+        ("fragment F on R { o(e: \"\u{2028}\") { id } } mutation { addStar { ...F } }", true),
+        ("fragment F on R { o(e: \"\u{2029}\") { id } } subscription { s { ...F } }", true),
+        ("{ a } \"\\\nmutation { x }", true),
         ("{ a } \"open\nmutation { x }", true),
     ])
     func detectsMutations(document: String, isMutation: Bool) {

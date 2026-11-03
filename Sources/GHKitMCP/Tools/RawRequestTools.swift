@@ -158,9 +158,9 @@ enum GraphQLDocument {
             let scalar = scalars[index]
             switch scalar {
             case "#":
-                // GraphQL comments end at LF or CR. Stop at any newline, so a server that also breaks
-                // lines at U+2028 can't run a mutation this scan took for a comment.
-                while index < scalars.count, !isNewline(scalars[index]) { index += 1 }
+                // Comments end at LF or CR, exactly as GraphQL's lexer ends them. Ending them anywhere
+                // else would misread what follows, such as a `"""` that GitHub sees as commented out.
+                while index < scalars.count, !isLineTerminator(scalars[index]) { index += 1 }
                 continue
             case "\"":
                 index = endOfString(in: scalars, from: index)
@@ -191,8 +191,9 @@ enum GraphQLDocument {
         return false
     }
 
-    private static func isNewline(_ scalar: Unicode.Scalar) -> Bool {
-        Character(scalar).isNewline
+    /// GraphQL's line terminators. U+2028 and U+2029 aren't, so strings and comments may contain them.
+    private static func isLineTerminator(_ scalar: Unicode.Scalar) -> Bool {
+        scalar == "\n" || scalar == "\r"
     }
 
     /// GraphQL names are ASCII: `[_A-Za-z][_0-9A-Za-z]*`.
@@ -223,10 +224,11 @@ enum GraphQLDocument {
         var index = start + 1
         while index < scalars.count {
             switch scalars[index] {
+            // A plain string can't span lines, so a line terminator ends it, even after a backslash.
+            case "\\" where index + 1 < scalars.count && isLineTerminator(scalars[index + 1]): return index + 1
             case "\\": index = min(index + 2, scalars.count)
             case "\"": return index + 1
-            // A plain string can't span lines, so a newline ends it here.
-            case _ where isNewline(scalars[index]): return index
+            case _ where isLineTerminator(scalars[index]): return index
             default: index += 1
             }
         }
