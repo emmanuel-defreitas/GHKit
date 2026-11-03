@@ -123,4 +123,11 @@ struct PullRequestToolsTests {
         #expect(text == "`startLine` must come before `line`.")
         #expect(transport.requests.isEmpty)
     }
+
+    @Test func emptyBodyClearsTheDescription() async throws {
+        let transport = MockTransport(.fixture("pull-request"))
+        let (text, isError) = try await callTool("update_pull_request", Self.with(["number": 1347, "body": ""]), on: transport)
+        #expect(!isError, "\(text)")
+        #expect(transport.requests.first?.jsonBody == ["body": ""])
+    }
 }

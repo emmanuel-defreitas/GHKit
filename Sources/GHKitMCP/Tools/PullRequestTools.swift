@@ -190,7 +190,7 @@ enum PullRequestTools {
             let (owner, repo) = try owner(arguments)
             let changes = PullRequestUpdate(
                 title: try arguments.optionalString("title"),
-                body: try arguments.optionalString("body"),
+                body: try arguments.optionalText("body"),
                 state: try arguments.choice("state", from: ["open": IssueState.open, "closed": .closed]),
                 base: try arguments.optionalString("base")
             )
