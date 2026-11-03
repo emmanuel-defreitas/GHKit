@@ -216,4 +216,26 @@ struct RepositoryToolsTests {
         #expect(date.contains("ISO 8601"))
         #expect(transport.requests.isEmpty)
     }
+
+    @Test func emptyStringsClearFields() async throws {
+        let repository = MockTransport(.fixture("full-repository"))
+        _ = try await callTool("update_repository", Self.with(["description": "", "homepage": ""]), on: repository)
+        #expect(repository.requests.first?.jsonBody == ["description": "", "homepage": ""])
+
+        let release = MockTransport(.fixture("release"))
+        _ = try await callTool("update_release", Self.with(["id": 1, "body": ""]), on: release)
+        #expect(release.requests.first?.jsonBody == ["body": ""])
+    }
+
+    @Test func requiresContentAndTopics() async throws {
+        let transport = MockTransport(.json("{}"))
+        let (file, fileError) = try await callTool(
+            "create_or_update_file", Self.with(["path": "a.md", "message": "Edit", "sha": "abc"]), on: transport)
+        #expect(fileError)
+        #expect(file == "Missing required argument `content`.")
+        let (topics, topicsError) = try await callTool("replace_topics", Self.repo, on: transport)
+        #expect(topicsError)
+        #expect(topics == "Missing required argument `topics`.")
+        #expect(transport.requests.isEmpty)
+    }
 }

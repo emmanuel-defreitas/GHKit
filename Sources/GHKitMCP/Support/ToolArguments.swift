@@ -36,6 +36,24 @@ struct ToolArguments: Sendable {
         }
     }
 
+    /// Like ``optionalString(_:)``, but keeps an empty string. Use it for fields where `""` clears a value.
+    func optionalText(_ key: String) throws(ToolFailure) -> String? {
+        if case .string(let text)? = values[key] { return text }
+        return try optionalString(key)
+    }
+
+    /// A required string that may be empty, such as a file's contents.
+    func text(_ key: String) throws(ToolFailure) -> String {
+        guard let value = try optionalText(key) else { throw ToolFailure("Missing required argument `\(key)`.") }
+        return value
+    }
+
+    /// A required list that may be empty, such as topics to replace.
+    func requiredStrings(_ key: String) throws(ToolFailure) -> [String] {
+        guard let value = try optionalStrings(key) else { throw ToolFailure("Missing required argument `\(key)`.") }
+        return value
+    }
+
     func strings(_ key: String) throws(ToolFailure) -> [String] {
         try optionalStrings(key) ?? []
     }

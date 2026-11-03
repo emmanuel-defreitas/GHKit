@@ -141,8 +141,8 @@ enum RepositoryTools {
             )
         ) { arguments, context in
             let changes = RepositoryUpdate(
-                description: try arguments.optionalString("description"),
-                homepage: try arguments.optionalString("homepage"),
+                description: try arguments.optionalText("description"),
+                homepage: try arguments.optionalText("homepage"),
                 visibility: try arguments.optionalBool("private").map { $0 ? .private : .public },
                 defaultBranch: try arguments.optionalString("defaultBranch"),
                 hasIssues: try arguments.optionalBool("hasIssues"),
@@ -184,7 +184,7 @@ enum RepositoryTools {
         ) { arguments, context in
             try .json(
                 await context.client.repositories.replaceTopics(
-                    arguments.strings("topics"), on: arguments.string("owner"), arguments.string("repo")))
+                    arguments.requiredStrings("topics"), on: arguments.string("owner"), arguments.string("repo")))
         },
     ]
 
@@ -249,7 +249,7 @@ enum RepositoryTools {
         ) { arguments, context in
             let change = FileChange(
                 message: try arguments.string("message"),
-                text: try arguments.optionalString("content") ?? "",
+                text: try arguments.text("content"),
                 replacing: try arguments.optionalString("sha"),
                 branch: try arguments.optionalString("branch")
             )
@@ -502,8 +502,8 @@ enum RepositoryTools {
             let changes = ReleaseUpdate(
                 tagName: try arguments.optionalString("tag"),
                 targetCommitish: try arguments.optionalString("target"),
-                name: try arguments.optionalString("name"),
-                body: try arguments.optionalString("body"),
+                name: try arguments.optionalText("name"),
+                body: try arguments.optionalText("body"),
                 isDraft: try arguments.optionalBool("draft"),
                 isPrerelease: try arguments.optionalBool("prerelease")
             )
