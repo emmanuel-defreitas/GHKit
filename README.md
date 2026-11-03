@@ -328,7 +328,7 @@ Let Claude and other AI assistants use GitHub through your app, as the signed-in
 import GHKitMCP
 import MCP
 
-let toolbox = GitHubToolbox(client: github, toolsets: [.context, .rawRequests])  // read-only by default
+let toolbox = GitHubToolbox(client: github, toolsets: [.context, .repositories])  // read-only by default
 let server = await toolbox.makeServer(name: "MyApp", version: "1.0")
 try await server.start(transport: StdioTransport())
 ```

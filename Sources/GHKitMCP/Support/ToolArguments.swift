@@ -36,6 +36,24 @@ struct ToolArguments: Sendable {
         }
     }
 
+    /// Like ``optionalString(_:)``, but keeps an empty string. Use it for fields where `""` clears a value.
+    func optionalText(_ key: String) throws(ToolFailure) -> String? {
+        if case .string(let text)? = values[key] { return text }
+        return try optionalString(key)
+    }
+
+    /// A required string that may be empty, such as a file's contents.
+    func text(_ key: String) throws(ToolFailure) -> String {
+        guard let value = try optionalText(key) else { throw ToolFailure("Missing required argument `\(key)`.") }
+        return value
+    }
+
+    /// A required list that may be empty, such as topics to replace.
+    func requiredStrings(_ key: String) throws(ToolFailure) -> [String] {
+        guard let value = try optionalStrings(key) else { throw ToolFailure("Missing required argument `\(key)`.") }
+        return value
+    }
+
     func strings(_ key: String) throws(ToolFailure) -> [String] {
         try optionalStrings(key) ?? []
     }
@@ -86,6 +104,24 @@ struct ToolArguments: Sendable {
         case .string("false")?: return false
         default: throw ToolFailure("`\(key)` must be true or false.")
         }
+    }
+
+    /// The value one of `options`' names stands for, such as a sort order.
+    func choice<Option>(_ key: String, from options: KeyValuePairs<String, Option>) throws(ToolFailure) -> Option? {
+        guard let name = try optionalString(key) else { return nil }
+        guard let option = options.first(where: { $0.key == name })?.value else {
+            throw ToolFailure("`\(key)` must be one of: \(options.map(\.key).joined(separator: ", ")).")
+        }
+        return option
+    }
+
+    /// An ISO 8601 date and time, or a `YYYY-MM-DD` date taken as midnight UTC.
+    func optionalDate(_ key: String) throws(ToolFailure) -> Date? {
+        guard let text = try optionalString(key) else { return nil }
+        if let date = try? Date(text, strategy: .iso8601) { return date }
+        if let date = try? Date(text, strategy: Date.ISO8601FormatStyle(includingFractionalSeconds: true)) { return date }
+        if let date = try? Date(text, strategy: Date.ISO8601FormatStyle().year().month().day()) { return date }
+        throw ToolFailure("`\(key)` must be an ISO 8601 date, such as `2026-01-31` or `2026-01-31T12:00:00Z`.")
     }
 
     func object(_ key: String) throws(ToolFailure) -> [String: MCP.Value]? {
