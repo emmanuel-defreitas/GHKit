@@ -269,4 +269,18 @@ struct IssueDetailsTests {
         #expect(transport.requests[2].jsonBody == ["name": "Research notes", "body": "## Findings", "type": "generic"])
         #expect(transport.requests[3].jsonBody == ["body": "## Revised"])
     }
+
+    @Test func artifactsPageByNumberWithoutLinkHeaders() async throws {
+        // Two artifacts per full page, then a short page. GitHub sends no `Link` header here.
+        let transport = MockTransport { request, _ in
+            switch request.queryItems["page"] {
+            case nil, "2": .fixture("issue-artifact-items")
+            default: .fixtureList("issue-artifact")
+            }
+        }
+        let artifacts = try await makeClient(transport).issues.artifacts(on: 1347, in: "octocat", "Hello-World", perPage: 2).collect()
+        #expect(artifacts.count == 5)
+        #expect(transport.requests.map { $0.queryItems["page"] } == [nil, "2", "3"])
+        #expect(transport.requests.allSatisfy { $0.queryItems["per_page"] == "2" })
+    }
 }

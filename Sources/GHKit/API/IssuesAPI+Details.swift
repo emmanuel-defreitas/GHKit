@@ -215,9 +215,11 @@ extension IssuesAPI {
     public func artifacts(
         on number: Int, in owner: String, _ name: String, type: IssueArtifactType? = nil, perPage: Int = 100
     ) -> Paginated<IssueArtifact> {
-        client.paginate(
-            GitHubRequest(
-                .get, issuePath(number, owner, name, "/artifacts"), query: .query(("type", type), ("per_page", perPage))))
+        // This endpoint sends no `Link` header, so pages are counted instead.
+        var request = GitHubRequest<[IssueArtifact]>(
+            .get, issuePath(number, owner, name, "/artifacts"), query: .query(("type", type), ("per_page", perPage)))
+        request.numberedPageSize = perPage
+        return client.paginate(request)
     }
 
     /// One artifact and its earlier versions.

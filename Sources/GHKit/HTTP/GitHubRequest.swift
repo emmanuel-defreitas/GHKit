@@ -21,6 +21,9 @@ public struct GitHubRequest<Response: Sendable>: Sendable {
     public var headers: [String: String]
     public var body: RequestBody?
     let decode: @Sendable (Data) throws -> Response
+    /// The page size of a list endpoint that pages by number but sends no `Link` header.
+    /// A full page then means there may be another.
+    var numberedPageSize: Int?
 
     public init(
         method: HTTPMethod,
