@@ -53,10 +53,31 @@ common=(
     --source-service github
     --source-service-base-url "https://github.com/$repository/blob/$source_ref"
     --checkout-path "$root"
-    --warnings-as-errors
-    -Wwarning org.swift.docc.MissingParameterDocumentation
 )
 [ -n "$base_path" ] && common+=(--hosting-base-path "$base_path")
+
+# Fails if DocC reported any warning other than an incomplete "- Parameters:" list.
+# DocC 6.2 (Xcode 26) has no -Wwarning flag and no diagnostic IDs in this file, so match the message too.
+check_diagnostics() {
+    python3 -I - "$1" <<'PY'
+import json, re, sys
+
+allowed_id = "org.swift.docc.MissingParameterDocumentation"
+allowed_summary = re.compile(r"^Parameter '.+' is missing documentation$")
+
+diagnostics = json.load(open(sys.argv[1])).get("diagnostics", [])
+failures = [
+    d for d in diagnostics
+    if d.get("severity") in ("warning", "error")
+    and d.get("id") != allowed_id
+    and not allowed_summary.match(d.get("summary", ""))
+]
+for d in failures:
+    line = ((d.get("range") or {}).get("start") or {}).get("line", "?")
+    print(f"error: {d.get('source', '')}:{line}: {d.get('summary')}", file=sys.stderr)
+sys.exit(1 if failures else 0)
+PY
+}
 
 archives=()
 for module in "${modules[@]}"; do
@@ -74,7 +95,9 @@ for module in "${modules[@]}"; do
         --fallback-display-name "$module" \
         --fallback-bundle-identifier "com.github.${repository//\//.}.$module" \
         --output-path "$work/$module.doccarchive" \
+        --diagnostics-file "$work/$module-diagnostics.json" \
         "${common[@]}" "${extra[@]}"
+    check_diagnostics "$work/$module-diagnostics.json"
     archives+=("$work/$module.doccarchive")
 done
 
