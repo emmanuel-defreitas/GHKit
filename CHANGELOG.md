@@ -31,6 +31,34 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
 - Gists: list (yours, a user's, public, or starred), get (or an earlier revision), create, update (edit, add,
   rename, or delete files), delete, fork, star, revisions, forks, and comments.
+- `GHKitMCP`, a new product that offers GitHub as Model Context Protocol tools, so apps can let AI assistants
+  use GitHub as the signed-in user. `GitHubToolbox` lists and runs the tools, groups them into toolsets, and
+  is read-only unless you pass `.readWrite`. It starts with `get_me`, `get_rate_limit`, and the
+  `github_rest` and `github_graphql` tools for any endpoint. Adds the official MCP Swift SDK, for this
+  product only. The package also has a `ghkit-mcp` stdio server for trying the tools on macOS.
+- `GHKitMCP` repository tools, on by default: get, list, create, update, and fork repositories; read files as
+  text and the README; create, update, and delete files; branches, merges, tags, commits, comparisons, commit
+  status, contributors, languages, forks, topics, and releases (including generated release notes).
+- `GHKitMCP` issue tools, on by default: list issues in a repository or across repositories, get an issue, its
+  comments, timeline, and sub-issues; labels, milestones, assignable users, and issue types; create and update
+  issues, comment, edit and delete comments, add and remove labels and assignees, create labels, and add
+  sub-issues by number.
+- `GHKitMCP` pull request tools, on by default: list and get pull requests, their diffs, changed files,
+  commits, reviews, review comments, and requested reviewers, and find the pull requests for a commit; open,
+  update, and merge pull requests, update their branch, request reviewers, review with line comments, comment
+  on lines or files, and reply to review threads.
+- `GHKitMCP` search tools, on by default, for code, issues and pull requests, repositories, users, and commits.
+  Opt-in toolsets: `activity` (notifications, events, starred repositories, and starring), `gists` (list, get,
+  create, update, delete), and `reactions` (list and add).
+- `GHKitMCP` opt-in toolsets for `users` (profiles, followers, following, and following people),
+  `organizations` (profiles, members, memberships, outside collaborators, and invitations), `teams` (members,
+  child teams, repository access, and managing all three), and `projects` (projects, fields, items, drafts,
+  field values, and status updates).
+- `PageCursor(url:)`, to rebuild a cursor from a saved URL.
+
+### Changed
+
+- `RateLimit` and `RateLimitOverview` are `Codable`, like the other models.
 
 ### Fixed
 

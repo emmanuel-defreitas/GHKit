@@ -5,7 +5,8 @@ Guidance for AI coding agents working on GHKit. Humans: see [CONTRIBUTING.md](CO
 ## What this is
 
 GHKit is a Swift package wrapping the GitHub REST and GraphQL APIs for SwiftUI apps.
-Two products: `GHKit` (client, auth, models, APIs; no UI) and `GHKitUI` (SwiftUI session and views).
+Three products: `GHKit` (client, auth, models, APIs; no UI), `GHKitUI` (SwiftUI session and views),
+and `GHKitMCP` (Model Context Protocol tools that expose the API to AI assistants).
 Coverage and the roadmap live in [TODO.md](TODO.md), which is generated; never edit it by hand.
 
 ## Commands
@@ -31,6 +32,8 @@ Scripts/build_docs.sh                                           # DocC site in .
 | `Sources/GHKit/Models/` | Codable models and request inputs |
 | `Sources/GHKit/Core/` | `JSONValue`, `CalendarDate`, `RichText`, JSON coders |
 | `Sources/GHKitUI/` | `GitHubSession`, sign-in views, environment values (main-actor by default) |
+| `Sources/GHKitMCP/` | `GitHubToolbox`, toolsets, and one `Tools/<Category>Tools.swift` per toolset |
+| `Sources/ghkit-mcp/` | Stdio MCP server for trying the tools (`swift run ghkit-mcp`, macOS only) |
 | `Sources/*/*.docc/` | DocC catalogs: landing pages (topic groups) and articles |
 | `Tests/GHKitTests/` | Tests, `MockTransport`, fixtures from GitHub's OpenAPI examples |
 | `Scripts/generate_todo.py` | Builds TODO.md from GitHub's OpenAPI description |
@@ -46,11 +49,15 @@ Scripts/build_docs.sh                                           # DocC site in .
 - Values GitHub may extend use `OpenEnum` structs, not Swift enums.
 - Escape user-supplied path segments with `escape(_:)`.
 - GraphQL-only features are wrapped in the same API type and return REST models when possible.
-- No third-party dependencies in `GHKit`. No `@unchecked Sendable` in library code.
+- No third-party dependencies in `GHKit` or `GHKitUI`. `GHKitMCP` depends only on the official MCP Swift SDK.
+  No `@unchecked Sendable` in library code.
+- MCP tools: snake_case names, a `GitHubTool.Kind` that matches what they do, and list tools that return
+  one page via `ToolOutput.page`. Write tools are hidden in read-only toolboxes, so mark them `.write` or `.destructive`.
 - Doc comments: one plain sentence, then the HTTP method and path.
   Link symbols with double backticks; from GHKitUI, link GHKit symbols absolutely (``` ``/GHKit/OAuthWebFlow`` ```).
 - New public types: add the important ones to a topic group in the module's `.docc` landing page.
 - Every endpoint gets a test for the request (method, path, query, body) and for decoding a fixture.
+  So does every MCP tool, in `Tests/GHKitTests/MCP/`.
 
 ## Branches and pull requests
 

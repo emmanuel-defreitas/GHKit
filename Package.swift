@@ -25,6 +25,13 @@ let package = Package(
         .library(name: "GHKit", targets: ["GHKit"]),
         // SwiftUI helpers: an observable session, sign-in views, environment values.
         .library(name: "GHKitUI", targets: ["GHKitUI"]),
+        // Model Context Protocol tools that expose the GitHub API to AI assistants.
+        .library(name: "GHKitMCP", targets: ["GHKitMCP"]),
+    ],
+    dependencies: [
+        // Only GHKitMCP uses it, so apps that link GHKit or GHKitUI alone never fetch it.
+        // Pinned to a minor version: before 1.0, a minor release of the SDK may break its API.
+        .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", .upToNextMinor(from: "0.12.1"))
     ],
     targets: [
         .target(
@@ -36,9 +43,20 @@ let package = Package(
             dependencies: ["GHKit"],
             swiftSettings: strictSettings + [.defaultIsolation(MainActor.self)]
         ),
+        .target(
+            name: "GHKitMCP",
+            dependencies: ["GHKit", .product(name: "MCP", package: "swift-sdk")],
+            swiftSettings: strictSettings
+        ),
+        // A stdio MCP server for trying the tools from an MCP client. Not a product.
+        .executableTarget(
+            name: "ghkit-mcp",
+            dependencies: ["GHKit", "GHKitMCP", .product(name: "MCP", package: "swift-sdk")],
+            swiftSettings: strictSettings
+        ),
         .testTarget(
             name: "GHKitTests",
-            dependencies: ["GHKit"],
+            dependencies: ["GHKit", "GHKitMCP", .product(name: "MCP", package: "swift-sdk")],
             resources: [.copy("Fixtures")],
             swiftSettings: strictSettings
         ),

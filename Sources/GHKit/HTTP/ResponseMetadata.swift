@@ -66,7 +66,7 @@ public struct ResponseMetadata: Sendable {
 }
 
 /// Rate limit details from `X-RateLimit-*` headers or from `GET /rate_limit`.
-public struct RateLimit: Sendable, Hashable, Decodable {
+public struct RateLimit: Sendable, Hashable, Codable {
     public var limit: Int
     public var remaining: Int
     public var used: Int
@@ -108,6 +108,16 @@ public struct RateLimit: Sendable, Hashable, Decodable {
         used = try c.decodeIfPresent(Int.self, forKey: .used) ?? (limit - remaining)
         reset = Date(timeIntervalSince1970: try c.decode(TimeInterval.self, forKey: .reset))
         resource = try c.decodeIfPresent(String.self, forKey: .resource)
+    }
+
+    /// Writes `reset` as Unix seconds, the way GitHub sends it.
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(limit, forKey: .limit)
+        try c.encode(remaining, forKey: .remaining)
+        try c.encode(used, forKey: .used)
+        try c.encode(Int(reset.timeIntervalSince1970), forKey: .reset)
+        try c.encodeIfPresent(resource, forKey: .resource)
     }
 }
 
