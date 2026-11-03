@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 526 of 1254 endpoints (41%)
+**REST progress:** 560 of 1254 endpoints (44%)
 
 ## Milestones
 
@@ -64,7 +64,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [repos](#repos) | M2 | 201 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
 | [users](#users) | M2 | 42 | 47 | 🚧 |
-| [activity](#activity) | M3 | 0 | 34 | ⬜ |
+| [activity](#activity) | M3 | 34 | 34 | ✅ |
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
 | [issues](#issues) | M3 | 66 | 66 | ✅ |
 | [pulls](#pulls) | M3 | 35 | 35 | ✅ |
@@ -670,42 +670,42 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### activity
 
-0/34 done · milestone M3
+34/34 done · milestone M3
 
-- [ ] `GET /events` — List public events
-- [ ] `GET /feeds` — Get feeds
-- [ ] `GET /networks/{owner}/{repo}/events` — List public events for a network of repositories
-- [ ] `GET /notifications` — List notifications for the authenticated user
-- [ ] `PUT /notifications` — Mark notifications as read
-- [ ] `GET /notifications/threads/{thread_id}` — Get a thread
-- [ ] `PATCH /notifications/threads/{thread_id}` — Mark a thread as read
-- [ ] `DELETE /notifications/threads/{thread_id}` — Mark a thread as done
-- [ ] `GET /notifications/threads/{thread_id}/subscription` — Get a thread subscription for the authenticated user
-- [ ] `PUT /notifications/threads/{thread_id}/subscription` — Set a thread subscription
-- [ ] `DELETE /notifications/threads/{thread_id}/subscription` — Delete a thread subscription
-- [ ] `GET /orgs/{org}/events` — List public organization events
-- [ ] `GET /repos/{owner}/{repo}/events` — List repository events
-- [ ] `GET /repos/{owner}/{repo}/notifications` — List repository notifications for the authenticated user
-- [ ] `PUT /repos/{owner}/{repo}/notifications` — Mark repository notifications as read
-- [ ] `GET /repos/{owner}/{repo}/stargazers` — List stargazers
-- [ ] `GET /repos/{owner}/{repo}/stargazers/count` — Get stargazer count
-- [ ] `GET /repos/{owner}/{repo}/stargazers/history` — Get repository star history
-- [ ] `GET /repos/{owner}/{repo}/subscribers` — List watchers
-- [ ] `GET /repos/{owner}/{repo}/subscription` — Get a repository subscription
-- [ ] `PUT /repos/{owner}/{repo}/subscription` — Set a repository subscription
-- [ ] `DELETE /repos/{owner}/{repo}/subscription` — Delete a repository subscription
-- [ ] `GET /user/starred` — List repositories starred by the authenticated user
-- [ ] `GET /user/starred/{owner}/{repo}` — Check if a repository is starred by the authenticated user
-- [ ] `PUT /user/starred/{owner}/{repo}` — Star a repository for the authenticated user
-- [ ] `DELETE /user/starred/{owner}/{repo}` — Unstar a repository for the authenticated user
-- [ ] `GET /user/subscriptions` — List repositories watched by the authenticated user
-- [ ] `GET /users/{username}/events` — List events for the authenticated user
-- [ ] `GET /users/{username}/events/orgs/{org}` — List organization events for the authenticated user
-- [ ] `GET /users/{username}/events/public` — List public events for a user
-- [ ] `GET /users/{username}/received_events` — List events received by the authenticated user
-- [ ] `GET /users/{username}/received_events/public` — List public events received by a user
-- [ ] `GET /users/{username}/starred` — List repositories starred by a user
-- [ ] `GET /users/{username}/subscriptions` — List repositories watched by a user
+- [x] ✅ `GET /events` — List public events → `activity.events(_:perPage:)`
+- [x] ✅ `GET /feeds` — Get feeds → `activity.feeds()`
+- [x] ✅ `GET /networks/{owner}/{repo}/events` — List public events for a network of repositories → `activity.events(_:perPage:)`
+- [x] ✅ `GET /notifications` — List notifications for the authenticated user → `activity.notifications(matching:perPage:)`
+- [x] ✅ `PUT /notifications` — Mark notifications as read → `activity.markNotificationsRead(before:)`
+- [x] ✅ `GET /notifications/threads/{thread_id}` — Get a thread → `activity.thread(id:)`
+- [x] ✅ `PATCH /notifications/threads/{thread_id}` — Mark a thread as read → `activity.markThreadRead(id:)`
+- [x] ✅ `DELETE /notifications/threads/{thread_id}` — Mark a thread as done → `activity.markThreadDone(id:)`
+- [x] ✅ `GET /notifications/threads/{thread_id}/subscription` — Get a thread subscription for the authenticated user → `activity.threadSubscription(id:)`
+- [x] ✅ `PUT /notifications/threads/{thread_id}/subscription` — Set a thread subscription → `activity.subscribeToThread(id:ignored:)`
+- [x] ✅ `DELETE /notifications/threads/{thread_id}/subscription` — Delete a thread subscription → `activity.unsubscribeFromThread(id:)`
+- [x] ✅ `GET /orgs/{org}/events` — List public organization events → `activity.events(_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/events` — List repository events → `activity.events(_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/notifications` — List repository notifications for the authenticated user → `activity.notifications(in:_:matching:perPage:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/notifications` — Mark repository notifications as read → `activity.markNotificationsRead(in:_:before:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stargazers` — List stargazers → `activity.stargazers(of:_:perPage:)` and `activity.stars(on:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stargazers/count` — Get stargazer count → `activity.stargazerCount(of:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stargazers/history` — Get repository star history → `activity.starHistory(of:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/subscribers` — List watchers → `activity.watchers(of:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/subscription` — Get a repository subscription → `activity.subscription(to:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/subscription` — Set a repository subscription → `activity.watch(_:_:ignored:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/subscription` — Delete a repository subscription → `activity.unwatch(_:_:)`
+- [x] ✅ `GET /user/starred` — List repositories starred by the authenticated user → `activity.starredRepositories(by:sort:ascending:perPage:)` and `activity.stars(by:sort:ascending:perPage:)`
+- [x] ✅ `GET /user/starred/{owner}/{repo}` — Check if a repository is starred by the authenticated user → `activity.isStarred(_:_:)`
+- [x] ✅ `PUT /user/starred/{owner}/{repo}` — Star a repository for the authenticated user → `activity.star(_:_:)`
+- [x] ✅ `DELETE /user/starred/{owner}/{repo}` — Unstar a repository for the authenticated user → `activity.unstar(_:_:)`
+- [x] ✅ `GET /user/subscriptions` — List repositories watched by the authenticated user → `activity.watchedRepositories(by:perPage:)`
+- [x] ✅ `GET /users/{username}/events` — List events for the authenticated user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/events/orgs/{org}` — List organization events for the authenticated user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/events/public` — List public events for a user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/received_events` — List events received by the authenticated user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/received_events/public` — List public events received by a user → `activity.events(_:perPage:)`
+- [x] ✅ `GET /users/{username}/starred` — List repositories starred by a user → `activity.starredRepositories(by:sort:ascending:perPage:)` and `activity.stars(by:sort:ascending:perPage:)`
+- [x] ✅ `GET /users/{username}/subscriptions` — List repositories watched by a user → `activity.watchedRepositories(by:perPage:)`
 
 ### gists
 
