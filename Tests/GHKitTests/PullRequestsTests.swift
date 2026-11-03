@@ -87,12 +87,18 @@ struct PullRequestsTests {
               "tree": {"sha": "t"}, "parents": [], "html_url": "https://github.com/c"},
              {"event": "line-commented", "node_id": "L_1", "comments": []},
              {"event": "commit-commented", "commit_id": "abc", "comments": []},
-             {"event": "connected_in_space", "actor": null}]
+             {"event": "connected_in_space", "actor": null},
+             {"event": "reviewed", "id": 80, "node_id": "PRR_1", "state": "changes_requested",
+              "html_url": "https://github.com/r", "pull_request_url": "https://api.github.com/p"}]
             """#
         let entries = try decoder.decode([TimelineEvent].self, from: Data(json.utf8))
-        #expect(entries.map(\.type) == ["cross-referenced", "committed", "line-commented", "commit-commented", "connected_in_space"])
+        #expect(
+            entries.map(\.type) == [
+                "cross-referenced", "committed", "line-commented", "commit-commented", "connected_in_space", "reviewed",
+            ])
         if case .committed(let commit) = entries[1] { #expect(commit.message == "Fix") } else { Issue.record("Not a commit") }
         if case .unknown(_, let raw) = entries[4] { #expect(raw["event"] == "connected_in_space") } else { Issue.record("Not unknown") }
+        if case .reviewed(let review) = entries[5] { #expect(review.state == .changesRequested) } else { Issue.record("Not a review") }
 
         let again = try decoder.decode([TimelineEvent].self, from: GitHubJSON.encoder().encode(entries + timeline))
         #expect(again == entries + timeline)

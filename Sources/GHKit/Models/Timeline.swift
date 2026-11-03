@@ -69,7 +69,11 @@ public enum TimelineEvent: Sendable, Hashable, Codable {
         case "commented": self = .commented(try IssueComment(from: decoder))
         case "cross-referenced": self = .crossReferenced(try CrossReference(from: decoder))
         case "committed": self = .committed(try GitCommit(from: decoder))
-        case "reviewed": self = .reviewed(try PullRequestReview(from: decoder))
+        case "reviewed":
+            // Timeline reviews use lowercase states ("approved"); the reviews endpoint uses uppercase.
+            var review = try PullRequestReview(from: decoder)
+            review.state = ReviewState(rawValue: review.state.rawValue.uppercased())
+            self = .reviewed(review)
         case "line-commented":
             self = .lineCommented(try c.decodeIfPresent([ReviewComment].self, forKey: .comments) ?? [])
         case "commit-commented":
