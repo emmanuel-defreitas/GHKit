@@ -6,31 +6,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
-## [0.2.0] - 2026-11-03
+## [0.3.0] - 2026-11-03
 
 ### Added
 
-- Issues: list issues across repositories, in an organization, or in one repository; open, update, close,
-  reopen, lock, and unlock them; manage assignees, conversation comments (including pinning), labels, and
-  milestones. Issues are `GitHubIssue`, so they don't clash with Swift Testing's `Issue`.
-- Issue details: issue events, sub-issues (add, remove, reorder, parent), blocking dependencies, related
-  issues, custom field values, GitHub's suggestions, and artifacts. Organizations can manage issue types and
-  custom issue fields, and new or updated issues can set field values.
-- Pull requests: list, get (or fetch as a diff or patch), open (also from an issue), update, close, reopen,
-  commits, files, and the pull requests that contain a commit. Merge directly or in the background
-  (including through the merge queue), update the branch, request and re-request reviewers, create, submit,
-  update, dismiss, and delete reviews, manage review comments and replies, and build pull request stacks.
-- Issue timelines as `TimelineEvent`, with typed comments, commits, reviews, cross-references, and line comments.
-- Reactions: list, add, and remove emoji reactions on issues, pull requests, issue comments, commit comments,
-  review comments, and releases. Pick the target with `ReactionSubject`.
-- Search: code, commits, issues and pull requests (including advanced and semantic search), labels,
-  repositories, topics, and users. Results are `SearchResult` values that read like the matched item and add
-  the score and optional text matches; `summary()` gives the total count.
-- Activity: events from every source (`EventSource`), Atom feeds, notifications (list, mark read or done,
-  and follow or mute threads), stars (with star dates, counts, and weekly history), and watching.
-  Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
-- Gists: list (yours, a user's, public, or starred), get (or an earlier revision), create, update (edit, add,
-  rename, or delete files), delete, fork, star, revisions, forks, and comments.
 - `GHKitMCP`, a new product that offers GitHub as Model Context Protocol tools, so apps can let AI assistants
   use GitHub as the signed-in user. `GitHubToolbox` lists and runs the tools, groups them into toolsets, and
   is read-only unless you pass `.readWrite`. It starts with `get_me`, `get_rate_limit`, and the
@@ -59,6 +38,38 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Changed
 
 - `RateLimit` and `RateLimitOverview` are `Codable`, like the other models.
+
+### Fixed
+
+- The read-only `github_graphql` tool lets operations named `mutation` run, and its guard scans Unicode
+  scalars, as GraphQL's lexer does, so combining marks can't hide a mutation.
+- The `ghkit-mcp` server reports `GHKitVersion.current` as its version.
+
+## [0.2.0] - 2026-11-03
+
+### Added
+
+- Issues: list issues across repositories, in an organization, or in one repository; open, update, close,
+  reopen, lock, and unlock them; manage assignees, conversation comments (including pinning), labels, and
+  milestones. Issues are `GitHubIssue`, so they don't clash with Swift Testing's `Issue`.
+- Issue details: issue events, sub-issues (add, remove, reorder, parent), blocking dependencies, related
+  issues, custom field values, GitHub's suggestions, and artifacts. Organizations can manage issue types and
+  custom issue fields, and new or updated issues can set field values.
+- Pull requests: list, get (or fetch as a diff or patch), open (also from an issue), update, close, reopen,
+  commits, files, and the pull requests that contain a commit. Merge directly or in the background
+  (including through the merge queue), update the branch, request and re-request reviewers, create, submit,
+  update, dismiss, and delete reviews, manage review comments and replies, and build pull request stacks.
+- Issue timelines as `TimelineEvent`, with typed comments, commits, reviews, cross-references, and line comments.
+- Reactions: list, add, and remove emoji reactions on issues, pull requests, issue comments, commit comments,
+  review comments, and releases. Pick the target with `ReactionSubject`.
+- Search: code, commits, issues and pull requests (including advanced and semantic search), labels,
+  repositories, topics, and users. Results are `SearchResult` values that read like the matched item and add
+  the score and optional text matches; `summary()` gives the total count.
+- Activity: events from every source (`EventSource`), Atom feeds, notifications (list, mark read or done,
+  and follow or mute threads), stars (with star dates, counts, and weekly history), and watching.
+  Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
+- Gists: list (yours, a user's, public, or starred), get (or an earlier revision), create, update (edit, add,
+  rename, or delete files), delete, fork, star, revisions, forks, and comments.
 
 ### Fixed
 
@@ -134,7 +145,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...next
+[0.3.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/emmanuel-defreitas/GHKit/releases/tag/0.1.0
