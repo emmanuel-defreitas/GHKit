@@ -27,7 +27,7 @@ Scripts/build_docs.sh                                           # DocC site in .
 | `Sources/GHKit/Client/` | `GitHubClient`, pagination (`Paginated`, `Page`), GraphQL |
 | `Sources/GHKit/HTTP/` | Transport, configuration, `GitHubRequest`, `GitHubError`, response metadata |
 | `Sources/GHKit/Auth/` | Authenticators, OAuth device and web flows, GitHub App JWT and installation tokens, credential stores |
-| `Sources/GHKit/API/` | One API type per GitHub category (`ProjectsAPI`, `UsersAPI`, `OrganizationsAPI`, `TeamsAPI`, `RepositoriesAPI`, `RulesetsAPI`, `IssuesAPI`, `PullRequestsAPI`, `ReactionsAPI`, `AppsAPI`) |
+| `Sources/GHKit/API/` | One API type per GitHub category (`ProjectsAPI`, `UsersAPI`, `OrganizationsAPI`, `TeamsAPI`, `RepositoriesAPI`, `RulesetsAPI`, `IssuesAPI`, `PullRequestsAPI`, `ReactionsAPI`, `SearchAPI`, `AppsAPI`) |
 | `Sources/GHKit/Models/` | Codable models and request inputs |
 | `Sources/GHKit/Core/` | `JSONValue`, `CalendarDate`, `RichText`, JSON coders |
 | `Sources/GHKitUI/` | `GitHubSession`, sign-in views, environment values (main-actor by default) |

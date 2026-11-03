@@ -21,6 +21,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Issue timelines as `TimelineEvent`, with typed comments, commits, reviews, cross-references, and line comments.
 - Reactions: list, add, and remove emoji reactions on issues, pull requests, issue comments, commit comments,
   review comments, and releases. Pick the target with `ReactionSubject`.
+- Search: code, commits, issues and pull requests (including advanced and semantic search), labels,
+  repositories, topics, and users. Results are `SearchResult` values that read like the matched item and add
+  the score and optional text matches; `summary()` gives the total count.
 
 ## [0.1.1] - 2026-11-03
 

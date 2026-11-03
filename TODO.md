@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 519 of 1254 endpoints (41%)
+**REST progress:** 526 of 1254 endpoints (41%)
 
 ## Milestones
 
@@ -69,7 +69,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [issues](#issues) | M3 | 66 | 66 | ✅ |
 | [pulls](#pulls) | M3 | 35 | 35 | ✅ |
 | [reactions](#reactions) | M3 | 15 | 15 | ✅ |
-| [search](#search) | M3 | 0 | 7 | ⬜ |
+| [search](#search) | M3 | 7 | 7 | ✅ |
 | [actions](#actions) | M4 | 0 | 200 | ⬜ |
 | [agent-automations](#agent-automations) | M4 | 0 | 10 | ⬜ |
 | [agent-merge](#agent-merge) | M4 | 0 | 3 | ⬜ |
@@ -865,15 +865,15 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### search
 
-0/7 done · milestone M3
+7/7 done · milestone M3
 
-- [ ] `GET /search/code` — Search code
-- [ ] `GET /search/commits` — Search commits
-- [ ] `GET /search/issues` — Search issues and pull requests
-- [ ] `GET /search/labels` — Search labels
-- [ ] `GET /search/repositories` — Search repositories
-- [ ] `GET /search/topics` — Search topics
-- [ ] `GET /search/users` — Search users
+- [x] ✅ `GET /search/code` — Search code → `search.code(_:textMatches:perPage:)`
+- [x] ✅ `GET /search/commits` — Search commits → `search.commits(_:sort:ascending:textMatches:perPage:)`
+- [x] ✅ `GET /search/issues` — Search issues and pull requests → `search.issues(_:sort:ascending:advanced:mode:textMatches:perPage:)`
+- [x] ✅ `GET /search/labels` — Search labels → `search.labels(_:inRepository:sort:ascending:textMatches:perPage:)`
+- [x] ✅ `GET /search/repositories` — Search repositories → `search.repositories(_:sort:ascending:textMatches:perPage:)`
+- [x] ✅ `GET /search/topics` — Search topics → `search.topics(_:textMatches:perPage:)`
+- [x] ✅ `GET /search/users` — Search users → `search.users(_:sort:ascending:textMatches:perPage:)`
 
 ### actions
 

@@ -546,6 +546,14 @@ DONE = {
     "reactions/list-for-release": "`reactions.list(on:in:_:content:perPage:)`",
     "reactions/create-for-release": "`reactions.add(_:to:in:_:)`",
     "reactions/delete-for-release": "`reactions.delete(id:from:in:_:)`",
+    # Search (milestone 3)
+    "search/code": "`search.code(_:textMatches:perPage:)`",
+    "search/commits": "`search.commits(_:sort:ascending:textMatches:perPage:)`",
+    "search/issues-and-pull-requests": "`search.issues(_:sort:ascending:advanced:mode:textMatches:perPage:)`",
+    "search/labels": "`search.labels(_:inRepository:sort:ascending:textMatches:perPage:)`",
+    "search/repos": "`search.repositories(_:sort:ascending:textMatches:perPage:)`",
+    "search/topics": "`search.topics(_:textMatches:perPage:)`",
+    "search/users": "`search.users(_:sort:ascending:textMatches:perPage:)`",
 }
 
 # operationId -> note
