@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 504 of 1254 endpoints (40%)
+**REST progress:** 519 of 1254 endpoints (41%)
 
 ## Milestones
 
@@ -68,7 +68,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
 | [issues](#issues) | M3 | 66 | 66 | ✅ |
 | [pulls](#pulls) | M3 | 35 | 35 | ✅ |
-| [reactions](#reactions) | M3 | 0 | 15 | ⬜ |
+| [reactions](#reactions) | M3 | 15 | 15 | ✅ |
 | [search](#search) | M3 | 0 | 7 | ⬜ |
 | [actions](#actions) | M4 | 0 | 200 | ⬜ |
 | [agent-automations](#agent-automations) | M4 | 0 | 10 | ⬜ |
@@ -845,23 +845,23 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### reactions
 
-0/15 done · milestone M3
+15/15 done · milestone M3
 
-- [ ] `GET /repos/{owner}/{repo}/comments/{comment_id}/reactions` — List reactions for a commit comment
-- [ ] `POST /repos/{owner}/{repo}/comments/{comment_id}/reactions` — Create reaction for a commit comment
-- [ ] `DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}` — Delete a commit comment reaction
-- [ ] `GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — List reactions for an issue comment
-- [ ] `POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — Create reaction for an issue comment
-- [ ] `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}` — Delete an issue comment reaction
-- [ ] `GET /repos/{owner}/{repo}/issues/{issue_number}/reactions` — List reactions for an issue
-- [ ] `POST /repos/{owner}/{repo}/issues/{issue_number}/reactions` — Create reaction for an issue
-- [ ] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}` — Delete an issue reaction
-- [ ] `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — List reactions for a pull request review comment
-- [ ] `POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — Create reaction for a pull request review comment
-- [ ] `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}` — Delete a pull request comment reaction
-- [ ] `GET /repos/{owner}/{repo}/releases/{release_id}/reactions` — List reactions for a release
-- [ ] `POST /repos/{owner}/{repo}/releases/{release_id}/reactions` — Create reaction for a release
-- [ ] `DELETE /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}` — Delete a release reaction
+- [x] ✅ `GET /repos/{owner}/{repo}/comments/{comment_id}/reactions` — List reactions for a commit comment → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/comments/{comment_id}/reactions` — Create reaction for a commit comment → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}` — Delete a commit comment reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — List reactions for an issue comment → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions` — Create reaction for an issue comment → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}` — Delete an issue comment reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/issues/{issue_number}/reactions` — List reactions for an issue → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/issues/{issue_number}/reactions` — Create reaction for an issue → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}` — Delete an issue reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — List reactions for a pull request review comment → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions` — Create reaction for a pull request review comment → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}` — Delete a pull request comment reaction → `reactions.delete(id:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/{release_id}/reactions` — List reactions for a release → `reactions.list(on:in:_:content:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases/{release_id}/reactions` — Create reaction for a release → `reactions.add(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}` — Delete a release reaction → `reactions.delete(id:from:in:_:)`
 
 ### search
 

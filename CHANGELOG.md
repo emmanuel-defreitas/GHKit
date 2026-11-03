@@ -19,6 +19,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   (including through the merge queue), update the branch, request and re-request reviewers, create, submit,
   update, dismiss, and delete reviews, manage review comments and replies, and build pull request stacks.
 - Issue timelines as `TimelineEvent`, with typed comments, commits, reviews, cross-references, and line comments.
+- Reactions: list, add, and remove emoji reactions on issues, pull requests, issue comments, commit comments,
+  review comments, and releases. Pick the target with `ReactionSubject`.
 
 ## [0.1.1] - 2026-11-03
 
