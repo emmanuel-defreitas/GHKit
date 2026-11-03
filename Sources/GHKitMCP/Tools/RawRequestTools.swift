@@ -153,7 +153,8 @@ enum GraphQLDocument {
             let character = document[index]
             switch character {
             case "#":
-                index = document[index...].firstIndex(of: "\n") ?? document.endIndex
+                // Comments end at LF, CR, or CRLF. Swift reads CRLF as one `Character`, so match any newline.
+                index = document[index...].firstIndex(where: \.isNewline) ?? document.endIndex
                 continue
             case "\"":
                 index = endOfString(in: document, from: index)
@@ -183,8 +184,18 @@ enum GraphQLDocument {
     /// The index just past the string that starts at `start`, handling escapes and `"""` blocks.
     private static func endOfString(in document: String, from start: String.Index) -> String.Index {
         if document[start...].hasPrefix("\"\"\"") {
-            let contents = document.index(start, offsetBy: 3)
-            return document[contents...].range(of: "\"\"\"")?.upperBound ?? document.endIndex
+            // Block strings end at the first `"""` that isn't escaped as `\"""`.
+            var index = document.index(start, offsetBy: 3)
+            while index < document.endIndex {
+                if document[index...].hasPrefix("\\\"\"\"") {
+                    index = document.index(index, offsetBy: 4)
+                } else if document[index...].hasPrefix("\"\"\"") {
+                    return document.index(index, offsetBy: 3)
+                } else {
+                    index = document.index(after: index)
+                }
+            }
+            return document.endIndex
         }
         var index = document.index(after: start)
         while index < document.endIndex {
