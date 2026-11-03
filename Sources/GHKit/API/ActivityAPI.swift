@@ -138,7 +138,8 @@ public struct ActivityAPI: Sendable {
     }
 
     /// New stars per week. `GET /repos/{owner}/{repo}/stargazers/history`
-    public func starHistory(of owner: String, _ name: String, perPage: Int = 100) -> Paginated<StarHistoryWeek> {
+    /// - Parameter perPage: At most 30, unlike the other star lists.
+    public func starHistory(of owner: String, _ name: String, perPage: Int = 30) -> Paginated<StarHistoryWeek> {
         client.paginate(
             GitHubRequest(.get, repositoryPath(owner, name, "/stargazers/history"), query: .query(("per_page", perPage))))
     }

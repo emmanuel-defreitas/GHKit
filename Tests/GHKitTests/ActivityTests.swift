@@ -198,6 +198,7 @@ struct ActivityTests {
                 "GET /repos/octocat/Hello-World/stargazers/count", "GET /repos/octocat/Hello-World/stargazers/history",
             ])
         #expect(transport.requests[1].queryItems == ["per_page": "10"])
+        #expect(transport.requests[3].queryItems == ["per_page": "30"])
     }
 
     @Test func listsStarredRepositories() async throws {
