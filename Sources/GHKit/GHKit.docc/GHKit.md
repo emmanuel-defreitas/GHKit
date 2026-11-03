@@ -164,6 +164,16 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``StarHistoryWeek``
 - ``RepositorySubscription``
 
+### Gists
+
+- ``GistsAPI``
+- ``Gist``
+- ``GistCollection``
+- ``NewGist``
+- ``GistUpdate``
+- ``GistCommit``
+- ``GistComment``
+
 ### Paging through lists
 
 - <doc:Pagination>

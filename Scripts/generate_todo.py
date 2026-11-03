@@ -589,6 +589,27 @@ DONE = {
     "activity/list-received-public-events-for-user": "`activity.events(_:perPage:)`",
     "activity/list-repos-starred-by-user": "`activity.starredRepositories(by:sort:ascending:perPage:)` and `activity.stars(by:sort:ascending:perPage:)`",
     "activity/list-repos-watched-by-user": "`activity.watchedRepositories(by:perPage:)`",
+    # Gists (milestone 3)
+    "gists/list": "`gists.list(_:since:perPage:)`",
+    "gists/create": "`gists.create(_:)`",
+    "gists/list-public": "`gists.list(_:since:perPage:)`",
+    "gists/list-starred": "`gists.list(_:since:perPage:)`",
+    "gists/get": "`gists.gist(id:revision:)`",
+    "gists/update": "`gists.update(id:_:)`",
+    "gists/delete": "`gists.delete(id:)`",
+    "gists/list-comments": "`gists.comments(on:perPage:)`",
+    "gists/create-comment": "`gists.createComment(_:on:)`",
+    "gists/get-comment": "`gists.comment(id:on:)`",
+    "gists/update-comment": "`gists.updateComment(id:on:body:)`",
+    "gists/delete-comment": "`gists.deleteComment(id:on:)`",
+    "gists/list-commits": "`gists.commits(of:perPage:)`",
+    "gists/list-forks": "`gists.forks(of:perPage:)`",
+    "gists/fork": "`gists.fork(id:)`",
+    "gists/check-is-starred": "`gists.isStarred(id:)`",
+    "gists/star": "`gists.star(id:)`",
+    "gists/unstar": "`gists.unstar(id:)`",
+    "gists/get-revision": "`gists.gist(id:revision:)`",
+    "gists/list-for-user": "`gists.list(_:since:perPage:)`",
 }
 
 # operationId -> note
@@ -624,7 +645,7 @@ DEFERRED: dict[str, str] = {
 MILESTONES = [
     ("M1", "Authentication & Projects", "✅ Done"),
     ("M2", "Core resources: users, organizations, teams, repositories", "🚧 In progress"),
-    ("M3", "Collaboration: issues, pull requests, search, activity", "🚧 In progress"),
+    ("M3", "Collaboration: issues, pull requests, search, activity", "✅ Done"),
     ("M4", "Automation: Actions, checks, packages, app webhooks", "⬜ Planned"),
     ("M5", "Security: code scanning, secret scanning, Dependabot", "⬜ Planned"),
     ("M6", "Platform & admin: Copilot, Codespaces, billing, migrations", "⬜ Planned"),
