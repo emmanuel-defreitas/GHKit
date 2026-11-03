@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-03
+
 ### Added
 
 - Issues: list issues across repositories, in an organization, or in one repository; open, update, close,
@@ -29,6 +31,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   Notifications are `NotificationThread` and events are `GitHubEvent`, so neither clashes with Foundation.
 - Gists: list (yours, a user's, public, or starred), get (or an earlier revision), create, update (edit, add,
   rename, or delete files), delete, fork, star, revisions, forks, and comments.
+
+### Fixed
+
+- Review states in timeline events are normalized.
 
 ## [0.1.1] - 2026-11-03
 
@@ -100,6 +106,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...next
+[0.2.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/emmanuel-defreitas/GHKit/releases/tag/0.1.0

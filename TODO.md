@@ -1,6 +1,6 @@
 # GHKit API coverage
 
-Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-02 by `Scripts/generate_todo.py`.
+Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-03 by `Scripts/generate_todo.py`.
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 

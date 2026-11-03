@@ -6,8 +6,8 @@
   [![Swift 6.2+](https://img.shields.io/badge/Swift-6.2%2B-F05138?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
   [![Platforms](https://img.shields.io/badge/platforms-iOS%2017%20%7C%20macOS%2014%20%7C%20tvOS%2017%20%7C%20watchOS%2010%20%7C%20visionOS%201-0d1117?style=flat-square)](#-requirements)
   [![SwiftPM](https://img.shields.io/badge/SwiftPM-compatible-FFB02E?style=flat-square)](#-installation)
-  [![API coverage](https://img.shields.io/badge/REST%20coverage-393%20%2F%201254-blue?style=flat-square)](TODO.md)
-  [![Milestone](https://img.shields.io/badge/milestone-1%20of%206-brightgreen?style=flat-square)](TODO.md#milestones)
+  [![API coverage](https://img.shields.io/badge/REST%20coverage-580%20%2F%201254-blue?style=flat-square)](TODO.md)
+  [![Milestone](https://img.shields.io/badge/milestone-2%20of%206-brightgreen?style=flat-square)](TODO.md#milestones)
   [![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)](LICENSE)
   [![Documentation](https://img.shields.io/badge/docs-DocC-F05138?style=flat-square)](https://emmanuel-defreitas.github.io/GHKit/documentation/)
 
@@ -345,13 +345,13 @@ Swap the `HTTPTransport` to add logging or caching, or to stub responses in test
 
 ## 🗺️ Roadmap
 
-GHKit is growing in milestones. [TODO.md](TODO.md) tracks every one of GitHub's 1,254 REST endpoints (393 done, 31%), plus the GraphQL-only features.
+GHKit is growing in milestones. [TODO.md](TODO.md) tracks every one of GitHub's 1,254 REST endpoints (580 done, 46%), plus the GraphQL-only features.
 
 | Milestone | Scope | Status |
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
 | M2 | Users, organizations, teams, repositories | 🚧 In progress |
-| M3 | Issues, pull requests, search, activity | Planned |
+| M3 | Issues, pull requests, search, activity | ✅ Done |
 | M4 | Actions, checks, packages, app webhooks | Planned |
 | M5 | Code scanning, secret scanning, Dependabot | Planned |
 | M6 | Copilot, Codespaces, billing, migrations | Planned |
