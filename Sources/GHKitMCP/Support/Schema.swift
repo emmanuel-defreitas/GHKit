@@ -29,6 +29,15 @@ enum Schema {
         ["type": "string", "enum": .array(values.map { .string($0) }), "description": .string(description)]
     }
 
+    /// A string limited to the names in `options`, as read by ``ToolArguments/choice(_:from:)``.
+    static func oneOf<Option>(_ options: KeyValuePairs<String, Option>, _ description: String) -> MCP.Value {
+        oneOf(options.map(\.key), description)
+    }
+
+    static func date(_ description: String) -> MCP.Value {
+        ["type": "string", "description": .string(description + " ISO 8601, such as `2026-01-31` or `2026-01-31T12:00:00Z`.")]
+    }
+
     static func array(of items: MCP.Value, _ description: String) -> MCP.Value {
         ["type": "array", "items": items, "description": .string(description)]
     }

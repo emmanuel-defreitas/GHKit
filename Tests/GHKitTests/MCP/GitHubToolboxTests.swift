@@ -34,7 +34,7 @@ struct GitHubToolboxTests {
 
     @Test func readOnlyListsOnlyReadTools() throws {
         let tools = toolbox(MockTransport(.noContent())).tools
-        #expect(Set(tools.map(\.name)) == ["get_me", "get_rate_limit", "github_rest", "github_graphql"])
+        #expect(Set(tools.map(\.name)).isSuperset(of: ["get_me", "get_rate_limit", "github_rest", "github_graphql"]))
         #expect(tools.allSatisfy { $0.annotations.readOnlyHint == true && $0.annotations.destructiveHint == nil })
         let rest = try #require(tools.first { $0.name == "github_rest" })
         #expect(rest.inputSchema.objectValue?["properties"]?.objectValue?["method"]?.objectValue?["enum"] == ["GET"])
@@ -50,7 +50,8 @@ struct GitHubToolboxTests {
 
     @Test func filtersByToolsetAndName() {
         let transport = MockTransport(.noContent())
-        #expect(toolbox(transport, toolsets: .defaults).tools.map(\.name) == ["get_me", "get_rate_limit"])
+        #expect(toolbox(transport, toolsets: [.context]).tools.map(\.name) == ["get_me", "get_rate_limit"])
+        #expect(Set(toolbox(transport, toolsets: .defaults).tools.map(\.name)).isSuperset(of: ["get_me", "get_repository"]))
         #expect(toolbox(transport, toolsets: [.rawRequests], excluding: ["github_graphql"]).tools.map(\.name) == ["github_rest"])
         #expect(GitHubToolset.named("raw_requests") == .rawRequests)
         #expect(GitHubToolset.named("nope") == nil)

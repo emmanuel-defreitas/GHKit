@@ -36,6 +36,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   is read-only unless you pass `.readWrite`. It starts with `get_me`, `get_rate_limit`, and the
   `github_rest` and `github_graphql` tools for any endpoint. Adds the official MCP Swift SDK, for this
   product only. The package also has a `ghkit-mcp` stdio server for trying the tools on macOS.
+- `GHKitMCP` repository tools, on by default: get, list, create, update, and fork repositories; read files as
+  text and the README; create, update, and delete files; branches, merges, tags, commits, comparisons, commit
+  status, contributors, languages, forks, topics, and releases (including generated release notes).
 - `PageCursor(url:)`, to rebuild a cursor from a saved URL.
 
 ### Changed

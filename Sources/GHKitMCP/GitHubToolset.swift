@@ -2,7 +2,7 @@
 ///
 /// Pick the toolsets an assistant needs. Fewer tools make it easier for a model to choose well.
 ///
-///     let toolbox = GitHubToolbox(client: github, toolsets: [.context, .rawRequests])
+///     let toolbox = GitHubToolbox(client: github, toolsets: [.context, .repositories])
 public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
     /// A stable identifier, such as `issues`. Use it to read toolsets from configuration.
     public let name: String
@@ -24,12 +24,15 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
     }
 
     /// Every toolset, in the order their tools are listed.
-    static let everyToolset: [GitHubToolset] = [.context, .rawRequests]
+    static let everyToolset: [GitHubToolset] = [.context, .repositories, .rawRequests]
 }
 
 extension GitHubToolset {
     /// The signed-in user and the current rate limits.
     public static let context = GitHubToolset("context", tools: ContextTools.tools)
+
+    /// Repositories, files, branches, commits, tags, and releases.
+    public static let repositories = GitHubToolset("repositories", tools: RepositoryTools.tools)
 
     /// `github_rest` and `github_graphql`, for anything the other toolsets don't cover.
     ///
@@ -40,7 +43,7 @@ extension GitHubToolset {
 
 extension Set where Element == GitHubToolset {
     /// The toolsets most assistants need.
-    public static var defaults: Set<GitHubToolset> { [.context] }
+    public static var defaults: Set<GitHubToolset> { [.context, .repositories] }
 
     /// Every toolset.
     public static var all: Set<GitHubToolset> { Set(GitHubToolset.everyToolset) }

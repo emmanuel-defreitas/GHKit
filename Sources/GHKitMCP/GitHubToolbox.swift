@@ -7,7 +7,7 @@ import MCP
 /// Give an AI assistant access to GitHub as the signed-in user. Tools are read-only unless you
 /// pass ``GitHubToolAccess/readWrite``.
 ///
-///     let toolbox = GitHubToolbox(client: github, toolsets: [.context, .rawRequests])
+///     let toolbox = GitHubToolbox(client: github, toolsets: [.context, .repositories])
 ///     let server = await toolbox.makeServer(name: "MyApp", version: "1.0")
 ///     try await server.start(transport: StdioTransport())
 ///
