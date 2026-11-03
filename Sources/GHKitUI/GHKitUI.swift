@@ -26,7 +26,7 @@ extension View {
         ///     try await session.signIn(credential: credential)
         ///
         /// The exchange needs the client secret. Prefer device flow in shipping apps,
-        /// or exchange the code on your server with ``OAuthWebFlow/exchange(code:codeVerifier:)``.
+        /// or exchange the code on your server with ``/GHKit/OAuthWebFlow/exchange(code:codeVerifier:)``.
         public func authenticate(
             using webAuthenticationSession: WebAuthenticationSession,
             callbackURLScheme: String,

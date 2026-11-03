@@ -38,18 +38,24 @@ public final class GitHubSession {
     /// Scopes GitHub reported for the current token.
     public private(set) var grantedScopes: [OAuthScope]?
 
+    /// The OAuth app or GitHub App client ID used for device flow.
     public let clientID: String
+    /// The scopes device flow asks for.
     public let scopes: [OAuthScope]
+    /// The GitHub instance to sign in to.
     public let server: GitHubServer
 
     @ObservationIgnored private let store: any CredentialStore
     @ObservationIgnored private let transport: any HTTPTransport
     @ObservationIgnored private var signInTask: Task<Void, Never>?
 
+    /// Creates a signed-out session. Call ``restore()`` at launch to load a saved token.
     /// - Parameters:
     ///   - clientID: Your OAuth app or GitHub App client ID, with device flow enabled.
     ///   - scopes: OAuth app scopes. GitHub Apps ignore them.
+    ///   - server: The GitHub instance to sign in to. Defaults to GitHub.com.
     ///   - store: Where the token is kept. Defaults to the Keychain.
+    ///   - transport: Sends HTTP requests. Replace it to stub responses in tests.
     public init(
         clientID: String,
         scopes: [OAuthScope] = [.repo, .readOrg, .project],
@@ -122,7 +128,7 @@ public final class GitHubSession {
         try await signIn(credential: OAuthCredential(accessToken: token))
     }
 
-    /// Signs in with a credential from another flow, such as ``OAuthWebFlow``.
+    /// Signs in with a credential from another flow, such as ``/GHKit/OAuthWebFlow``.
     public func signIn(credential: OAuthCredential) async throws(GitHubError) {
         lastError = nil
         do {

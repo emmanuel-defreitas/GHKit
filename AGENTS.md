@@ -17,6 +17,7 @@ swift format lint --strict --recursive Sources Tests Package.swift
 swift format format --in-place --recursive Sources Tests Package.swift
 xcodebuild -scheme GHKit-Package -destination "generic/platform=iOS" build -quiet
 python3 Scripts/generate_todo.py /path/to/api.json > TODO.md    # after adding endpoints
+Scripts/build_docs.sh                                           # DocC site in .build/docs/site; fails on broken doc links
 ```
 
 ## Layout
@@ -30,9 +31,11 @@ python3 Scripts/generate_todo.py /path/to/api.json > TODO.md    # after adding e
 | `Sources/GHKit/Models/` | Codable models and request inputs |
 | `Sources/GHKit/Core/` | `JSONValue`, `CalendarDate`, `RichText`, JSON coders |
 | `Sources/GHKitUI/` | `GitHubSession`, sign-in views, environment values (main-actor by default) |
+| `Sources/*/*.docc/` | DocC catalogs: landing pages (topic groups) and articles |
 | `Tests/GHKitTests/` | Tests, `MockTransport`, fixtures from GitHub's OpenAPI examples |
 | `Scripts/generate_todo.py` | Builds TODO.md from GitHub's OpenAPI description |
-| `.github/` | CI, branch policy, and release workflows |
+| `Scripts/build_docs.sh` | Builds the combined DocC site that the Docs workflow publishes to GitHub Pages |
+| `.github/` | CI, docs, branch policy, and release workflows |
 
 ## Conventions
 
@@ -45,6 +48,8 @@ python3 Scripts/generate_todo.py /path/to/api.json > TODO.md    # after adding e
 - GraphQL-only features are wrapped in the same API type and return REST models when possible.
 - No third-party dependencies in `GHKit`. No `@unchecked Sendable` in library code.
 - Doc comments: one plain sentence, then the HTTP method and path.
+  Link symbols with double backticks; from GHKitUI, link GHKit symbols absolutely (``` ``/GHKit/OAuthWebFlow`` ```).
+- New public types: add the important ones to a topic group in the module's `.docc` landing page.
 - Every endpoint gets a test for the request (method, path, query, body) and for decoding a fixture.
 
 ## Branches and pull requests

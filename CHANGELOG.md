@@ -8,6 +8,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
+- DocC documentation for `GHKit` and `GHKitUI`, with getting-started, authentication, pagination, error-handling,
+  and sign-in articles, published to GitHub Pages by the new Docs workflow on every release.
+
+## [0.1.0] - 2026-11-03
+
+### Added
+
 - `GitHubClient`: a `Sendable` client with typed throws, lazy `AsyncSequence` pagination, rate-limit handling,
   retries, GitHub Enterprise support, and escape hatches for any REST endpoint or GraphQL query.
 - Authentication: personal access tokens, OAuth device flow, OAuth web flow with PKCE, automatic refresh of
@@ -60,4 +67,5 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/commits/next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...next
+[0.1.0]: https://github.com/emmanuel-defreitas/GHKit/releases/tag/0.1.0
