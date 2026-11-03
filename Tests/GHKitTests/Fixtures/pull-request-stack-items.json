@@ -1,0 +1,35 @@
+[
+  {
+    "id": 9876543,
+    "number": 42,
+    "node_id": "S_kwDOABCDEF4AAAAA",
+    "url": "https://api.github.com/repos/octocat/hello-world/stacks/42",
+    "base": {
+      "ref": "main"
+    },
+    "pull_requests": [
+      {
+        "number": 101,
+        "state": "open",
+        "draft": false,
+        "merged_at": null,
+        "head": {
+          "ref": "user-model",
+          "sha": "aaa1111aaa1111aaa1111aaa1111aaa1111aaa11"
+        }
+      },
+      {
+        "number": 102,
+        "state": "open",
+        "draft": false,
+        "merged_at": null,
+        "head": {
+          "ref": "user-api",
+          "sha": "bbb2222bbb2222bbb2222bbb2222bbb2222bbb22"
+        }
+      }
+    ],
+    "open": true,
+    "created_at": "2026-04-15T10:00:00Z"
+  }
+]
