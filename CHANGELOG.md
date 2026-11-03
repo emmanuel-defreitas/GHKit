@@ -47,6 +47,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   commits, reviews, review comments, and requested reviewers, and find the pull requests for a commit; open,
   update, and merge pull requests, update their branch, request reviewers, review with line comments, comment
   on lines or files, and reply to review threads.
+- `GHKitMCP` search tools, on by default, for code, issues and pull requests, repositories, users, and commits.
+  Opt-in toolsets: `activity` (notifications, events, starred repositories, and starring), `gists` (list, get,
+  create, update, delete), and `reactions` (list and add).
 - `PageCursor(url:)`, to rebuild a cursor from a saved URL.
 
 ### Changed
