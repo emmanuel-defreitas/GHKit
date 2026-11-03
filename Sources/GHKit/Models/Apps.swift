@@ -32,6 +32,27 @@ public struct GitHubApp: Sendable, Hashable, Codable, Identifiable {
     }
 }
 
+extension GitHubApp {
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(Int.self, forKey: .id)
+        slug = try c.decodeIfPresent(String.self, forKey: .slug)
+        nodeID = try c.decode(String.self, forKey: .nodeID)
+        clientID = try c.decodeIfPresent(String.self, forKey: .clientID)
+        name = try c.decode(String.self, forKey: .name)
+        description = try c.decodeIfPresent(String.self, forKey: .description)
+        // Branch protection responses send a partial owner without a `type`.
+        owner = try? c.decodeIfPresent(SimpleUser.self, forKey: .owner)
+        externalURL = try c.decodeIfPresent(URL.self, forKey: .externalURL)
+        htmlURL = try c.decode(URL.self, forKey: .htmlURL)
+        createdAt = try c.decode(Date.self, forKey: .createdAt)
+        updatedAt = try c.decode(Date.self, forKey: .updatedAt)
+        permissions = try c.decode(AppPermissions.self, forKey: .permissions)
+        events = try c.decode([String].self, forKey: .events)
+        installationsCount = try c.decodeIfPresent(Int.self, forKey: .installationsCount)
+    }
+}
+
 /// One installation of a GitHub App on a user, organization, or enterprise.
 public struct Installation: Sendable, Hashable, Codable, Identifiable {
     public var id: Int

@@ -1,17 +1,17 @@
 # GHKit API coverage
 
-Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-01 by `Scripts/generate_todo.py`.
+Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-02 by `Scripts/generate_todo.py`.
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 47 of 1254 endpoints (3%)
+**REST progress:** 393 of 1254 endpoints (31%)
 
 ## Milestones
 
 | Milestone | Scope | Status |
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
-| M2 | Core resources: users, organizations, teams, repositories | ⬜ Next |
+| M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
 | M3 | Collaboration: issues, pull requests, search, activity | ⬜ Planned |
 | M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
@@ -57,13 +57,13 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [emojis](#emojis) | M2 | 0 | 1 | ⬜ |
 | [git](#git) | M2 | 0 | 13 | ⬜ |
 | [gitignore](#gitignore) | M2 | 0 | 2 | ⬜ |
-| [licenses](#licenses) | M2 | 0 | 3 | ⬜ |
+| [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
 | [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 0 | 116 | ⬜ |
-| [repos](#repos) | M2 | 0 | 203 | ⬜ |
-| [teams](#teams) | M2 | 0 | 32 | ⬜ |
-| [users](#users) | M2 | 3 | 47 | 🚧 |
+| [orgs](#orgs) | M2 | 91 | 116 | 🚧 |
+| [repos](#repos) | M2 | 199 | 203 | 🚧 |
+| [teams](#teams) | M2 | 16 | 32 | 🚧 |
+| [users](#users) | M2 | 42 | 47 | 🚧 |
 | [activity](#activity) | M3 | 0 | 34 | ⬜ |
 | [gists](#gists) | M3 | 0 | 20 | ⬜ |
 | [issues](#issues) | M3 | 0 | 66 | ⬜ |
@@ -227,11 +227,11 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### licenses
 
-0/3 done · milestone M2
+1/3 done · milestone M2
 
 - [ ] `GET /licenses` — Get all commonly used licenses
 - [ ] `GET /licenses/{license}` — Get a license
-- [ ] `GET /repos/{owner}/{repo}/license` — Get the license for a repository
+- [x] ✅ `GET /repos/{owner}/{repo}/license` — Get the license for a repository → `repositories.license(_:_:ref:)`
 
 ### markdown
 
@@ -252,352 +252,352 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### orgs
 
-0/116 done · milestone M2
+91/116 done · milestone M2
 
-- [ ] `GET /organizations` — List organizations
-- [ ] `GET /orgs/{org}` — Get an organization
-- [ ] `PATCH /orgs/{org}` — Update an organization
-- [ ] `DELETE /orgs/{org}` — Delete an organization
-- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record` — Create an artifact deployment record
-- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}` — Set cluster deployment records
-- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs` — Create a cluster deployment records job
-- [ ] `GET /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs/{job_id}` — Get cluster deployment records job status
-- [ ] `POST /orgs/{org}/artifacts/metadata/storage-record` — Create artifact metadata storage record
-- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/deployment-records` — List artifact deployment records
-- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/storage-records` — List artifact storage records
-- [ ] `POST /orgs/{org}/attestations/bulk-list` — List attestations by bulk subject digests
-- [ ] `POST /orgs/{org}/attestations/delete-request` — Delete attestations in bulk
-- [ ] `DELETE /orgs/{org}/attestations/digest/{subject_digest}` — Delete attestations by subject digest
-- [ ] `GET /orgs/{org}/attestations/repositories` — List attestation repositories
-- [ ] `DELETE /orgs/{org}/attestations/{attestation_id}` — Delete attestations by ID
-- [ ] `GET /orgs/{org}/attestations/{subject_digest}` — List attestations
-- [ ] `GET /orgs/{org}/blocks` — List users blocked by an organization
-- [ ] `GET /orgs/{org}/blocks/{username}` — Check if a user is blocked by an organization
-- [ ] `PUT /orgs/{org}/blocks/{username}` — Block a user from an organization
-- [ ] `DELETE /orgs/{org}/blocks/{username}` — Unblock a user from an organization
-- [ ] `GET /orgs/{org}/failed_invitations` — List failed organization invitations
-- [ ] `GET /orgs/{org}/hooks` — List organization webhooks
-- [ ] `POST /orgs/{org}/hooks` — Create an organization webhook
-- [ ] `GET /orgs/{org}/hooks/{hook_id}` — Get an organization webhook
-- [ ] `PATCH /orgs/{org}/hooks/{hook_id}` — Update an organization webhook
-- [ ] `DELETE /orgs/{org}/hooks/{hook_id}` — Delete an organization webhook
-- [ ] `GET /orgs/{org}/hooks/{hook_id}/config` — Get a webhook configuration for an organization
-- [ ] `PATCH /orgs/{org}/hooks/{hook_id}/config` — Update a webhook configuration for an organization
-- [ ] `GET /orgs/{org}/hooks/{hook_id}/deliveries` — List deliveries for an organization webhook
-- [ ] `GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a webhook delivery for an organization webhook
-- [ ] `POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for an organization webhook
-- [ ] `POST /orgs/{org}/hooks/{hook_id}/pings` — Ping an organization webhook
-- [ ] `GET /orgs/{org}/insights/api/route-stats/{actor_type}/{actor_id}` — Get route stats by actor
-- [ ] `GET /orgs/{org}/insights/api/subject-stats` — Get subject stats
-- [ ] `GET /orgs/{org}/insights/api/summary-stats` — Get summary stats
-- [ ] `GET /orgs/{org}/insights/api/summary-stats/users/{user_id}` — Get summary stats by user
-- [ ] `GET /orgs/{org}/insights/api/summary-stats/{actor_type}/{actor_id}` — Get summary stats by actor
-- [ ] `GET /orgs/{org}/insights/api/time-stats` — Get time stats
-- [ ] `GET /orgs/{org}/insights/api/time-stats/users/{user_id}` — Get time stats by user
-- [ ] `GET /orgs/{org}/insights/api/time-stats/{actor_type}/{actor_id}` — Get time stats by actor
-- [ ] `GET /orgs/{org}/insights/api/user-stats/{user_id}` — Get user stats
-- [ ] `GET /orgs/{org}/installations` — List app installations for an organization
-- [ ] `GET /orgs/{org}/invitations` — List pending organization invitations
-- [ ] `POST /orgs/{org}/invitations` — Create an organization invitation
-- [ ] `DELETE /orgs/{org}/invitations/{invitation_id}` — Cancel an organization invitation
-- [ ] `GET /orgs/{org}/invitations/{invitation_id}/teams` — List organization invitation teams
-- [ ] `GET /orgs/{org}/issue-fields` — List issue fields for an organization
-- [ ] `POST /orgs/{org}/issue-fields` — Create issue field for an organization
-- [ ] `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization
-- [ ] `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization
-- [ ] `GET /orgs/{org}/issue-types` — List issue types for an organization
-- [ ] `POST /orgs/{org}/issue-types` — Create issue type for an organization
-- [ ] `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization
-- [ ] `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization
-- [ ] `GET /orgs/{org}/members` — List organization members
-- [ ] `GET /orgs/{org}/members/{username}` — Check organization membership for a user
-- [ ] `DELETE /orgs/{org}/members/{username}` — Remove an organization member
-- [ ] `GET /orgs/{org}/memberships/{username}` — Get organization membership for a user
-- [ ] `PUT /orgs/{org}/memberships/{username}` — Set organization membership for a user
-- [ ] `DELETE /orgs/{org}/memberships/{username}` — Remove organization membership for a user
-- [ ] `GET /orgs/{org}/organization-roles` — Get all organization roles for an organization
-- [ ] `DELETE /orgs/{org}/organization-roles/teams/{team_slug}` — Remove all organization roles for a team
-- [ ] `PUT /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Assign an organization role to a team
-- [ ] `DELETE /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Remove an organization role from a team
-- [ ] `DELETE /orgs/{org}/organization-roles/users/{username}` — Remove all organization roles for a user
-- [ ] `PUT /orgs/{org}/organization-roles/users/{username}/{role_id}` — Assign an organization role to a user
-- [ ] `DELETE /orgs/{org}/organization-roles/users/{username}/{role_id}` — Remove an organization role from a user
-- [ ] `GET /orgs/{org}/organization-roles/{role_id}` — Get an organization role
-- [ ] `GET /orgs/{org}/organization-roles/{role_id}/teams` — List teams that are assigned to an organization role
-- [ ] `GET /orgs/{org}/organization-roles/{role_id}/users` — List users that are assigned to an organization role
-- [ ] `GET /orgs/{org}/outside_collaborators` — List outside collaborators for an organization
-- [ ] `PUT /orgs/{org}/outside_collaborators/{username}` — Convert an organization member to outside collaborator
-- [ ] `DELETE /orgs/{org}/outside_collaborators/{username}` — Remove outside collaborator from an organization
-- [ ] `GET /orgs/{org}/personal-access-token-requests` — List requests to access organization resources with fine-grained personal access tokens
-- [ ] `POST /orgs/{org}/personal-access-token-requests` — Review requests to access organization resources with fine-grained personal access tokens
-- [ ] `POST /orgs/{org}/personal-access-token-requests/{pat_request_id}` — Review a request to access organization resources with a fine-grained personal access token
-- [ ] `GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories` — List repositories requested to be accessed by a fine-grained personal access token
-- [ ] `GET /orgs/{org}/personal-access-tokens` — List fine-grained personal access tokens with access to organization resources
-- [ ] `POST /orgs/{org}/personal-access-tokens` — Update the access to organization resources via fine-grained personal access tokens
-- [ ] `POST /orgs/{org}/personal-access-tokens/{pat_id}` — Update the access a fine-grained personal access token has to organization resources
-- [ ] `GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories` — List repositories a fine-grained personal access token has access to
-- [ ] `GET /orgs/{org}/properties/installations` — Get registered app installations for external custom properties
-- [ ] `POST /orgs/{org}/properties/installations` — Register an app installation for external custom properties
-- [ ] `GET /orgs/{org}/properties/installations/schema` — Get all external custom properties for a GitHub App installation in an organization
-- [ ] `PATCH /orgs/{org}/properties/installations/values` — Create or update external custom property values for organization repositories
-- [ ] `PATCH /orgs/{org}/properties/installations/values/{property_name}` — Create or update external custom property values for a property across organization repositories
-- [ ] `DELETE /orgs/{org}/properties/installations/values/{property_name}` — Remove all external custom property values for a property across all organization repositories
-- [ ] `GET /orgs/{org}/properties/schema` — Get all custom properties for an organization
-- [ ] `PATCH /orgs/{org}/properties/schema` — Create or update custom properties for an organization
-- [ ] `GET /orgs/{org}/properties/schema/{custom_property_name}` — Get a custom property for an organization
-- [ ] `PUT /orgs/{org}/properties/schema/{custom_property_name}` — Create or update a custom property for an organization
-- [ ] `DELETE /orgs/{org}/properties/schema/{custom_property_name}` — Remove a custom property for an organization
-- [ ] `GET /orgs/{org}/properties/values` — List custom property values for organization repositories
-- [ ] `PATCH /orgs/{org}/properties/values` — Create or update custom property values for organization repositories
-- [ ] `GET /orgs/{org}/public_members` — List public organization members
-- [ ] `GET /orgs/{org}/public_members/{username}` — Check public organization membership for a user
-- [ ] `PUT /orgs/{org}/public_members/{username}` — Set public organization membership for the authenticated user
-- [ ] `DELETE /orgs/{org}/public_members/{username}` — Remove public organization membership for the authenticated user
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version
+- [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
+- [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
+- [x] ✅ `PATCH /orgs/{org}` — Update an organization → `organizations.update(_:_:)`
+- [x] ✅ `DELETE /orgs/{org}` — Delete an organization → `organizations.delete(_:)`
+- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record` — Create an artifact deployment record (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}` — Set cluster deployment records (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs` — Create a cluster deployment records job (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/artifacts/metadata/deployment-record/cluster/{cluster}/jobs/{job_id}` — Get cluster deployment records job status (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/artifacts/metadata/storage-record` — Create artifact metadata storage record (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/deployment-records` — List artifact deployment records (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/artifacts/{subject_digest}/metadata/storage-records` — List artifact storage records (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/attestations/bulk-list` — List attestations by bulk subject digests (deferred to milestone 5)
+- [ ] `POST /orgs/{org}/attestations/delete-request` — Delete attestations in bulk (deferred to milestone 5)
+- [ ] `DELETE /orgs/{org}/attestations/digest/{subject_digest}` — Delete attestations by subject digest (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/attestations/repositories` — List attestation repositories (deferred to milestone 5)
+- [ ] `DELETE /orgs/{org}/attestations/{attestation_id}` — Delete attestations by ID (deferred to milestone 5)
+- [ ] `GET /orgs/{org}/attestations/{subject_digest}` — List attestations (deferred to milestone 5)
+- [x] ✅ `GET /orgs/{org}/blocks` — List users blocked by an organization → `organizations.blockedUsers(in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/blocks/{username}` — Check if a user is blocked by an organization → `organizations.isBlocked(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/blocks/{username}` — Block a user from an organization → `organizations.block(_:in:)`
+- [x] ✅ `DELETE /orgs/{org}/blocks/{username}` — Unblock a user from an organization → `organizations.unblock(_:in:)`
+- [x] ✅ `GET /orgs/{org}/failed_invitations` — List failed organization invitations → `organizations.failedInvitations(of:perPage:)`
+- [x] ✅ `GET /orgs/{org}/hooks` — List organization webhooks → `organizations.webhooks(of:perPage:)`
+- [x] ✅ `POST /orgs/{org}/hooks` — Create an organization webhook → `organizations.createWebhook(_:in:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}` — Get an organization webhook → `organizations.webhook(id:in:)`
+- [x] ✅ `PATCH /orgs/{org}/hooks/{hook_id}` — Update an organization webhook → `organizations.updateWebhook(id:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/hooks/{hook_id}` — Delete an organization webhook → `organizations.deleteWebhook(id:in:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/config` — Get a webhook configuration for an organization → `organizations.webhookConfiguration(id:in:)`
+- [x] ✅ `PATCH /orgs/{org}/hooks/{hook_id}/config` — Update a webhook configuration for an organization → `organizations.updateWebhookConfiguration(id:in:_:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/deliveries` — List deliveries for an organization webhook → `organizations.webhookDeliveries(id:in:status:perPage:)`
+- [x] ✅ `GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a webhook delivery for an organization webhook → `organizations.webhookDelivery(_:webhook:in:)`
+- [x] ✅ `POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for an organization webhook → `organizations.redeliver(_:webhook:in:)`
+- [x] ✅ `POST /orgs/{org}/hooks/{hook_id}/pings` — Ping an organization webhook → `organizations.pingWebhook(id:in:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/route-stats/{actor_type}/{actor_id}` — Get route stats by actor → `organizations.apiRouteUsage(in:by:during:sortedBy:ascending:routeContaining:perPage:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/subject-stats` — Get subject stats → `organizations.apiSubjectUsage(in:during:sortedBy:ascending:subjectContaining:perPage:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/summary-stats` — Get summary stats → `organizations.apiUsageSummary(in:for:during:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/summary-stats/users/{user_id}` — Get summary stats by user → `organizations.apiUsageSummary(in:for:during:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/summary-stats/{actor_type}/{actor_id}` — Get summary stats by actor → `organizations.apiUsageSummary(in:for:during:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/time-stats` — Get time stats → `organizations.apiUsageOverTime(in:for:during:every:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/time-stats/users/{user_id}` — Get time stats by user → `organizations.apiUsageOverTime(in:for:during:every:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/time-stats/{actor_type}/{actor_id}` — Get time stats by actor → `organizations.apiUsageOverTime(in:for:during:every:)`
+- [x] ✅ `GET /orgs/{org}/insights/api/user-stats/{user_id}` — Get user stats → `organizations.apiActorUsage(in:forUser:during:sortedBy:ascending:actorContaining:perPage:)`
+- [x] ✅ `GET /orgs/{org}/installations` — List app installations for an organization → `organizations.installations(of:perPage:)`
+- [x] ✅ `GET /orgs/{org}/invitations` — List pending organization invitations → `organizations.invitations(of:role:source:perPage:)`
+- [x] ✅ `POST /orgs/{org}/invitations` — Create an organization invitation → `organizations.invite(_:to:)`
+- [x] ✅ `DELETE /orgs/{org}/invitations/{invitation_id}` — Cancel an organization invitation → `organizations.cancelInvitation(id:in:)`
+- [x] ✅ `GET /orgs/{org}/invitations/{invitation_id}/teams` — List organization invitation teams → `organizations.invitationTeams(id:in:perPage:)`
+- [ ] `GET /orgs/{org}/issue-fields` — List issue fields for an organization (deferred to milestone 3)
+- [ ] `POST /orgs/{org}/issue-fields` — Create issue field for an organization (deferred to milestone 3)
+- [ ] `PATCH /orgs/{org}/issue-fields/{issue_field_id}` — Update issue field for an organization (deferred to milestone 3)
+- [ ] `DELETE /orgs/{org}/issue-fields/{issue_field_id}` — Delete issue field for an organization (deferred to milestone 3)
+- [ ] `GET /orgs/{org}/issue-types` — List issue types for an organization (deferred to milestone 3)
+- [ ] `POST /orgs/{org}/issue-types` — Create issue type for an organization (deferred to milestone 3)
+- [ ] `PUT /orgs/{org}/issue-types/{issue_type_id}` — Update issue type for an organization (deferred to milestone 3)
+- [ ] `DELETE /orgs/{org}/issue-types/{issue_type_id}` — Delete issue type for an organization (deferred to milestone 3)
+- [x] ✅ `GET /orgs/{org}/members` — List organization members → `organizations.members(of:filter:role:perPage:)`
+- [x] ✅ `GET /orgs/{org}/members/{username}` — Check organization membership for a user → `organizations.isMember(_:of:)`
+- [x] ✅ `DELETE /orgs/{org}/members/{username}` — Remove an organization member → `organizations.removeMember(_:from:)`
+- [x] ✅ `GET /orgs/{org}/memberships/{username}` — Get organization membership for a user → `organizations.membership(of:in:)`
+- [x] ✅ `PUT /orgs/{org}/memberships/{username}` — Set organization membership for a user → `organizations.setMembership(of:in:role:)`
+- [x] ✅ `DELETE /orgs/{org}/memberships/{username}` — Remove organization membership for a user → `organizations.removeMembership(of:from:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles` — Get all organization roles for an organization → `organizations.roles(of:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/teams/{team_slug}` — Remove all organization roles for a team → `organizations.revokeAllRoles(fromTeam:in:)`
+- [x] ✅ `PUT /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Assign an organization role to a team → `organizations.assignRole(_:toTeam:in:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/teams/{team_slug}/{role_id}` — Remove an organization role from a team → `organizations.revokeRole(_:fromTeam:in:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/users/{username}` — Remove all organization roles for a user → `organizations.revokeAllRoles(fromUser:in:)`
+- [x] ✅ `PUT /orgs/{org}/organization-roles/users/{username}/{role_id}` — Assign an organization role to a user → `organizations.assignRole(_:toUser:in:)`
+- [x] ✅ `DELETE /orgs/{org}/organization-roles/users/{username}/{role_id}` — Remove an organization role from a user → `organizations.revokeRole(_:fromUser:in:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles/{role_id}` — Get an organization role → `organizations.role(id:in:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles/{role_id}/teams` — List teams that are assigned to an organization role → `organizations.teams(withRole:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/organization-roles/{role_id}/users` — List users that are assigned to an organization role → `organizations.users(withRole:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/outside_collaborators` — List outside collaborators for an organization → `organizations.outsideCollaborators(of:filter:perPage:)`
+- [x] ✅ `PUT /orgs/{org}/outside_collaborators/{username}` — Convert an organization member to outside collaborator → `organizations.convertToOutsideCollaborator(_:in:async:)`
+- [x] ✅ `DELETE /orgs/{org}/outside_collaborators/{username}` — Remove outside collaborator from an organization → `organizations.removeOutsideCollaborator(_:from:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-token-requests` — List requests to access organization resources with fine-grained personal access tokens → `organizations.tokenRequests(in:matching:perPage:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-token-requests` — Review requests to access organization resources with fine-grained personal access tokens → `organizations.reviewTokenRequests(ids:in:_:reason:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-token-requests/{pat_request_id}` — Review a request to access organization resources with a fine-grained personal access token → `organizations.reviewTokenRequest(id:in:_:reason:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories` — List repositories requested to be accessed by a fine-grained personal access token → `organizations.tokenRequestRepositories(id:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-tokens` — List fine-grained personal access tokens with access to organization resources → `organizations.tokenGrants(in:matching:perPage:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-tokens` — Update the access to organization resources via fine-grained personal access tokens → `organizations.revokeTokenGrants(ids:in:)`
+- [x] ✅ `POST /orgs/{org}/personal-access-tokens/{pat_id}` — Update the access a fine-grained personal access token has to organization resources → `organizations.revokeTokenGrant(id:in:)`
+- [x] ✅ `GET /orgs/{org}/personal-access-tokens/{pat_id}/repositories` — List repositories a fine-grained personal access token has access to → `organizations.tokenGrantRepositories(id:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/properties/installations` — Get registered app installations for external custom properties → `organizations.externalPropertyInstallations(of:)`
+- [x] ✅ `POST /orgs/{org}/properties/installations` — Register an app installation for external custom properties → `organizations.registerExternalPropertyInstallation(_:displayName:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/installations/schema` — Get all external custom properties for a GitHub App installation in an organization → `organizations.externalProperties(of:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/installations/values` — Create or update external custom property values for organization repositories → `organizations.setExternalPropertyValues(_:onRepositories:in:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/installations/values/{property_name}` — Create or update external custom property values for a property across organization repositories → `organizations.setExternalPropertyValue(_:values:in:)`
+- [x] ✅ `DELETE /orgs/{org}/properties/installations/values/{property_name}` — Remove all external custom property values for a property across all organization repositories → `organizations.deleteExternalPropertyValues(_:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/schema` — Get all custom properties for an organization → `organizations.customProperties(of:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/schema` — Create or update custom properties for an organization → `organizations.setCustomProperties(_:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/schema/{custom_property_name}` — Get a custom property for an organization → `organizations.customProperty(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/properties/schema/{custom_property_name}` — Create or update a custom property for an organization → `organizations.setCustomProperty(_:in:)`
+- [x] ✅ `DELETE /orgs/{org}/properties/schema/{custom_property_name}` — Remove a custom property for an organization → `organizations.deleteCustomProperty(_:in:)`
+- [x] ✅ `GET /orgs/{org}/properties/values` — List custom property values for organization repositories → `organizations.customPropertyValues(in:repositoryQuery:perPage:)`
+- [x] ✅ `PATCH /orgs/{org}/properties/values` — Create or update custom property values for organization repositories → `organizations.setCustomPropertyValues(_:onRepositories:in:)`
+- [x] ✅ `GET /orgs/{org}/public_members` — List public organization members → `organizations.publicMembers(of:perPage:)`
+- [x] ✅ `GET /orgs/{org}/public_members/{username}` — Check public organization membership for a user → `organizations.isPublicMember(_:of:)`
+- [x] ✅ `PUT /orgs/{org}/public_members/{username}` — Set public organization membership for the authenticated user → `organizations.publicizeMembership(of:in:)`
+- [x] ✅ `DELETE /orgs/{org}/public_members/{username}` — Remove public organization membership for the authenticated user → `organizations.concealMembership(of:in:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/{ruleset_id}/history` — Get organization ruleset history → `rulesets(_:).history(of:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/{ruleset_id}/history/{version_id}` — Get organization ruleset version → `rulesets(_:).version(_:of:)`
 - [ ] ~~`GET /orgs/{org}/security-managers` — List security manager teams~~
 - [ ] ~~`PUT /orgs/{org}/security-managers/teams/{team_slug}` — Add a security manager team~~
 - [ ] ~~`DELETE /orgs/{org}/security-managers/teams/{team_slug}` — Remove a security manager team~~
-- [ ] `GET /orgs/{org}/settings/immutable-releases` — Get immutable releases settings for an organization
-- [ ] `PUT /orgs/{org}/settings/immutable-releases` — Set immutable releases settings for an organization
-- [ ] `GET /orgs/{org}/settings/immutable-releases/repositories` — List selected repositories for immutable releases enforcement
-- [ ] `PUT /orgs/{org}/settings/immutable-releases/repositories` — Set selected repositories for immutable releases enforcement
-- [ ] `PUT /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Enable a selected repository for immutable releases in an organization
-- [ ] `DELETE /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Disable a selected repository for immutable releases in an organization
+- [x] ✅ `GET /orgs/{org}/settings/immutable-releases` — Get immutable releases settings for an organization → `organizations.immutableReleasesSettings(of:)`
+- [x] ✅ `PUT /orgs/{org}/settings/immutable-releases` — Set immutable releases settings for an organization → `organizations.setImmutableReleases(_:in:)`
+- [x] ✅ `GET /orgs/{org}/settings/immutable-releases/repositories` — List selected repositories for immutable releases enforcement → `organizations.immutableReleasesRepositories(of:perPage:)`
+- [x] ✅ `PUT /orgs/{org}/settings/immutable-releases/repositories` — Set selected repositories for immutable releases enforcement → `organizations.setImmutableReleasesRepositories(_:in:)`
+- [x] ✅ `PUT /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Enable a selected repository for immutable releases in an organization → `organizations.enableImmutableReleases(forRepository:in:)`
+- [x] ✅ `DELETE /orgs/{org}/settings/immutable-releases/repositories/{repository_id}` — Disable a selected repository for immutable releases in an organization → `organizations.disableImmutableReleases(forRepository:in:)`
 - [ ] ~~`POST /orgs/{org}/{security_product}/{enablement}` — Enable or disable a security feature for an organization~~
-- [ ] `GET /user/memberships/orgs` — List organization memberships for the authenticated user
-- [ ] `GET /user/memberships/orgs/{org}` — Get an organization membership for the authenticated user
-- [ ] `PATCH /user/memberships/orgs/{org}` — Update an organization membership for the authenticated user
-- [ ] `GET /user/orgs` — List organizations for the authenticated user
-- [ ] `GET /users/{username}/orgs` — List organizations for a user
+- [x] ✅ `GET /user/memberships/orgs` — List organization memberships for the authenticated user → `organizations.memberships(state:perPage:)`
+- [x] ✅ `GET /user/memberships/orgs/{org}` — Get an organization membership for the authenticated user → `organizations.membership(in:)`
+- [x] ✅ `PATCH /user/memberships/orgs/{org}` — Update an organization membership for the authenticated user → `organizations.acceptInvitation(to:)`
+- [x] ✅ `GET /user/orgs` — List organizations for the authenticated user → `organizations.list(perPage:)`
+- [x] ✅ `GET /users/{username}/orgs` — List organizations for a user → `organizations.list(of:perPage:)`
 
 ### repos
 
-0/203 done · milestone M2
+199/203 done · milestone M2
 
-- [ ] `GET /orgs/{org}/repos` — List organization repositories
-- [ ] `POST /orgs/{org}/repos` — Create an organization repository
-- [ ] `GET /orgs/{org}/rulesets` — Get all organization repository rulesets
-- [ ] `POST /orgs/{org}/rulesets` — Create an organization repository ruleset
-- [ ] `GET /orgs/{org}/rulesets/rule-suites` — List organization rule suites
-- [ ] `GET /orgs/{org}/rulesets/rule-suites/{rule_suite_id}` — Get an organization rule suite
-- [ ] `GET /orgs/{org}/rulesets/{ruleset_id}` — Get an organization repository ruleset
-- [ ] `PUT /orgs/{org}/rulesets/{ruleset_id}` — Update an organization repository ruleset
-- [ ] `DELETE /orgs/{org}/rulesets/{ruleset_id}` — Delete an organization repository ruleset
-- [ ] `GET /repos/{owner}/{repo}` — Get a repository
-- [ ] `PATCH /repos/{owner}/{repo}` — Update a repository
-- [ ] `DELETE /repos/{owner}/{repo}` — Delete a repository
-- [ ] `GET /repos/{owner}/{repo}/activity` — List repository activities
-- [ ] `POST /repos/{owner}/{repo}/attestations` — Create an attestation
-- [ ] `GET /repos/{owner}/{repo}/attestations/{subject_digest}` — List attestations
-- [ ] `GET /repos/{owner}/{repo}/autolinks` — Get all autolinks of a repository
-- [ ] `POST /repos/{owner}/{repo}/autolinks` — Create an autolink reference for a repository
-- [ ] `GET /repos/{owner}/{repo}/autolinks/{autolink_id}` — Get an autolink reference of a repository
-- [ ] `DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}` — Delete an autolink reference from a repository
-- [ ] `GET /repos/{owner}/{repo}/automated-security-fixes` — Check if Dependabot security updates are enabled for a repository
-- [ ] `PUT /repos/{owner}/{repo}/automated-security-fixes` — Enable Dependabot security updates
-- [ ] `DELETE /repos/{owner}/{repo}/automated-security-fixes` — Disable Dependabot security updates
-- [ ] `GET /repos/{owner}/{repo}/branches` — List branches
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}` — Get a branch
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection` — Get branch protection
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection` — Update branch protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection` — Delete branch protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Get admin branch protection
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Set admin branch protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Delete admin branch protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Get pull request review protection
-- [ ] `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Update pull request review protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Delete pull request review protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Get commit signature protection
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Create commit signature protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Delete commit signature protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Get status checks protection
-- [ ] `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Update status check protection
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Remove status check protection
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Get all status check contexts
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Add status check contexts
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Set status check contexts
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Remove status check contexts
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Get access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Delete access restrictions
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Get apps with access to the protected branch
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Add app access restrictions
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Set app access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Remove app access restrictions
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Get teams with access to the protected branch
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Add team access restrictions
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Set team access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Remove team access restrictions
-- [ ] `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Get users with access to the protected branch
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Add user access restrictions
-- [ ] `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Set user access restrictions
-- [ ] `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Remove user access restrictions
-- [ ] `POST /repos/{owner}/{repo}/branches/{branch}/rename` — Rename a branch
-- [ ] `GET /repos/{owner}/{repo}/codeowners/errors` — List CODEOWNERS errors
-- [ ] `GET /repos/{owner}/{repo}/collaborators` — List repository collaborators
-- [ ] `GET /repos/{owner}/{repo}/collaborators/{username}` — Check if a user is a repository collaborator
-- [ ] `PUT /repos/{owner}/{repo}/collaborators/{username}` — Add a repository collaborator
-- [ ] `DELETE /repos/{owner}/{repo}/collaborators/{username}` — Remove a repository collaborator
-- [ ] `GET /repos/{owner}/{repo}/collaborators/{username}/permission` — Get repository permissions for a user
-- [ ] `GET /repos/{owner}/{repo}/comments` — List commit comments for a repository
-- [ ] `GET /repos/{owner}/{repo}/comments/{comment_id}` — Get a commit comment
-- [ ] `PATCH /repos/{owner}/{repo}/comments/{comment_id}` — Update a commit comment
-- [ ] `DELETE /repos/{owner}/{repo}/comments/{comment_id}` — Delete a commit comment
-- [ ] `GET /repos/{owner}/{repo}/commits` — List commits
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments
-- [ ] `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment
-- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference
-- [ ] `GET /repos/{owner}/{repo}/community/profile` — Get community profile metrics
-- [ ] `GET /repos/{owner}/{repo}/compare/{basehead}` — Compare two commits
-- [ ] `GET /repos/{owner}/{repo}/contents/{path}` — Get repository content
-- [ ] `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents
-- [ ] `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file
-- [ ] `GET /repos/{owner}/{repo}/contributors` — List repository contributors
-- [ ] `GET /repos/{owner}/{repo}/deployments` — List deployments
-- [ ] `POST /repos/{owner}/{repo}/deployments` — Create a deployment
-- [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}` — Get a deployment
-- [ ] `DELETE /repos/{owner}/{repo}/deployments/{deployment_id}` — Delete a deployment
-- [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — List deployment statuses
-- [ ] `POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — Create a deployment status
-- [ ] `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}` — Get a deployment status
-- [ ] `POST /repos/{owner}/{repo}/dispatches` — Create a repository dispatch event
-- [ ] `GET /repos/{owner}/{repo}/environments` — List environments
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}` — Get an environment
-- [ ] `PUT /repos/{owner}/{repo}/environments/{environment_name}` — Create or update an environment
-- [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}` — Delete an environment
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — List deployment branch policies
-- [ ] `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — Create a deployment branch policy
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Get a deployment branch policy
-- [ ] `PUT /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Update a deployment branch policy
-- [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Delete a deployment branch policy
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Get all deployment protection rules for an environment
-- [ ] `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Create a custom deployment protection rule on an environment
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps` — List custom deployment rule integrations available for an environment
-- [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Get a custom deployment protection rule
-- [ ] `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Disable a custom protection rule for an environment
-- [ ] `GET /repos/{owner}/{repo}/forks` — List forks
-- [ ] `POST /repos/{owner}/{repo}/forks` — Create a fork
-- [ ] `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository
-- [ ] `GET /repos/{owner}/{repo}/hooks` — List repository webhooks
-- [ ] `POST /repos/{owner}/{repo}/hooks` — Create a repository webhook
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}` — Get a repository webhook
-- [ ] `PATCH /repos/{owner}/{repo}/hooks/{hook_id}` — Update a repository webhook
-- [ ] `DELETE /repos/{owner}/{repo}/hooks/{hook_id}` — Delete a repository webhook
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}/config` — Get a webhook configuration for a repository
-- [ ] `PATCH /repos/{owner}/{repo}/hooks/{hook_id}/config` — Update a webhook configuration for a repository
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries` — List deliveries for a repository webhook
-- [ ] `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a delivery for a repository webhook
-- [ ] `POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for a repository webhook
-- [ ] `POST /repos/{owner}/{repo}/hooks/{hook_id}/pings` — Ping a repository webhook
-- [ ] `POST /repos/{owner}/{repo}/hooks/{hook_id}/tests` — Test the push repository webhook
-- [ ] `GET /repos/{owner}/{repo}/immutable-releases` — Check if immutable releases are enabled for a repository
-- [ ] `PUT /repos/{owner}/{repo}/immutable-releases` — Enable immutable releases
-- [ ] `DELETE /repos/{owner}/{repo}/immutable-releases` — Disable immutable releases
-- [ ] `GET /repos/{owner}/{repo}/invitations` — List repository invitations
-- [ ] `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation
-- [ ] `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation
-- [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository
-- [ ] `GET /repos/{owner}/{repo}/keys` — List deploy keys
-- [ ] `POST /repos/{owner}/{repo}/keys` — Create a deploy key
-- [ ] `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key
-- [ ] `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key
-- [ ] `GET /repos/{owner}/{repo}/languages` — List repository languages
-- [ ] `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository
-- [ ] `POST /repos/{owner}/{repo}/merges` — Merge a branch
-- [ ] `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site
-- [ ] `POST /repos/{owner}/{repo}/pages` — Create a GitHub Pages site
-- [ ] `PUT /repos/{owner}/{repo}/pages` — Update information about a GitHub Pages site
-- [ ] `DELETE /repos/{owner}/{repo}/pages` — Delete a GitHub Pages site
-- [ ] `GET /repos/{owner}/{repo}/pages/builds` — List GitHub Pages builds
-- [ ] `POST /repos/{owner}/{repo}/pages/builds` — Request a GitHub Pages build
-- [ ] `GET /repos/{owner}/{repo}/pages/builds/latest` — Get latest Pages build
-- [ ] `GET /repos/{owner}/{repo}/pages/builds/{build_id}` — Get GitHub Pages build
-- [ ] `POST /repos/{owner}/{repo}/pages/deployments` — Create a GitHub Pages deployment
-- [ ] `GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}` — Get the status of a GitHub Pages deployment
-- [ ] `POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel` — Cancel a GitHub Pages deployment
-- [ ] `GET /repos/{owner}/{repo}/pages/health` — Get a DNS health check for GitHub Pages
-- [ ] `GET /repos/{owner}/{repo}/private-vulnerability-reporting` — Check if private vulnerability reporting is enabled for a repository
-- [ ] `PUT /repos/{owner}/{repo}/private-vulnerability-reporting` — Enable private vulnerability reporting for a repository
-- [ ] `DELETE /repos/{owner}/{repo}/private-vulnerability-reporting` — Disable private vulnerability reporting for a repository
-- [ ] `GET /repos/{owner}/{repo}/properties/values` — Get all custom property values for a repository
-- [ ] `PATCH /repos/{owner}/{repo}/properties/values` — Create or update custom property values for a repository
-- [ ] `GET /repos/{owner}/{repo}/readme` — Get a repository README
-- [ ] `GET /repos/{owner}/{repo}/readme/{dir}` — Get a repository README for a directory
-- [ ] `GET /repos/{owner}/{repo}/releases` — List releases
-- [ ] `POST /repos/{owner}/{repo}/releases` — Create a release
-- [ ] `GET /repos/{owner}/{repo}/releases/assets/{asset_id}` — Get a release asset
-- [ ] `PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}` — Update a release asset
-- [ ] `DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}` — Delete a release asset
-- [ ] `POST /repos/{owner}/{repo}/releases/generate-notes` — Generate release notes content for a release
-- [ ] `GET /repos/{owner}/{repo}/releases/latest` — Get the latest release
-- [ ] `GET /repos/{owner}/{repo}/releases/tags/{tag}` — Get a release by tag name
-- [ ] `GET /repos/{owner}/{repo}/releases/{release_id}` — Get a release
-- [ ] `PATCH /repos/{owner}/{repo}/releases/{release_id}` — Update a release
-- [ ] `DELETE /repos/{owner}/{repo}/releases/{release_id}` — Delete a release
-- [ ] `GET /repos/{owner}/{repo}/releases/{release_id}/assets` — List release assets
-- [ ] `POST /repos/{owner}/{repo}/releases/{release_id}/assets` — Upload a release asset
-- [ ] `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch
-- [ ] `GET /repos/{owner}/{repo}/rulesets` — Get all repository rulesets
-- [ ] `POST /repos/{owner}/{repo}/rulesets` — Create a repository ruleset
-- [ ] `GET /repos/{owner}/{repo}/rulesets/rule-suites` — List repository rule suites
-- [ ] `GET /repos/{owner}/{repo}/rulesets/rule-suites/{rule_suite_id}` — Get a repository rule suite
-- [ ] `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Get a repository ruleset
-- [ ] `PUT /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Update a repository ruleset
-- [ ] `DELETE /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Delete a repository ruleset
-- [ ] `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history` — Get repository ruleset history
-- [ ] `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history/{version_id}` — Get repository ruleset version
-- [ ] `GET /repos/{owner}/{repo}/stats/code_frequency` — Get the weekly commit activity
-- [ ] `GET /repos/{owner}/{repo}/stats/commit_activity` — Get the last year of commit activity
-- [ ] `GET /repos/{owner}/{repo}/stats/contributors` — Get all contributor commit activity
-- [ ] `GET /repos/{owner}/{repo}/stats/participation` — Get the weekly commit count
-- [ ] `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day
-- [ ] `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status
-- [ ] `GET /repos/{owner}/{repo}/tags` — List repository tags
-- [ ] `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar)
-- [ ] `GET /repos/{owner}/{repo}/teams` — List repository teams
-- [ ] `GET /repos/{owner}/{repo}/topics` — Get all repository topics
-- [ ] `PUT /repos/{owner}/{repo}/topics` — Replace all repository topics
-- [ ] `GET /repos/{owner}/{repo}/traffic/clones` — Get repository clones
-- [ ] `GET /repos/{owner}/{repo}/traffic/popular/paths` — Get top referral paths
-- [ ] `GET /repos/{owner}/{repo}/traffic/popular/referrers` — Get top referral sources
-- [ ] `GET /repos/{owner}/{repo}/traffic/views` — Get page views
-- [ ] `POST /repos/{owner}/{repo}/transfer` — Transfer a repository
-- [ ] `GET /repos/{owner}/{repo}/vulnerability-alerts` — Check if vulnerability alerts are enabled for a repository
-- [ ] `PUT /repos/{owner}/{repo}/vulnerability-alerts` — Enable vulnerability alerts
-- [ ] `DELETE /repos/{owner}/{repo}/vulnerability-alerts` — Disable vulnerability alerts
-- [ ] `GET /repos/{owner}/{repo}/zipball/{ref}` — Download a repository archive (zip)
-- [ ] `POST /repos/{template_owner}/{template_repo}/generate` — Create a repository using a template
-- [ ] `GET /repositories` — List public repositories
-- [ ] `GET /user/repos` — List repositories for the authenticated user
-- [ ] `POST /user/repos` — Create a repository for the authenticated user
-- [ ] `GET /user/repository_invitations` — List repository invitations for the authenticated user
-- [ ] `PATCH /user/repository_invitations/{invitation_id}` — Accept a repository invitation
-- [ ] `DELETE /user/repository_invitations/{invitation_id}` — Decline a repository invitation
-- [ ] `GET /users/{username}/repos` — List repositories for a user
+- [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
+- [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
+- [x] ✅ `GET /orgs/{org}/rulesets` — Get all organization repository rulesets → `rulesets(_:).list(targets:includesParents:)`
+- [x] ✅ `POST /orgs/{org}/rulesets` — Create an organization repository ruleset → `rulesets(_:).create(_:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/rule-suites` — List organization rule suites → `rulesets(_:).ruleSuites(ref:repository:period:actor:result:evaluateStatus:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/rule-suites/{rule_suite_id}` — Get an organization rule suite → `rulesets(_:).ruleSuite(id:includeMetadata:)`
+- [x] ✅ `GET /orgs/{org}/rulesets/{ruleset_id}` — Get an organization repository ruleset → `rulesets(_:).ruleset(id:includesParents:)`
+- [x] ✅ `PUT /orgs/{org}/rulesets/{ruleset_id}` — Update an organization repository ruleset → `rulesets(_:).update(id:_:)`
+- [x] ✅ `DELETE /orgs/{org}/rulesets/{ruleset_id}` — Delete an organization repository ruleset → `rulesets(_:).delete(id:)`
+- [x] ✅ `GET /repos/{owner}/{repo}` — Get a repository → `repositories.repository(_:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}` — Update a repository → `repositories.update(_:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}` — Delete a repository → `repositories.delete(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/activity` — List repository activities → `repositories.activity(_:_:matching:perPage:)`
+- [ ] `POST /repos/{owner}/{repo}/attestations` — Create an attestation (deferred to milestone 5)
+- [ ] `GET /repos/{owner}/{repo}/attestations/{subject_digest}` — List attestations (deferred to milestone 5)
+- [x] ✅ `GET /repos/{owner}/{repo}/autolinks` — Get all autolinks of a repository → `repositories.autolinks(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/autolinks` — Create an autolink reference for a repository → `repositories.createAutolink(prefix:urlTemplate:alphanumeric:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/autolinks/{autolink_id}` — Get an autolink reference of a repository → `repositories.autolink(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}` — Delete an autolink reference from a repository → `repositories.deleteAutolink(id:from:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/automated-security-fixes` — Check if Dependabot security updates are enabled for a repository → `repositories.dependabotSecurityUpdates(_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/automated-security-fixes` — Enable Dependabot security updates → `repositories.setDependabotSecurityUpdates(enabled:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/automated-security-fixes` — Disable Dependabot security updates → `repositories.setDependabotSecurityUpdates(enabled:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches` — List branches → `repositories.branches(_:_:protected:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}` — Get a branch → `repositories.branch(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection` — Get branch protection → `repositories.protection(of:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection` — Update branch protection → `repositories.protect(_:in:_:rules:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection` — Delete branch protection → `repositories.removeProtection(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Get admin branch protection → `repositories.adminEnforcement(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Set admin branch protection → `repositories.setAdminEnforcement(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins` — Delete admin branch protection → `repositories.setAdminEnforcement(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Get pull request review protection → `repositories.reviewProtection(of:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Update pull request review protection → `repositories.updateReviewProtection(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews` — Delete pull request review protection → `repositories.removeReviewProtection(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Get commit signature protection → `repositories.signatureRequirement(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Create commit signature protection → `repositories.setSignatureRequirement(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures` — Delete commit signature protection → `repositories.setSignatureRequirement(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Get status checks protection → `repositories.statusChecks(of:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Update status check protection → `repositories.updateStatusChecks(on:in:_:strict:checks:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks` — Remove status check protection → `repositories.removeStatusChecks(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Get all status check contexts → `repositories.statusCheckContexts(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Add status check contexts → `repositories.addStatusCheckContexts(_:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Set status check contexts → `repositories.setStatusCheckContexts(_:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts` — Remove status check contexts → `repositories.removeStatusCheckContexts(_:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Get access restrictions → `repositories.pushRestrictions(of:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions` — Delete access restrictions → `repositories.removePushRestrictions(from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Get apps with access to the protected branch → `repositories.appsWithPushAccess(to:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Add app access restrictions → `repositories.addPushAccess(apps:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Set app access restrictions → `repositories.setPushAccess(apps:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps` — Remove app access restrictions → `repositories.removePushAccess(apps:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Get teams with access to the protected branch → `repositories.teamsWithPushAccess(to:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Add team access restrictions → `repositories.addPushAccess(teams:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Set team access restrictions → `repositories.setPushAccess(teams:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams` — Remove team access restrictions → `repositories.removePushAccess(teams:from:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Get users with access to the protected branch → `repositories.usersWithPushAccess(to:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Add user access restrictions → `repositories.addPushAccess(users:to:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Set user access restrictions → `repositories.setPushAccess(users:on:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users` — Remove user access restrictions → `repositories.removePushAccess(users:from:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/branches/{branch}/rename` — Rename a branch → `repositories.renameBranch(_:to:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/codeowners/errors` — List CODEOWNERS errors → `repositories.codeownersErrors(_:_:ref:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/collaborators` — List repository collaborators → `repositories.collaborators(_:_:affiliation:role:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/collaborators/{username}` — Check if a user is a repository collaborator → `repositories.isCollaborator(_:on:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/collaborators/{username}` — Add a repository collaborator → `repositories.addCollaborator(_:to:_:role:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/collaborators/{username}` — Remove a repository collaborator → `repositories.removeCollaborator(_:from:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/collaborators/{username}/permission` — Get repository permissions for a user → `repositories.permission(of:on:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/comments` — List commit comments for a repository → `repositories.commitComments(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/comments/{comment_id}` — Get a commit comment → `repositories.commitComment(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/comments/{comment_id}` — Update a commit comment → `repositories.updateCommitComment(id:in:_:body:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/comments/{comment_id}` — Delete a commit comment → `repositories.deleteCommitComment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits` — List commits → `repositories.commits(_:_:ref:path:author:committer:since:until:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head` — List branches for HEAD commit → `repositories.branches(withHead:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{commit_sha}/comments` — List commit comments → `repositories.comments(onCommit:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/commits/{commit_sha}/comments` — Create a commit comment → `repositories.createCommitComment(_:on:in:_:path:position:)`
+- [ ] `GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls` — List pull requests associated with a commit (deferred to the pull requests work)
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}` — Get a commit → `repositories.commit(_:in:_:)` / `commitDiff(_:in:_:format:)` / `commitSHA(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/status` — Get the combined status for a specific reference → `repositories.combinedStatus(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/statuses` — List commit statuses for a reference → `repositories.statuses(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/community/profile` — Get community profile metrics → `repositories.communityProfile(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/compare/{basehead}` — Compare two commits → `repositories.compare(_:_:in:_:)` / `compareDiff(_:_:in:_:format:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/contents/{path}` — Get repository content → `repositories.contents(_:_:at:ref:)` / `rawContents(_:_:at:ref:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/contents/{path}` — Create or update file contents → `repositories.writeFile(_:to:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/contents/{path}` — Delete a file → `repositories.deleteFile(_:sha:message:in:_:branch:committer:author:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/contributors` — List repository contributors → `repositories.contributors(_:_:includeAnonymous:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments` — List deployments → `repositories.deployments(_:_:sha:ref:task:environment:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/deployments` — Create a deployment → `repositories.createDeployment(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments/{deployment_id}` — Get a deployment → `repositories.deployment(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/deployments/{deployment_id}` — Delete a deployment → `repositories.deleteDeployment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — List deployment statuses → `repositories.deploymentStatuses(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/deployments/{deployment_id}/statuses` — Create a deployment status → `repositories.createDeploymentStatus(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}` — Get a deployment status → `repositories.deploymentStatus(id:of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/dispatches` — Create a repository dispatch event → `repositories.dispatch(_:payload:to:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments` — List environments → `repositories.environments(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}` — Get an environment → `repositories.environment(_:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/environments/{environment_name}` — Create or update an environment → `repositories.setEnvironment(_:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/environments/{environment_name}` — Delete an environment → `repositories.deleteEnvironment(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — List deployment branch policies → `repositories.deploymentBranchPatterns(for:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies` — Create a deployment branch policy → `repositories.addDeploymentBranchPattern(_:type:to:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Get a deployment branch policy → `repositories.deploymentBranchPattern(id:for:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Update a deployment branch policy → `repositories.updateDeploymentBranchPattern(id:to:for:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}` — Delete a deployment branch policy → `repositories.deleteDeploymentBranchPattern(id:for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Get all deployment protection rules for an environment → `repositories.deploymentProtectionRules(for:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules` — Create a custom deployment protection rule on an environment → `repositories.enableProtectionRule(appID:for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps` — List custom deployment rule integrations available for an environment → `repositories.availableProtectionRuleApps(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Get a custom deployment protection rule → `repositories.deploymentProtectionRule(id:for:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}` — Disable a custom protection rule for an environment → `repositories.disableProtectionRule(id:for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/forks` — List forks → `repositories.forks(_:_:sort:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/forks` — Create a fork → `repositories.fork(_:_:into:as:defaultBranchOnly:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hash-algorithm` — Get the hash algorithm for a repository → `repositories.hashAlgorithm(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks` — List repository webhooks → `repositories.webhooks(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks` — Create a repository webhook → `repositories.createWebhook(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}` — Get a repository webhook → `repositories.webhook(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/hooks/{hook_id}` — Update a repository webhook → `repositories.updateWebhook(id:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/hooks/{hook_id}` — Delete a repository webhook → `repositories.deleteWebhook(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}/config` — Get a webhook configuration for a repository → `repositories.webhookConfiguration(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/hooks/{hook_id}/config` — Update a webhook configuration for a repository → `repositories.updateWebhookConfiguration(id:in:_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries` — List deliveries for a repository webhook → `repositories.webhookDeliveries(id:in:_:status:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}` — Get a delivery for a repository webhook → `repositories.webhookDelivery(_:webhook:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` — Redeliver a delivery for a repository webhook → `repositories.redeliver(_:webhook:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks/{hook_id}/pings` — Ping a repository webhook → `repositories.pingWebhook(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/hooks/{hook_id}/tests` — Test the push repository webhook → `repositories.testWebhook(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/immutable-releases` — Check if immutable releases are enabled for a repository → `repositories.immutableReleases(_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/immutable-releases` — Enable immutable releases → `repositories.setImmutableReleases(enabled:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/immutable-releases` — Disable immutable releases → `repositories.setImmutableReleases(enabled:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/invitations` — List repository invitations → `repositories.invitations(_:_:perPage:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/invitations/{invitation_id}` — Update a repository invitation → `repositories.updateInvitation(id:on:_:permission:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/invitations/{invitation_id}` — Delete a repository invitation → `repositories.cancelInvitation(id:on:_:)`
+- [ ] `GET /repos/{owner}/{repo}/issue-types` — List issue types for a repository (deferred to milestone 3)
+- [x] ✅ `GET /repos/{owner}/{repo}/keys` — List deploy keys → `repositories.deployKeys(_:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/keys` — Create a deploy key → `repositories.addDeployKey(_:title:readOnly:to:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/keys/{key_id}` — Get a deploy key → `repositories.deployKey(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/keys/{key_id}` — Delete a deploy key → `repositories.deleteDeployKey(id:from:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/languages` — List repository languages → `repositories.languages(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/merge-upstream` — Sync a fork branch with the upstream repository → `repositories.syncWithUpstream(_:_:branch:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/merges` — Merge a branch → `repositories.merge(_:into:in:_:message:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages` — Get a GitHub Pages site → `repositories.pagesSite(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages` — Create a GitHub Pages site → `repositories.createPagesSite(from:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/pages` — Update information about a GitHub Pages site → `repositories.updatePagesSite(_:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/pages` — Delete a GitHub Pages site → `repositories.deletePagesSite(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/builds` — List GitHub Pages builds → `repositories.pagesBuilds(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages/builds` — Request a GitHub Pages build → `repositories.requestPagesBuild(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/builds/latest` — Get latest Pages build → `repositories.latestPagesBuild(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/builds/{build_id}` — Get GitHub Pages build → `repositories.pagesBuild(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages/deployments` — Create a GitHub Pages deployment → `repositories.createPagesDeployment(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}` — Get the status of a GitHub Pages deployment → `repositories.pagesDeploymentState(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel` — Cancel a GitHub Pages deployment → `repositories.cancelPagesDeployment(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/pages/health` — Get a DNS health check for GitHub Pages → `repositories.pagesHealthCheck(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/private-vulnerability-reporting` — Check if private vulnerability reporting is enabled for a repository → `repositories.privateVulnerabilityReportingEnabled(_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/private-vulnerability-reporting` — Enable private vulnerability reporting for a repository → `repositories.setPrivateVulnerabilityReporting(enabled:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/private-vulnerability-reporting` — Disable private vulnerability reporting for a repository → `repositories.setPrivateVulnerabilityReporting(enabled:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/properties/values` — Get all custom property values for a repository → `repositories.customPropertyValues(_:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/properties/values` — Create or update custom property values for a repository → `repositories.setCustomPropertyValues(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/readme` — Get a repository README → `repositories.readme(_:_:in:ref:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/readme/{dir}` — Get a repository README for a directory → `repositories.readme(_:_:in:ref:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases` — List releases → `repositories.releases(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases` — Create a release → `repositories.createRelease(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/assets/{asset_id}` — Get a release asset → `repositories.releaseAsset(id:in:_:)` / `repositories.downloadReleaseAsset(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/releases/assets/{asset_id}` — Update a release asset → `repositories.updateReleaseAsset(id:in:_:fileName:label:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/releases/assets/{asset_id}` — Delete a release asset → `repositories.deleteReleaseAsset(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases/generate-notes` — Generate release notes content for a release → `repositories.generateReleaseNotes(for:in:_:target:previousTag:configurationFile:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/latest` — Get the latest release → `repositories.latestRelease(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/tags/{tag}` — Get a release by tag name → `repositories.release(tag:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/{release_id}` — Get a release → `repositories.release(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/releases/{release_id}` — Update a release → `repositories.updateRelease(id:in:_:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/releases/{release_id}` — Delete a release → `repositories.deleteRelease(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/releases/{release_id}/assets` — List release assets → `repositories.releaseAssets(of:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/releases/{release_id}/assets` — Upload a release asset → `repositories.uploadReleaseAsset(_:fileName:label:contentType:to:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rules/branches/{branch}` — Get rules for a branch → `repositories.rules(for:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets` — Get all repository rulesets → `rulesets(_:).list(targets:includesParents:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/rulesets` — Create a repository ruleset → `rulesets(_:).create(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/rule-suites` — List repository rule suites → `rulesets(_:).ruleSuites(ref:repository:period:actor:result:evaluateStatus:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/rule-suites/{rule_suite_id}` — Get a repository rule suite → `rulesets(_:).ruleSuite(id:includeMetadata:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Get a repository ruleset → `rulesets(_:).ruleset(id:includesParents:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Update a repository ruleset → `rulesets(_:).update(id:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/rulesets/{ruleset_id}` — Delete a repository ruleset → `rulesets(_:).delete(id:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history` — Get repository ruleset history → `rulesets(_:).history(of:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/rulesets/{ruleset_id}/history/{version_id}` — Get repository ruleset version → `rulesets(_:).version(_:of:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/code_frequency` — Get the weekly commit activity → `repositories.codeFrequency(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/commit_activity` — Get the last year of commit activity → `repositories.commitActivity(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/contributors` — Get all contributor commit activity → `repositories.contributorStatistics(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/participation` — Get the weekly commit count → `repositories.participation(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/stats/punch_card` — Get the hourly commit count for each day → `repositories.punchCard(_:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/statuses/{sha}` — Create a commit status → `repositories.createStatus(_:on:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/tags` — List repository tags → `repositories.tags(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/tarball/{ref}` — Download a repository archive (tar) → `repositories.archive(_:_:format:ref:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/teams` — List repository teams → `repositories.teams(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/topics` — Get all repository topics → `repositories.topics(_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/topics` — Replace all repository topics → `repositories.replaceTopics(_:on:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/clones` — Get repository clones → `repositories.clones(_:_:per:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/popular/paths` — Get top referral paths → `repositories.popularContent(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/popular/referrers` — Get top referral sources → `repositories.referrers(_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/traffic/views` — Get page views → `repositories.views(_:_:per:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/transfer` — Transfer a repository → `repositories.transfer(_:_:to:newName:teamIDs:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/vulnerability-alerts` — Check if vulnerability alerts are enabled for a repository → `repositories.vulnerabilityAlertsEnabled(_:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/vulnerability-alerts` — Enable vulnerability alerts → `repositories.setVulnerabilityAlerts(enabled:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/vulnerability-alerts` — Disable vulnerability alerts → `repositories.setVulnerabilityAlerts(enabled:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/zipball/{ref}` — Download a repository archive (zip) → `repositories.archive(_:_:format:ref:)`
+- [x] ✅ `POST /repos/{template_owner}/{template_repo}/generate` — Create a repository using a template → `repositories.create(_:fromTemplate:_:)`
+- [x] ✅ `GET /repositories` — List public repositories → `repositories.all(since:)`
+- [x] ✅ `GET /user/repos` — List repositories for the authenticated user → `repositories.list(matching:sort:ascending:perPage:)`
+- [x] ✅ `POST /user/repos` — Create a repository for the authenticated user → `repositories.create(_:)`
+- [x] ✅ `GET /user/repository_invitations` — List repository invitations for the authenticated user → `repositories.myInvitations(perPage:)`
+- [x] ✅ `PATCH /user/repository_invitations/{invitation_id}` — Accept a repository invitation → `repositories.acceptInvitation(id:)`
+- [x] ✅ `DELETE /user/repository_invitations/{invitation_id}` — Decline a repository invitation → `repositories.declineInvitation(id:)`
+- [x] ✅ `GET /users/{username}/repos` — List repositories for a user → `repositories.list(of:type:sort:ascending:perPage:)`
 
 ### teams
 
-0/32 done · milestone M2
+16/32 done · milestone M2
 
-- [ ] `GET /orgs/{org}/teams` — List teams
-- [ ] `POST /orgs/{org}/teams` — Create a team
-- [ ] `GET /orgs/{org}/teams/{team_slug}` — Get a team by name
-- [ ] `PATCH /orgs/{org}/teams/{team_slug}` — Update a team
-- [ ] `DELETE /orgs/{org}/teams/{team_slug}` — Delete a team
-- [ ] `GET /orgs/{org}/teams/{team_slug}/invitations` — List pending team invitations
-- [ ] `GET /orgs/{org}/teams/{team_slug}/members` — List team members
-- [ ] `GET /orgs/{org}/teams/{team_slug}/memberships/{username}` — Get team membership for a user
-- [ ] `PUT /orgs/{org}/teams/{team_slug}/memberships/{username}` — Add or update team membership for a user
-- [ ] `DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}` — Remove team membership for a user
-- [ ] `GET /orgs/{org}/teams/{team_slug}/repos` — List team repositories
-- [ ] `GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Check team permissions for a repository
-- [ ] `PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Add or update team repository permissions
-- [ ] `DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Remove a repository from a team
-- [ ] `GET /orgs/{org}/teams/{team_slug}/teams` — List child teams
+- [x] ✅ `GET /orgs/{org}/teams` — List teams → `teams.list(in:type:perPage:)`
+- [x] ✅ `POST /orgs/{org}/teams` — Create a team → `teams.create(_:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}` — Get a team by name → `teams.team(_:in:)`
+- [x] ✅ `PATCH /orgs/{org}/teams/{team_slug}` — Update a team → `teams.update(_:in:_:)`
+- [x] ✅ `DELETE /orgs/{org}/teams/{team_slug}` — Delete a team → `teams.delete(_:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/invitations` — List pending team invitations → `teams.invitations(for:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/members` — List team members → `teams.members(of:in:role:perPage:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/memberships/{username}` — Get team membership for a user → `teams.membership(of:on:in:)`
+- [x] ✅ `PUT /orgs/{org}/teams/{team_slug}/memberships/{username}` — Add or update team membership for a user → `teams.setMembership(of:on:in:role:)`
+- [x] ✅ `DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}` — Remove team membership for a user → `teams.removeMembership(of:from:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/repos` — List team repositories → `teams.repositories(of:in:perPage:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Check team permissions for a repository → `teams.repository(_:_:for:in:)`
+- [x] ✅ `PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Add or update team repository permissions → `teams.setRepositoryRole(_:on:_:for:in:)`
+- [x] ✅ `DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}` — Remove a repository from a team → `teams.removeRepository(_:_:from:in:)`
+- [x] ✅ `GET /orgs/{org}/teams/{team_slug}/teams` — List child teams → `teams.childTeams(of:in:perPage:)`
 - [ ] ~~`GET /teams/{team_id}` — Get a team (Legacy)~~
 - [ ] ~~`PATCH /teams/{team_id}` — Update a team (Legacy)~~
 - [ ] ~~`DELETE /teams/{team_id}` — Delete a team (Legacy)~~
@@ -614,59 +614,59 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] ~~`PUT /teams/{team_id}/repos/{owner}/{repo}` — Add or update team repository permissions (Legacy)~~
 - [ ] ~~`DELETE /teams/{team_id}/repos/{owner}/{repo}` — Remove a repository from a team (Legacy)~~
 - [ ] ~~`GET /teams/{team_id}/teams` — List child teams (Legacy)~~
-- [ ] `GET /user/teams` — List teams for the authenticated user
+- [x] ✅ `GET /user/teams` — List teams for the authenticated user → `teams.mine(perPage:)`
 
 ### users
 
-3/47 done · milestone M2
+42/47 done · milestone M2
 
 - [x] ✅ `GET /user` — Get the authenticated user → `github.users.authenticated()`, `github.verifyAuthentication()`
-- [ ] `PATCH /user` — Update the authenticated user
-- [ ] `GET /user/blocks` — List users blocked by the authenticated user
-- [ ] `GET /user/blocks/{username}` — Check if a user is blocked by the authenticated user
-- [ ] `PUT /user/blocks/{username}` — Block a user
-- [ ] `DELETE /user/blocks/{username}` — Unblock a user
-- [ ] `PATCH /user/email/visibility` — Set primary email visibility for the authenticated user
-- [ ] `GET /user/emails` — List email addresses for the authenticated user
-- [ ] `POST /user/emails` — Add an email address for the authenticated user
-- [ ] `DELETE /user/emails` — Delete an email address for the authenticated user
-- [ ] `GET /user/followers` — List followers of the authenticated user
-- [ ] `GET /user/following` — List the people the authenticated user follows
-- [ ] `GET /user/following/{username}` — Check if a person is followed by the authenticated user
-- [ ] `PUT /user/following/{username}` — Follow a user
-- [ ] `DELETE /user/following/{username}` — Unfollow a user
-- [ ] `GET /user/gpg_keys` — List GPG keys for the authenticated user
-- [ ] `POST /user/gpg_keys` — Create a GPG key for the authenticated user
-- [ ] `GET /user/gpg_keys/{gpg_key_id}` — Get a GPG key for the authenticated user
-- [ ] `DELETE /user/gpg_keys/{gpg_key_id}` — Delete a GPG key for the authenticated user
-- [ ] `GET /user/keys` — List public SSH keys for the authenticated user
-- [ ] `POST /user/keys` — Create a public SSH key for the authenticated user
-- [ ] `GET /user/keys/{key_id}` — Get a public SSH key for the authenticated user
-- [ ] `DELETE /user/keys/{key_id}` — Delete a public SSH key for the authenticated user
-- [ ] `GET /user/public_emails` — List public email addresses for the authenticated user
-- [ ] `GET /user/social_accounts` — List social accounts for the authenticated user
-- [ ] `POST /user/social_accounts` — Add social accounts for the authenticated user
-- [ ] `DELETE /user/social_accounts` — Delete social accounts for the authenticated user
-- [ ] `GET /user/ssh_signing_keys` — List SSH signing keys for the authenticated user
-- [ ] `POST /user/ssh_signing_keys` — Create a SSH signing key for the authenticated user
-- [ ] `GET /user/ssh_signing_keys/{ssh_signing_key_id}` — Get an SSH signing key for the authenticated user
-- [ ] `DELETE /user/ssh_signing_keys/{ssh_signing_key_id}` — Delete an SSH signing key for the authenticated user
+- [x] ✅ `PATCH /user` — Update the authenticated user → `users.updateProfile(_:)`
+- [x] ✅ `GET /user/blocks` — List users blocked by the authenticated user → `users.blockedUsers()`
+- [x] ✅ `GET /user/blocks/{username}` — Check if a user is blocked by the authenticated user → `users.isBlocked(_:)`
+- [x] ✅ `PUT /user/blocks/{username}` — Block a user → `users.block(_:)`
+- [x] ✅ `DELETE /user/blocks/{username}` — Unblock a user → `users.unblock(_:)`
+- [x] ✅ `PATCH /user/email/visibility` — Set primary email visibility for the authenticated user → `users.setPrimaryEmailVisibility(_:)`
+- [x] ✅ `GET /user/emails` — List email addresses for the authenticated user → `users.emails()`
+- [x] ✅ `POST /user/emails` — Add an email address for the authenticated user → `users.addEmails(_:)`
+- [x] ✅ `DELETE /user/emails` — Delete an email address for the authenticated user → `users.deleteEmails(_:)`
+- [x] ✅ `GET /user/followers` — List followers of the authenticated user → `users.followers()`
+- [x] ✅ `GET /user/following` — List the people the authenticated user follows → `users.following()`
+- [x] ✅ `GET /user/following/{username}` — Check if a person is followed by the authenticated user → `users.isFollowing(_:)`
+- [x] ✅ `PUT /user/following/{username}` — Follow a user → `users.follow(_:)`
+- [x] ✅ `DELETE /user/following/{username}` — Unfollow a user → `users.unfollow(_:)`
+- [x] ✅ `GET /user/gpg_keys` — List GPG keys for the authenticated user → `users.gpgKeys()`
+- [x] ✅ `POST /user/gpg_keys` — Create a GPG key for the authenticated user → `users.addGPGKey(armoredPublicKey:name:)`
+- [x] ✅ `GET /user/gpg_keys/{gpg_key_id}` — Get a GPG key for the authenticated user → `users.gpgKey(id:)`
+- [x] ✅ `DELETE /user/gpg_keys/{gpg_key_id}` — Delete a GPG key for the authenticated user → `users.deleteGPGKey(id:)`
+- [x] ✅ `GET /user/keys` — List public SSH keys for the authenticated user → `users.sshKeys()`
+- [x] ✅ `POST /user/keys` — Create a public SSH key for the authenticated user → `users.addSSHKey(_:title:)`
+- [x] ✅ `GET /user/keys/{key_id}` — Get a public SSH key for the authenticated user → `users.sshKey(id:)`
+- [x] ✅ `DELETE /user/keys/{key_id}` — Delete a public SSH key for the authenticated user → `users.deleteSSHKey(id:)`
+- [x] ✅ `GET /user/public_emails` — List public email addresses for the authenticated user → `users.publicEmails()`
+- [x] ✅ `GET /user/social_accounts` — List social accounts for the authenticated user → `users.socialAccounts()`
+- [x] ✅ `POST /user/social_accounts` — Add social accounts for the authenticated user → `users.addSocialAccounts(_:)`
+- [x] ✅ `DELETE /user/social_accounts` — Delete social accounts for the authenticated user → `users.deleteSocialAccounts(_:)`
+- [x] ✅ `GET /user/ssh_signing_keys` — List SSH signing keys for the authenticated user → `users.sshSigningKeys()`
+- [x] ✅ `POST /user/ssh_signing_keys` — Create a SSH signing key for the authenticated user → `users.addSSHSigningKey(_:title:)`
+- [x] ✅ `GET /user/ssh_signing_keys/{ssh_signing_key_id}` — Get an SSH signing key for the authenticated user → `users.sshSigningKey(id:)`
+- [x] ✅ `DELETE /user/ssh_signing_keys/{ssh_signing_key_id}` — Delete an SSH signing key for the authenticated user → `users.deleteSSHSigningKey(id:)`
 - [x] ✅ `GET /user/{account_id}` — Get a user using their ID → `github.users.user(id:)`
-- [ ] `GET /users` — List users
+- [x] ✅ `GET /users` — List users → `users.all(since:perPage:)`
 - [x] ✅ `GET /users/{username}` — Get a user → `github.users.user(_:)`
-- [ ] `POST /users/{username}/attestations/bulk-list` — List attestations by bulk subject digests
-- [ ] `POST /users/{username}/attestations/delete-request` — Delete attestations in bulk
-- [ ] `DELETE /users/{username}/attestations/digest/{subject_digest}` — Delete attestations by subject digest
-- [ ] `DELETE /users/{username}/attestations/{attestation_id}` — Delete attestations by ID
-- [ ] `GET /users/{username}/attestations/{subject_digest}` — List attestations
-- [ ] `GET /users/{username}/followers` — List followers of a user
-- [ ] `GET /users/{username}/following` — List the people a user follows
-- [ ] `GET /users/{username}/following/{target_user}` — Check if a user follows another user
-- [ ] `GET /users/{username}/gpg_keys` — List GPG keys for a user
-- [ ] `GET /users/{username}/hovercard` — Get contextual information for a user
-- [ ] `GET /users/{username}/keys` — List public keys for a user
-- [ ] `GET /users/{username}/social_accounts` — List social accounts for a user
-- [ ] `GET /users/{username}/ssh_signing_keys` — List SSH signing keys for a user
+- [ ] `POST /users/{username}/attestations/bulk-list` — List attestations by bulk subject digests (deferred to milestone 5)
+- [ ] `POST /users/{username}/attestations/delete-request` — Delete attestations in bulk (deferred to milestone 5)
+- [ ] `DELETE /users/{username}/attestations/digest/{subject_digest}` — Delete attestations by subject digest (deferred to milestone 5)
+- [ ] `DELETE /users/{username}/attestations/{attestation_id}` — Delete attestations by ID (deferred to milestone 5)
+- [ ] `GET /users/{username}/attestations/{subject_digest}` — List attestations (deferred to milestone 5)
+- [x] ✅ `GET /users/{username}/followers` — List followers of a user → `users.followers(of:)`
+- [x] ✅ `GET /users/{username}/following` — List the people a user follows → `users.following(of:)`
+- [x] ✅ `GET /users/{username}/following/{target_user}` — Check if a user follows another user → `users.isFollowing(_:by:)`
+- [x] ✅ `GET /users/{username}/gpg_keys` — List GPG keys for a user → `users.gpgKeys(of:)`
+- [x] ✅ `GET /users/{username}/hovercard` — Get contextual information for a user → `users.hovercard(for:about:)`
+- [x] ✅ `GET /users/{username}/keys` — List public keys for a user → `users.sshKeys(of:)`
+- [x] ✅ `GET /users/{username}/social_accounts` — List social accounts for a user → `users.socialAccounts(of:)`
+- [x] ✅ `GET /users/{username}/ssh_signing_keys` — List SSH signing keys for a user → `users.sshSigningKeys(of:)`
 
 ### activity
 
