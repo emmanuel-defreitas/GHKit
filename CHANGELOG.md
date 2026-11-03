@@ -11,6 +11,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - Issues: list issues across repositories, in an organization, or in one repository; open, update, close,
   reopen, lock, and unlock them; manage assignees, conversation comments (including pinning), labels, and
   milestones. Issues are `GitHubIssue`, so they don't clash with Swift Testing's `Issue`.
+- Issue details: issue events, sub-issues (add, remove, reorder, parent), blocking dependencies, related
+  issues, custom field values, GitHub's suggestions, and artifacts. Organizations can manage issue types and
+  custom issue fields, and new or updated issues can set field values.
 
 ## [0.1.1] - 2026-11-03
 
