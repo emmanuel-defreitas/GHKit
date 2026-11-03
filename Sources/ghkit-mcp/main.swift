@@ -42,7 +42,7 @@
         toolsets: toolsets,
         access: environment["GHKIT_MCP_WRITE"] == "1" ? .readWrite : .readOnly
     )
-    let server = await toolbox.makeServer(name: "ghkit-mcp", version: "0.1.0")
+    let server = await toolbox.makeServer(name: "ghkit-mcp", version: GHKitVersion.current)
     try await server.start(transport: StdioTransport())
     await server.waitUntilCompleted()
 #else
