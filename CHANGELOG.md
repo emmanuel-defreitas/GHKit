@@ -6,6 +6,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Changed
+
+- **Breaking:** GHKit is split into one library per part of GitHub: `GHKitUsers`, `GHKitRepositories`,
+  `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`, `GHKitProjects`, `GHKitActivity`, `GHKitGists`,
+  `GHKitSearch`, and `GHKitApps`, on top of `GHKitCore` (client, authentication, pagination, GraphQL, and shared
+  models). Apps can link only the domains they use. The `GHKit` product still imports everything, so
+  `import GHKit` keeps working. Code that names the `GHKit` module explicitly, such as `GHKit.Repository`,
+  now needs the module the type moved to.
+
 ## [0.3.0] - 2026-11-03
 
 ### Added

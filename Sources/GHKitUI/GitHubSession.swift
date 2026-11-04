@@ -1,5 +1,6 @@
 import Foundation
-import GHKit
+import GHKitCore
+import GHKitUsers
 import Observation
 
 /// Sign-in state for a SwiftUI app, backed by the Keychain.

@@ -55,7 +55,7 @@ jobs:
           curl -sSL -o "$RUNNER_TEMP/api.json" \
             https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json
           python3 -I Scripts/generate_todo.py "$RUNNER_TEMP/api.json" > TODO.md
-          sed -i -E "s/(public static let current = \")[^\"]+(\")/\1$VERSION\2/" Sources/GHKit/GHKit.swift
+          sed -i -E "s/(public static let current = \")[^\"]+(\")/\1$VERSION\2/" Sources/GHKitCore/GHKitCore.swift
 
       - name: Claude updates the docs
         uses: anthropics/claude-code-action@v1
@@ -85,7 +85,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md CHANGELOG.md TODO.md AGENTS.md CLAUDE.md Sources/GHKit/GHKit.swift
+          git add README.md CHANGELOG.md TODO.md AGENTS.md CLAUDE.md Sources/GHKitCore/GHKitCore.swift
           if git diff --cached --quiet; then
             echo "Docs already up to date." >> "$GITHUB_STEP_SUMMARY"; exit 0
           fi

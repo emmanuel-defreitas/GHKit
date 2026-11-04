@@ -30,4 +30,4 @@ hands the signed-in client to any view.
 
 ### Web flow
 
-- ``GHKit/OAuthWebFlow/authenticate(using:callbackURLScheme:ephemeral:)``
+- ``GHKitCore/OAuthWebFlow/authenticate(using:callbackURLScheme:ephemeral:)``

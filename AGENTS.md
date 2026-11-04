@@ -5,8 +5,10 @@ Guidance for AI coding agents working on GHKit. Humans: see [CONTRIBUTING.md](CO
 ## What this is
 
 GHKit is a Swift package wrapping the GitHub REST and GraphQL APIs for SwiftUI apps.
-Three products: `GHKit` (client, auth, models, APIs; no UI), `GHKitUI` (SwiftUI session and views),
-and `GHKitMCP` (Model Context Protocol tools that expose the API to AI assistants).
+`GHKitCore` holds the client, auth, pagination, GraphQL, and shared models. Each part of GitHub is its own
+library on top of it (`GHKitUsers`, `GHKitRepositories`, `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`,
+`GHKitProjects`, `GHKitActivity`, `GHKitGists`, `GHKitSearch`, `GHKitApps`), and `GHKit` re-exports all of them.
+`GHKitUI` adds a SwiftUI session and views, and `GHKitMCP` exposes the API to AI assistants as Model Context Protocol tools.
 Coverage and the roadmap live in [TODO.md](TODO.md), which is generated; never edit it by hand.
 
 ## Commands
@@ -25,12 +27,13 @@ Scripts/build_docs.sh                                           # DocC site in .
 
 | Path | Contents |
 |---|---|
-| `Sources/GHKit/Client/` | `GitHubClient`, pagination (`Paginated`, `Page`), GraphQL |
-| `Sources/GHKit/HTTP/` | Transport, configuration, `GitHubRequest`, `GitHubError`, response metadata |
-| `Sources/GHKit/Auth/` | Authenticators, OAuth device and web flows, GitHub App JWT and installation tokens, credential stores |
-| `Sources/GHKit/API/` | One API type per GitHub category (`ProjectsAPI`, `UsersAPI`, `OrganizationsAPI`, `TeamsAPI`, `RepositoriesAPI`, `RulesetsAPI`, `IssuesAPI`, `PullRequestsAPI`, `ReactionsAPI`, `SearchAPI`, `ActivityAPI`, `GistsAPI`, `AppsAPI`) |
-| `Sources/GHKit/Models/` | Codable models and request inputs |
-| `Sources/GHKit/Core/` | `JSONValue`, `CalendarDate`, `RichText`, JSON coders |
+| `Sources/GHKitCore/Client/` | `GitHubClient`, pagination (`Paginated`, `Page`), GraphQL |
+| `Sources/GHKitCore/HTTP/` | Transport, configuration, `GitHubRequest`, `GitHubError`, response metadata |
+| `Sources/GHKitCore/Auth/` | Authenticators, OAuth device and web flows, GitHub App JWT and installation tokens, credential stores |
+| `Sources/GHKitCore/Models/` | Models more than one domain uses (`SimpleUser`, `Repository`, `GitHubIssue`, `Team`, `OpenEnum`, …) |
+| `Sources/GHKitCore/Core/` | `JSONValue`, `CalendarDate`, `RichText`, JSON coders |
+| `Sources/GHKit<Domain>/` | One domain each: its API types (`IssuesAPI`, `ReactionsAPI`, …), and its own models and inputs in `Models/` |
+| `Sources/GHKit/` | The umbrella module (`@_exported` imports only) and the `GHKit.docc` catalog that documents every domain |
 | `Sources/GHKitUI/` | `GitHubSession`, sign-in views, environment values (main-actor by default) |
 | `Sources/GHKitMCP/` | `GitHubToolbox`, toolsets, and one `Tools/<Category>Tools.swift` per toolset |
 | `Sources/ghkit-mcp/` | Stdio MCP server for trying the tools (`swift run ghkit-mcp`, macOS only) |
@@ -48,6 +51,8 @@ Scripts/build_docs.sh                                           # DocC site in .
   Optional unless GitHub's schema marks the field required.
 - Values GitHub may extend use `OpenEnum` structs, not Swift enums.
 - Escape user-supplied path segments with `escape(_:)`.
+- New endpoints go in their domain module. Domain modules depend only on `GHKitCore`, never on each other:
+  a model two domains need moves to `Sources/GHKitCore/Models/`, and core helpers they call are `package`.
 - GraphQL-only features are wrapped in the same API type and return REST models when possible.
 - No third-party dependencies in `GHKit` or `GHKitUI`. `GHKitMCP` depends only on the official MCP Swift SDK.
   No `@unchecked Sendable` in library code.
@@ -55,7 +60,8 @@ Scripts/build_docs.sh                                           # DocC site in .
   one page via `ToolOutput.page`. Write tools are hidden in read-only toolboxes, so mark them `.write` or `.destructive`.
 - Doc comments: one plain sentence, then the HTTP method and path.
   Link symbols with double backticks; from GHKitUI, link GHKit symbols absolutely (``` ``/GHKit/OAuthWebFlow`` ```).
-- New public types: add the important ones to a topic group in the module's `.docc` landing page.
+- New public types: add the important ones to a topic group in `GHKit.docc/GHKit.md` (it covers every domain module).
+  Each `*API` type's doc comment ends with "Part of the `GHKit<Domain>` library."
 - Every endpoint gets a test for the request (method, path, query, body) and for decoding a fixture.
   So does every MCP tool, in `Tests/GHKitTests/MCP/`.
 

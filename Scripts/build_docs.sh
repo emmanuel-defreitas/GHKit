@@ -36,6 +36,9 @@ rm -rf "$work" "$output"
 mkdir -p "$work"
 
 echo "==> Extracting symbol graphs"
+# The GHKit graph holds every symbol GHKit re-exports, but GHKit's own source rarely changes, so an
+# incremental build keeps its old graph. Drop its build folder so the graph is extracted again.
+find "$scratch" -type d -name GHKit.build -prune -exec rm -rf {} +
 # SwiftPM in Xcode 26 also tries the test module, fails on it, and exits non-zero after writing
 # the library graphs. Ignore the exit code and check for each module's graph instead.
 # Extension block symbols give GHKitUI's extensions of SwiftUI and GHKit types their own pages.
