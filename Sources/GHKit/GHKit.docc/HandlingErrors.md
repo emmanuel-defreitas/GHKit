@@ -24,6 +24,20 @@ When GitHub returns an error body, ``GitHubError/apiError`` has its message and 
 and ``GitHubError/metadata`` has the response headers. Include
 ``ResponseMetadata/requestID`` when you report a problem to GitHub.
 
+### Missing permissions
+
+When a credential can't do something, GitHub says what would have worked. ``GitHubError/missingAccess``
+reads that from a `403` or `404`, for fine-grained tokens and GitHub Apps (permissions such as
+`issues=write`) and for classic tokens (scopes such as `repo`):
+
+```swift
+do {
+    try await github.issues.close(7, in: "acme", "app")
+} catch let error where error.missingAccess != nil {
+    print("This token \(error.missingAccess!)")   // "needs permissions issues=write"
+}
+```
+
 ### Retries
 
 The client retries secondary rate limits and transient server errors, waiting as GitHub asks.

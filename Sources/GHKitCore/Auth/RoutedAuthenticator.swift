@@ -1,26 +1,5 @@
 import Foundation
 
-/// A part of the GitHub API, such as issues or projects.
-///
-/// Each domain module declares the domains it covers, such as ``GitHubDomain`` `.issues` in GHKitIssues,
-/// and tags the requests it sends with them. A ``RoutedAuthenticator`` uses the tag to pick a credential.
-public struct GitHubDomain: RawRepresentable, Sendable, Hashable, Codable, ExpressibleByStringLiteral,
-    CustomStringConvertible
-{
-    /// A stable name, such as `issues` or `pull_requests`.
-    public let rawValue: String
-
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-
-    public var description: String { rawValue }
-}
-
 /// What a request is about, so an ``Authenticator`` can choose a credential for it.
 public struct GitHubRequestContext: Sendable, Hashable {
     /// The part of the API the request belongs to, or `nil` for custom requests sent with `send(_:)`.
