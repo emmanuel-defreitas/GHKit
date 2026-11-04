@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Organization endpoints.
-    public var organizations: OrganizationsAPI { OrganizationsAPI(client: self) }
+    public var organizations: OrganizationsAPI { OrganizationsAPI(client: scoped(to: .organizations)) }
 }
 
 /// Organization endpoints. Reach them with `github.organizations`.

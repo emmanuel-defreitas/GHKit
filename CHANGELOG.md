@@ -6,6 +6,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- `RoutedAuthenticator` sends different credentials for some parts of GitHub or some accounts, such as an
+  organization admin token for `github.organizations` or a GitHub App installation for one organization's
+  repositories. Each domain module declares its `GitHubDomain` values (`.issues`, `.projects`, …), and every
+  request carries a `GitHubRequestContext` with its domain and account. `Authenticator` gains
+  `authenticator(for:)`, which defaults to `self`, so existing authenticators keep working.
+
 ### Changed
 
 - **Breaking:** GHKit is split into one library per part of GitHub: `GHKitUsers`, `GHKitRepositories`,

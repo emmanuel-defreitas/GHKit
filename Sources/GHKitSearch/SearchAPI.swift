@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Search endpoints.
-    public var search: SearchAPI { SearchAPI(client: self) }
+    public var search: SearchAPI { SearchAPI(client: scoped(to: .search)) }
 }
 
 /// Search endpoints. Reach them with `github.search`.

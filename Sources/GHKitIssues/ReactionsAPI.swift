@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Reaction endpoints.
-    public var reactions: ReactionsAPI { ReactionsAPI(client: self) }
+    public var reactions: ReactionsAPI { ReactionsAPI(client: scoped(to: .reactions)) }
 }
 
 /// Reaction endpoints. Reach them with `github.reactions`.

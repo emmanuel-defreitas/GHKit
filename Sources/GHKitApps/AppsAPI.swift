@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// GitHub App endpoints used for authentication.
-    public var apps: AppsAPI { AppsAPI(client: self) }
+    public var apps: AppsAPI { AppsAPI(client: scoped(to: .apps)) }
 
     /// Token management for an OAuth app or GitHub App. These endpoints use Basic
     /// authentication with the app's client ID and secret, so call them from a server.

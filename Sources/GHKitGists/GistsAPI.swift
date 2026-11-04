@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Gist endpoints.
-    public var gists: GistsAPI { GistsAPI(client: self) }
+    public var gists: GistsAPI { GistsAPI(client: scoped(to: .gists)) }
 }
 
 /// Gist endpoints. Reach them with `github.gists`.

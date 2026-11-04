@@ -24,6 +24,18 @@ public struct GitHubRequest<Response: Sendable>: Sendable {
     /// The page size of a list endpoint that pages by number but sends no `Link` header.
     /// A full page then means there may be another.
     package var numberedPageSize: Int?
+    /// The account a pagination link acts on. Next-page links can name a repository by ID instead of
+    /// owner, so the first page's owner is kept for credential routing.
+    var pinnedOwner: String?
+
+    /// The user or organization login in the path, such as `"acme"` in `/repos/acme/app/issues`.
+    package var owner: String? {
+        if let pinnedOwner { return pinnedOwner }
+        guard case .path(let path) = target else { return nil }
+        let parts = path.split(separator: "/")
+        guard parts.count >= 2, ["repos", "orgs", "users"].contains(parts[0]) else { return nil }
+        return String(parts[1]).removingPercentEncoding ?? String(parts[1])
+    }
 
     public init(
         method: HTTPMethod,
@@ -44,6 +56,7 @@ public struct GitHubRequest<Response: Sendable>: Sendable {
     /// The same request pointed at a different URL. The decoder is kept.
     func redirected(to url: URL) -> GitHubRequest {
         var copy = self
+        copy.pinnedOwner = owner
         copy.target = .url(url)
         copy.query = []
         return copy

@@ -7,12 +7,12 @@ extension GitHubClient {
     ///     let acme = github.projects(.organization("acme"))
     ///     let roadmap = try await acme.project(1)
     public func projects(_ owner: ProjectOwner) -> ProjectsAPI {
-        ProjectsAPI(client: self, owner: owner)
+        ProjectsAPI(client: scoped(to: .projects, owner: owner.login), owner: owner)
     }
 
     /// Projects owned by the same account as `project`.
     public func projects(ownerOf project: Project) -> ProjectsAPI {
-        ProjectsAPI(client: self, owner: project.projectOwner)
+        ProjectsAPI(client: scoped(to: .projects, owner: project.projectOwner.login), owner: project.projectOwner)
     }
 }
 

@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Team endpoints.
-    public var teams: TeamsAPI { TeamsAPI(client: self) }
+    public var teams: TeamsAPI { TeamsAPI(client: scoped(to: .teams)) }
 }
 
 /// Team endpoints. Reach them with `github.teams`.

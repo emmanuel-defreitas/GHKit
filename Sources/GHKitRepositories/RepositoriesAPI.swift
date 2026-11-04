@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Repository endpoints.
-    public var repositories: RepositoriesAPI { RepositoriesAPI(client: self) }
+    public var repositories: RepositoriesAPI { RepositoriesAPI(client: scoped(to: .repositories)) }
 }
 
 /// Repository endpoints. Reach them with `github.repositories`.

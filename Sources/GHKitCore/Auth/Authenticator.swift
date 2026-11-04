@@ -8,6 +8,7 @@ import Foundation
 /// - ``GitHubAppAuthenticator``: GitHub App JWTs, for `/app` endpoints
 /// - ``InstallationAuthenticator``: GitHub App installation tokens, minted and cached
 /// - ``BasicAuthenticator``: OAuth app client ID and secret, for `/applications` endpoints
+/// - ``RoutedAuthenticator``: different credentials for some domains or accounts
 public protocol Authenticator: Sendable {
     /// The full header value, such as `"Bearer ghp_…"`, or `nil` for anonymous requests.
     func authorization() async throws(GitHubError) -> String?
@@ -15,10 +16,18 @@ public protocol Authenticator: Sendable {
     /// Called once after a `401`. Return `true` if new credentials are ready and
     /// the request should be retried.
     func refreshAfterUnauthorized() async throws(GitHubError) -> Bool
+
+    /// The authenticator to use for one request. ``GitHubClient`` calls this before each request.
+    ///
+    /// The default returns `self`. ``RoutedAuthenticator`` returns a different credential for some
+    /// domains or accounts; implement it yourself for other rules.
+    func authenticator(for context: GitHubRequestContext) -> any Authenticator
 }
 
 extension Authenticator {
     public func refreshAfterUnauthorized() async throws(GitHubError) -> Bool { false }
+
+    public func authenticator(for context: GitHubRequestContext) -> any Authenticator { self }
 }
 
 /// Sends no credentials. Anonymous requests get a low rate limit (60 per hour).

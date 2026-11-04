@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// User endpoints.
-    public var users: UsersAPI { UsersAPI(client: self) }
+    public var users: UsersAPI { UsersAPI(client: scoped(to: .users)) }
 
     /// Confirms the credentials work and reports who they belong to and what they allow.
     ///
