@@ -5,6 +5,7 @@ import Testing
 @testable import GHKitCore
 @testable import GHKitGists
 @testable import GHKitIssues
+@testable import GHKitMeta
 @testable import GHKitOrganizations
 @testable import GHKitProjects
 @testable import GHKitPullRequests
@@ -41,6 +42,8 @@ struct DomainAccessTests {
             ])
         #expect(GitHubDomain.activity.access(.read).permissions.map(\.description) == ["starring=read", "watching=read"])
         #expect(GitHubDomain.gists.access(.write).permissions.map(\.description) == ["gists=write"])
+        #expect(GitHubDomain.meta.access(.read).permissions.map(\.description) == ["contents=read", "metadata=read"])
+        #expect(GitHubDomain.meta.access(.read).scopes.isEmpty)
     }
 
     @Test func broaderScopesCoverNarrowerOnes() {
