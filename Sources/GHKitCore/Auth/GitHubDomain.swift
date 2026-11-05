@@ -256,9 +256,9 @@ extension GitHubError {
             let permissions = metadata.acceptedPermissions ?? []
             let scopes = metadata.acceptedOAuthScopes ?? []
             guard !permissions.isEmpty || !scopes.isEmpty else { return nil }
-            // A token with every accepted scope failed for another reason, such as a missing resource.
+            // A token with an accepted scope failed for another reason, such as a missing resource.
             if permissions.isEmpty, let granted = metadata.oauthScopes,
-                GitHubAccess(scopes: Set(scopes)).missingScopes(granted: granted).count < scopes.count
+                scopes.contains(where: { GitHubAccess(scopes: [$0]).missingScopes(granted: granted).isEmpty })
             {
                 return nil
             }

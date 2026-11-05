@@ -29,6 +29,12 @@ struct DomainAccessTests {
         #expect(GitHubDomain.organizations == GitHubDomain("organizations"))
     }
 
+    @Test func readAccessCoversReadEndpoints() {
+        #expect(GitHubDomain.users.access(.read).scopeList == ["read:gpg_key", "read:public_key", .readUser, .userEmail])
+        #expect(GitHubDomain.users.access(.write).scopeList == [.adminGPGKey, .adminPublicKey, .user])
+        #expect(GitHubDomain.repositories.access(.read).permissionLevels["deployments"] == .read)
+    }
+
     @Test func broaderScopesCoverNarrowerOnes() {
         let access = GitHubAccess(scopes: [.readOrg, .readProject, .publicRepo])
         #expect(access.missingScopes(granted: [.adminOrg, .project, .repo]).isEmpty)
@@ -78,6 +84,12 @@ struct DomainAccessTests {
         let missing = GitHubError.notFound(nil, lacking).missingAccess
         #expect(missing?.acceptedScopes == [.repo])
         #expect(missing?.description == "needs one of the scopes repo; token has gist")
+
+        // A scope that another accepted scope includes still counts as lacking.
+        let pair = ResponseMetadata(statusCode: 404, headers: ["x-accepted-oauth-scopes": "repo, public_repo", "x-oauth-scopes": "gist"])
+        #expect(GitHubError.notFound(nil, pair).missingAccess?.acceptedScopes == [.repo, .publicRepo])
+        let narrow = ResponseMetadata(statusCode: 404, headers: ["x-accepted-oauth-scopes": "repo, public_repo", "x-oauth-scopes": "public_repo"])
+        #expect(GitHubError.notFound(nil, narrow).missingAccess == nil)
 
         #expect(GitHubError.forbidden(nil, ResponseMetadata(statusCode: 403, headers: [:])).missingAccess == nil)
     }
