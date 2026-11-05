@@ -6,7 +6,10 @@ extension RepositoriesAPI {
     ///
     ///     let git = github.repositories.git("octocat", "Hello-World")
     ///     let head = try await git.ref("heads/main")
-    ///     let tree = try await git.createTree([.file("README.md", content: "Hello")], base: head.object.sha)
+    ///     let parent = try await git.commit(head.object.sha)
+    ///     let tree = try await git.createTree([.file("README.md", content: "Hello")], base: parent.tree.sha)
+    ///     let commit = try await git.createCommit(NewGitCommit(message: "Update README", tree: tree.sha, parents: [parent.sha]))
+    ///     try await git.updateRef("heads/main", to: commit.sha)
     public func git(_ owner: String, _ name: String) -> GitDatabaseAPI {
         GitDatabaseAPI(client: client, owner: owner, name: name)
     }
