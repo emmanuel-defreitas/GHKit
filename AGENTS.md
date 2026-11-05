@@ -51,6 +51,9 @@ Scripts/build_docs.sh                                           # DocC site in .
   Optional unless GitHub's schema marks the field required.
 - Values GitHub may extend use `OpenEnum` structs, not Swift enums.
 - Escape user-supplied path segments with `escape(_:)`.
+- Each domain module declares its `GitHubDomain` values in `Domains.swift`, with the scopes and fine-grained
+  permissions its read and write endpoints need (permission names from GitHub's `app-permissions` schema).
+  API accessors pass the client through `scoped(to:)` so requests carry their domain.
 - New endpoints go in their domain module. Domain modules depend only on `GHKitCore`, never on each other:
   a model two domains need moves to `Sources/GHKitCore/Models/`, and core helpers they call are `package`.
 - GraphQL-only features are wrapped in the same API type and return REST models when possible.

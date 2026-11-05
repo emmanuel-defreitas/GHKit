@@ -8,6 +8,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
+- Each `GitHubDomain` declares the scopes and fine-grained permissions its endpoints need.
+  `[GitHubDomain.issues, .projects].access(.write)` combines them into a `GitHubAccess`, which gives the scope list
+  for device flow and OAuth, and links that open GitHub's classic or fine-grained token form already filled in.
+  `GitHubSession(clientID:domains:access:)` asks for those scopes at sign-in.
+- `GitHubError.missingAccess` reads the `X-Accepted-GitHub-Permissions` and `X-Accepted-OAuth-Scopes` headers of a
+  `403` or `404` and says which permissions or scopes the call needed.
+- `GitHubClient.missingScopes(for:_:owner:)` checks a classic or OAuth token's scopes for a domain before you use it.
 - `RoutedAuthenticator` sends different credentials for some parts of GitHub or some accounts, such as an
   organization admin token for `github.organizations` or a GitHub App installation for one organization's
   repositories. Each domain module declares its `GitHubDomain` values (`.issues`, `.projects`, …), and every
