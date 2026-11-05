@@ -1,10 +1,10 @@
 # GHKit API coverage
 
-Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-03 by `Scripts/generate_todo.py`.
+Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-05 by `Scripts/generate_todo.py`.
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 580 of 1254 endpoints (46%)
+**REST progress:** 580 of 1259 endpoints (46%)
 
 ## Milestones
 
@@ -71,7 +71,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [reactions](#reactions) | M3 | 15 | 15 | ✅ |
 | [search](#search) | M3 | 7 | 7 | ✅ |
 | [actions](#actions) | M4 | 0 | 200 | ⬜ |
-| [agent-automations](#agent-automations) | M4 | 0 | 10 | ⬜ |
+| [agent-automations](#agent-automations) | M4 | 0 | 12 | ⬜ |
 | [agent-merge](#agent-merge) | M4 | 0 | 3 | ⬜ |
 | [agent-tasks](#agent-tasks) | M4 | 0 | 5 | ⬜ |
 | [agents](#agents) | M4 | 0 | 30 | ⬜ |
@@ -93,7 +93,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [billing](#billing) | M6 | 0 | 13 | ⬜ |
 | [classroom](#classroom) | M6 | 0 | 6 | ⬜ |
 | [codespaces](#codespaces) | M6 | 0 | 48 | ⬜ |
-| [copilot](#copilot) | M6 | 0 | 31 | ⬜ |
+| [copilot](#copilot) | M6 | 0 | 34 | ⬜ |
 | [copilot-spaces](#copilot-spaces) | M6 | 0 | 28 | ⬜ |
 | [interactions](#interactions) | M6 | 0 | 16 | ⬜ |
 | [migrations](#migrations) | M6 | 0 | 22 | ⬜ |
@@ -1082,7 +1082,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### agent-automations
 
-0/10 done · milestone M4
+0/12 done · milestone M4
 
 - [ ] `GET /agents/automations` — List automations for user
 - [ ] `GET /agents/repos/{owner}/{repo}/automations` — List automations for a repository
@@ -1092,6 +1092,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /agents/repos/{owner}/{repo}/automations/{automation_id}` — Get an automation
 - [ ] `PATCH /agents/repos/{owner}/{repo}/automations/{automation_id}` — Update an automation
 - [ ] `DELETE /agents/repos/{owner}/{repo}/automations/{automation_id}` — Delete an automation
+- [ ] `GET /agents/repos/{owner}/{repo}/automations/{automation_id}/revisions` — List revisions for an automation
+- [ ] `GET /agents/repos/{owner}/{repo}/automations/{automation_id}/revisions/{revision_id}` — Get an automation revision
 - [ ] `GET /agents/repos/{owner}/{repo}/automations/{automation_id}/tasks` — List tasks for an automation in a repository
 - [ ] `POST /agents/repos/{owner}/{repo}/automations/{automation_id}/tasks` — Run an automation
 
@@ -1519,7 +1521,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### copilot
 
-0/31 done · milestone M6
+0/34 done · milestone M6
 
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/enterprise-1-day` — Get Copilot enterprise usage metrics for a specific day
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/enterprise-28-day/latest` — Get Copilot enterprise usage metrics
@@ -1551,6 +1553,9 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /orgs/{org}/copilot/metrics/reports/users-1-day` — Get Copilot organization users usage metrics for a specific day
 - [ ] `GET /orgs/{org}/copilot/metrics/reports/users-28-day/latest` — Get Copilot organization users usage metrics
 - [ ] `GET /orgs/{org}/members/{username}/copilot` — Get Copilot seat assignment details for a user
+- [ ] `GET /orgs/{org}/teams/{team_slug}/copilot/customizations` — Get Copilot customizations for a team
+- [ ] `PUT /orgs/{org}/teams/{team_slug}/copilot/customizations` — Set Copilot customizations for a team
+- [ ] `DELETE /orgs/{org}/teams/{team_slug}/copilot/customizations` — Delete Copilot customizations for a team
 - [ ] `GET /repos/{owner}/{repo}/copilot/cloud-agent/configuration` — Get Copilot cloud agent configuration for a repository
 
 ### copilot-spaces

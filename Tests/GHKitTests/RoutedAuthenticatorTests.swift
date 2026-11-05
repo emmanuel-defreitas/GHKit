@@ -80,6 +80,20 @@ struct RoutedAuthenticatorTests {
         #expect(tokens(transport) == ["projects", "projects"])
     }
 
+    @Test func listRequestsKeepTheDomain() async throws {
+        // MCP list tools send `Paginated.request` through the unscoped client.
+        let transport = MockTransport { _, index in
+            index == 0
+                ? .json("[]", headers: ["Link": #"<https://api.github.com/repositories/1/issues?page=2>; rel="next""#])
+                : .json("[]")
+        }
+        let github = makeClient(transport, authenticator: .routed(default: .token("main"), domains: [.issues: .token("issues")]))
+        let request = github.issues.labels("acme", "app").request
+        let page = try await github.page(request)
+        _ = try await github.page(request, at: try #require(page.next))
+        #expect(tokens(transport) == ["issues", "issues"])
+    }
+
     @Test func userProjectViewsKeepTheLogin() async throws {
         // Creating a user project view posts to /users/{numeric id}/…, which must not count as a login.
         let transport = MockTransport { request, _ in
