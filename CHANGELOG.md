@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-05
+
 ### Added
 
 - Each `GitHubDomain` declares the scopes and fine-grained permissions its endpoints need.
@@ -29,6 +31,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
   models). Apps can link only the domains they use. The `GHKit` product still imports everything, so
   `import GHKit` keeps working. Code that names the `GHKit` module explicitly, such as `GHKit.Repository`,
   now needs the module the type moved to.
+
+### Fixed
+
+- Requests that list endpoints hand out for the next page now keep their domain, so `RoutedAuthenticator` sends the
+  right credentials when you page through results.
 
 ## [0.3.0] - 2026-11-03
 
@@ -169,7 +176,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.4.0...next
+[0.4.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...0.1.1
