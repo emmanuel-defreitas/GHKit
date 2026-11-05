@@ -122,6 +122,15 @@ struct IssueToolsTests {
         #expect(transport.requests.isEmpty)
     }
 
+    @Test func listsUseTheDomainCredential() async throws {
+        let transport = MockTransport(.fixture("issue-items"))
+        let client = makeClient(transport, authenticator: .routed(default: .token("main"), domains: [.issues: .token("issues")]))
+        let toolbox = GitHubToolbox(client: client, toolsets: .all, access: .readOnly)
+        let result = try #require(await toolbox.call(CallTool.Parameters(name: "list_issues", arguments: Self.repo)))
+        #expect(result.isError != true)
+        #expect(transport.requests.first?.value(forHTTPHeaderField: "Authorization") == "Bearer issues")
+    }
+
     @Test func emptyBodyClearsTheDescription() async throws {
         let transport = MockTransport(.fixture("issue"))
         let (text, isError) = try await callTool("update_issue", Self.with(["number": 1347, "body": ""]), on: transport)
