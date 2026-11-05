@@ -2,7 +2,17 @@ import Foundation
 import Security
 import Testing
 
-@testable import GHKit
+@testable import GHKitActivity
+@testable import GHKitApps
+@testable import GHKitCore
+@testable import GHKitGists
+@testable import GHKitIssues
+@testable import GHKitOrganizations
+@testable import GHKitProjects
+@testable import GHKitPullRequests
+@testable import GHKitRepositories
+@testable import GHKitSearch
+@testable import GHKitUsers
 
 @Suite("Authentication")
 struct AuthTests {

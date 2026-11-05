@@ -31,6 +31,9 @@ for try await project in github.projects(.organization("acme")).list(matching: "
 - Endpoints GHKit doesn't wrap yet are one ``GitHubRequest`` or GraphQL query away,
   with the same authentication, retries, and errors.
 
+Each part of GitHub is also its own library, such as `GHKitIssues` or `GHKitProjects`, so an app can link
+only what it uses. `GHKit` imports all of them, and every type documented here comes from one of them.
+
 GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views, add the GHKitUI library too.
 
 ## Topics

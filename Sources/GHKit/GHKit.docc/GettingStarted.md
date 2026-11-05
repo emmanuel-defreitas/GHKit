@@ -17,7 +17,7 @@ dependencies: [
 ],
 targets: [
     .target(name: "MyApp", dependencies: [
-        .product(name: "GHKit", package: "GHKit"),
+        .product(name: "GHKit", package: "GHKit"),     // every domain; or pick some, such as "GHKitIssues"
         .product(name: "GHKitUI", package: "GHKit"),   // optional SwiftUI helpers
     ]),
 ]
@@ -25,8 +25,13 @@ targets: [
 
 | Product | What's in it |
 |---|---|
-| `GHKit` | The client, authentication, models, and API wrappers. No UI. |
+| `GHKit` | Every domain module, in one import. No UI. |
+| `GHKitCore` | ``GitHubClient``, authentication, pagination, GraphQL, custom requests, and shared models. |
+| `GHKitUsers`, `GHKitRepositories`, `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`, `GHKitProjects`, `GHKitActivity`, `GHKitGists`, `GHKitSearch`, `GHKitApps` | One part of GitHub each. Importing one adds its API to the client, such as `github.issues`. |
 | `GHKitUI` | An observable sign-in session, sign-in views, and the `\.gitHubClient` environment value. |
+
+Each domain module brings `GHKitCore` with it. This reference documents every module under GHKit,
+and each API type's page says which library it's in.
 
 ### Make a client
 

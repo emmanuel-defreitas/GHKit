@@ -1,4 +1,5 @@
-import GHKit
+import GHKitCore
+import GHKitUsers
 import SwiftUI
 
 #if os(iOS) || os(macOS) || os(visionOS)
