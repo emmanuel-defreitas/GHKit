@@ -51,7 +51,7 @@ enum MetaTools {
                 title: "List .gitignore templates",
                 description: "The names of GitHub's `.gitignore` templates, such as `Swift` or `Node`."
             ) { _, context in
-                try .json(await context.client.meta.gitignoreTemplates())
+                try .list(await context.client.meta.gitignoreTemplates())
             },
             GitHubTool(
                 "get_gitignore_template",
@@ -66,7 +66,7 @@ enum MetaTools {
                 title: "List codes of conduct",
                 description: "The codes of conduct GitHub offers, with their keys for `get_code_of_conduct`."
             ) { _, context in
-                try .json(await context.client.meta.codesOfConduct())
+                try .list(await context.client.meta.codesOfConduct())
             },
             GitHubTool(
                 "get_code_of_conduct",
@@ -88,7 +88,7 @@ enum MetaTools {
                 title: "List API versions",
                 description: "The REST API versions the server supports, for the `X-GitHub-Api-Version` header."
             ) { _, context in
-                try .json(await context.client.meta.versions())
+                try .list(await context.client.meta.versions())
             },
         ]
     }

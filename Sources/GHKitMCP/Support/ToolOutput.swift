@@ -32,6 +32,11 @@ struct ToolOutput: Sendable, Equatable {
         return try .json(ListPage(items: page.items, nextCursor: page.next?.url.absoluteString))
     }
 
+    /// A whole list GitHub returns in one response, in the same shape as ``page(_:_:_:)`` with no next page.
+    static func list<Element: Encodable>(_ items: [Element]) throws(ToolFailure) -> ToolOutput {
+        try .json(ListPage(items: items, nextCursor: nil))
+    }
+
     /// The text cut to `limit` characters, with a note saying so.
     func truncated(to limit: Int) -> String {
         guard text.count > limit else { return text }

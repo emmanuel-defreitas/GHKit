@@ -95,6 +95,12 @@ struct GitAndMetaToolsTests {
         #expect(tools.subtracting(tested).isEmpty, "Untested: \(tools.subtracting(tested).sorted())")
     }
 
+    @Test func wholeListsComeBackAsOnePage() async throws {
+        let (text, isError) = try await callTool("list_gitignore_templates", on: MockTransport(.json(#"["C","Swift"]"#)))
+        #expect(!isError)
+        #expect(text == #"{"items":["C","Swift"]}"#)
+    }
+
     @Test func blobsComeBackAsText() async throws {
         let (text, isError) = try await callTool("get_git_blob", Self.with(["sha": "abc"]), on: MockTransport(.fixture("blob")))
         #expect(!isError)
