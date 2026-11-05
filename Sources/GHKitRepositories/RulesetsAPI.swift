@@ -7,7 +7,7 @@ extension GitHubClient {
     ///     let rulesets = github.rulesets(.repository("octocat", "hello-world"))
     ///     let all = try await rulesets.list().collect()
     public func rulesets(_ owner: RulesetOwner) -> RulesetsAPI {
-        RulesetsAPI(client: self, owner: owner)
+        RulesetsAPI(client: scoped(to: .rulesets), owner: owner)
     }
 }
 

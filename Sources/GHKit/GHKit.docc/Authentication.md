@@ -65,6 +65,33 @@ Concurrent requests share one token fetch.
 
 To call the `/app` endpoints themselves, sign with the app's JWT using ``GitHubAppAuthenticator``.
 
+### Use more than one credential
+
+One classic or OAuth token can carry the scopes for every part of GitHub, so most apps need only one.
+You need several when a credential only reaches one account, as a fine-grained personal access token or a
+GitHub App installation does, or when you keep a powerful token, such as an organization admin token, apart
+from the everyday one.
+
+A ``RoutedAuthenticator`` picks a credential for each request from its domain, such as
+`.issues` or `.organizations`, and the account it acts on:
+
+```swift
+let github = GitHubClient(authenticator: .routed(
+    default: .token(personalToken),
+    domains: [.organizations: .token(orgAdminToken)],
+    owners: ["acme": InstallationAuthenticator(app: app, installationID: 42)]
+))
+
+try await github.organizations.members(of: "github")   // orgAdminToken
+try await github.issues.issue(1, in: "acme", "app")     // the acme installation
+try await github.users.authenticated()                  // personalToken
+```
+
+Each domain module declares its domains as ``GitHubDomain`` values. The account comes from the path,
+such as `acme` in `/repos/acme/app`, or from the owner you pass, as in `github.projects(.organization("acme"))`.
+Later pages of a list keep the first page's account. To route on something else, implement
+``Authenticator/authenticator(for:)`` and read the ``GitHubRequestContext``.
+
 ### Store credentials
 
 ``KeychainCredentialStore`` keeps a credential in the Keychain. ``InMemoryCredentialStore`` is useful

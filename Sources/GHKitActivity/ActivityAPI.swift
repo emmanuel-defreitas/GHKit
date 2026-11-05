@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Activity endpoints: events, feeds, notifications, stars, and watching.
-    public var activity: ActivityAPI { ActivityAPI(client: self) }
+    public var activity: ActivityAPI { ActivityAPI(client: scoped(to: .activity)) }
 }
 
 /// Activity endpoints: events, feeds, notifications, stars, and watching. Reach them with `github.activity`.

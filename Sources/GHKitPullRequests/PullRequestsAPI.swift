@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Pull request endpoints, including reviews, review comments, merging, and stacks.
-    public var pullRequests: PullRequestsAPI { PullRequestsAPI(client: self) }
+    public var pullRequests: PullRequestsAPI { PullRequestsAPI(client: scoped(to: .pullRequests)) }
 }
 
 /// Pull request endpoints. Reach them with `github.pullRequests`.

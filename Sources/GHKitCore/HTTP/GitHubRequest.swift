@@ -24,6 +24,31 @@ public struct GitHubRequest<Response: Sendable>: Sendable {
     /// The page size of a list endpoint that pages by number but sends no `Link` header.
     /// A full page then means there may be another.
     package var numberedPageSize: Int?
+    /// The part of the API the request belongs to, for credential routing. Requests an API type hands out,
+    /// such as `ProjectsAPI.itemsRequest(of:)`, carry it so they route the same way when sent from any client.
+    package var domain: GitHubDomain?
+    /// The account the request acts on, when the path can't tell. Next-page links can name a repository by
+    /// ID instead of owner, so they keep the first page's owner.
+    package var routingOwner: String?
+
+    /// The user or organization login in the path, such as `"acme"` in `/repos/acme/app/issues`.
+    /// Absolute URLs, such as release upload addresses, are searched too, so a server prefix like
+    /// `/api/uploads` doesn't hide the owner.
+    package var pathOwner: String? {
+        let parts: [String]
+        switch target {
+        case .path(let path):
+            parts = path.split(separator: "/").map(String.init)
+            guard parts.count >= 2, ownerSegments.contains(parts[0]) else { return nil }
+            return parts[1].removingPercentEncoding ?? parts[1]
+        case .url(let url):
+            parts = url.pathComponents.filter { $0 != "/" }
+            guard let index = parts.firstIndex(where: ownerSegments.contains), index + 1 < parts.count else {
+                return nil
+            }
+            return parts[index + 1]
+        }
+    }
 
     public init(
         method: HTTPMethod,
@@ -44,11 +69,15 @@ public struct GitHubRequest<Response: Sendable>: Sendable {
     /// The same request pointed at a different URL. The decoder is kept.
     func redirected(to url: URL) -> GitHubRequest {
         var copy = self
+        copy.routingOwner = routingOwner ?? pathOwner
         copy.target = .url(url)
         copy.query = []
         return copy
     }
 }
+
+/// Path segments followed by an account login.
+private let ownerSegments: Set<String> = ["repos", "orgs", "users"]
 
 /// A request body.
 public enum RequestBody: Sendable {

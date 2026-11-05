@@ -16,6 +16,10 @@ public struct GitHubClient: Sendable {
     public let authenticator: any Authenticator
     let transport: any HTTPTransport
     var sleep: @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }
+    /// The domain this client's requests belong to. API types set it with ``scoped(to:owner:)``.
+    package var domain: GitHubDomain?
+    /// The account this client's requests act on. It wins over the path, which can name the account by ID.
+    package var owner: String?
 
     public init(
         authenticator: some Authenticator = AnonymousAuthenticator(),
@@ -40,6 +44,35 @@ public struct GitHubClient: Sendable {
     public func with(authenticator: some Authenticator) -> GitHubClient {
         var copy = GitHubClient(authenticator: authenticator, configuration: configuration, transport: transport)
         copy.sleep = sleep
+        copy.domain = domain
+        copy.owner = owner
+        return copy
+    }
+
+    /// A copy whose requests are tagged with `domain` and `owner`, so a ``RoutedAuthenticator`` can pick a
+    /// credential for them.
+    package func scoped(to domain: GitHubDomain, owner: String? = nil) -> GitHubClient {
+        var copy = self
+        copy.domain = domain
+        copy.owner = owner ?? self.owner
+        return copy
+    }
+
+    /// What `request` is about, for ``Authenticator/authenticator(for:)``.
+    /// The request's own domain and owner come first, then this client's, then the owner in the path.
+    package func context<Response>(for request: GitHubRequest<Response>) -> GitHubRequestContext {
+        GitHubRequestContext(
+            domain: request.domain ?? domain,
+            owner: request.routingOwner ?? owner ?? request.pathOwner,
+            method: request.method
+        )
+    }
+
+    /// `request` tagged with this client's domain and owner, for API types that hand requests out.
+    package func tagged<Response>(_ request: GitHubRequest<Response>) -> GitHubRequest<Response> {
+        var copy = request
+        copy.domain = copy.domain ?? domain
+        copy.routingOwner = copy.routingOwner ?? owner
         return copy
     }
 }
@@ -55,6 +88,8 @@ extension GitHubClient {
         let policy = configuration.retryPolicy
         var attempt = 0
         var refreshedCredentials = false
+
+        let authenticator = self.authenticator.authenticator(for: context(for: request))
 
         while true {
             if Task.isCancelled { throw .cancelled }

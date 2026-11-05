@@ -3,7 +3,7 @@ import GHKitCore
 
 extension GitHubClient {
     /// Issue endpoints, including labels, milestones, assignees, and comments.
-    public var issues: IssuesAPI { IssuesAPI(client: self) }
+    public var issues: IssuesAPI { IssuesAPI(client: scoped(to: .issues)) }
 }
 
 /// Issue endpoints. Reach them with `github.issues`.

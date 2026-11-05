@@ -7,12 +7,12 @@ extension GitHubClient {
     ///     let acme = github.projects(.organization("acme"))
     ///     let roadmap = try await acme.project(1)
     public func projects(_ owner: ProjectOwner) -> ProjectsAPI {
-        ProjectsAPI(client: self, owner: owner)
+        ProjectsAPI(client: scoped(to: .projects, owner: owner.login), owner: owner)
     }
 
     /// Projects owned by the same account as `project`.
     public func projects(ownerOf project: Project) -> ProjectsAPI {
-        ProjectsAPI(client: self, owner: project.projectOwner)
+        ProjectsAPI(client: scoped(to: .projects, owner: project.projectOwner.login), owner: project.projectOwner)
     }
 }
 
@@ -39,7 +39,8 @@ public struct ProjectsAPI: Sendable {
 
     /// The request behind ``list(matching:perPage:)``, for use with `GitHubClient.page(_:at:)`.
     public func listRequest(matching query: String? = nil, perPage: Int = 30) -> GitHubRequest<[Project]> {
-        GitHubRequest(.get, "\(owner.pathPrefix)/projectsV2", query: .query(("q", query), ("per_page", perPage)))
+        client.tagged(
+            GitHubRequest(.get, "\(owner.pathPrefix)/projectsV2", query: .query(("q", query), ("per_page", perPage))))
     }
 
     /// Every project the owner has that you can see.
@@ -98,13 +99,14 @@ public struct ProjectsAPI: Sendable {
         fields: [Int]? = nil,
         perPage: Int = 50
     ) -> GitHubRequest<[ProjectItem]> {
-        GitHubRequest(
-            .get, path(number, "/items"),
-            query: .query(
-                ("q", query),
-                ("fields", fields.map(Self.fieldList)),
-                ("per_page", perPage)
-            ))
+        client.tagged(
+            GitHubRequest(
+                .get, path(number, "/items"),
+                query: .query(
+                    ("q", query),
+                    ("fields", fields.map(Self.fieldList)),
+                    ("per_page", perPage)
+                )))
     }
 
     /// Every item in a project.
