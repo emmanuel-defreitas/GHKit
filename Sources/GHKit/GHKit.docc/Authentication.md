@@ -65,6 +65,56 @@ Concurrent requests share one token fetch.
 
 To call the `/app` endpoints themselves, sign with the app's JWT using ``GitHubAppAuthenticator``.
 
+### Ask for the right access
+
+Each domain, such as ``GitHubDomain/issues``, declares the scopes and fine-grained permissions its
+endpoints need. Combine the domains your app uses into a ``GitHubAccess`` and ask for exactly that:
+
+```swift
+let access = [GitHubDomain.repositories, .issues].access(.write)
+
+// Device flow and OAuth apps take scopes.
+let flow = DeviceFlow(clientID: "Iv1.abc", scopes: access.scopeList)
+
+// Links that open GitHub's token form, filled in for the person to review.
+let fineGrained = access.fineGrainedTokenURL(name: "My App", owner: "acme")
+let classic = access.classicTokenURL(description: "My App")
+```
+
+For a GitHub App, set the permissions in ``GitHubAccess/permissions`` on the app's settings page.
+
+Classic and OAuth tokens list their scopes, so you can check one before using it.
+``GitHubClient/missingScopes(for:_:owner:)`` returns what's missing, or `nil` for credentials that
+don't list scopes, such as fine-grained tokens. Those fail at call time instead, and
+``GitHubError/missingAccess`` says which permissions the call needed.
+
+### Use more than one credential
+
+One classic or OAuth token can carry the scopes for every part of GitHub, so most apps need only one.
+You need several when a credential only reaches one account, as a fine-grained personal access token or a
+GitHub App installation does, or when you keep a powerful token, such as an organization admin token, apart
+from the everyday one.
+
+A ``RoutedAuthenticator`` picks a credential for each request from its domain, such as
+`.issues` or `.organizations`, and the account it acts on:
+
+```swift
+let github = GitHubClient(authenticator: .routed(
+    default: .token(personalToken),
+    domains: [.organizations: .token(orgAdminToken)],
+    owners: ["acme": InstallationAuthenticator(app: app, installationID: 42)]
+))
+
+try await github.organizations.members(of: "github")   // orgAdminToken
+try await github.issues.issue(1, in: "acme", "app")     // the acme installation
+try await github.users.authenticated()                  // personalToken
+```
+
+Each domain module declares its domains as ``GitHubDomain`` values. The account comes from the path,
+such as `acme` in `/repos/acme/app`, or from the owner you pass, as in `github.projects(.organization("acme"))`.
+Later pages of a list keep the first page's account. To route on something else, implement
+``Authenticator/authenticator(for:)`` and read the ``GitHubRequestContext``.
+
 ### Store credentials
 
 ``KeychainCredentialStore`` keeps a credential in the Keychain. ``InMemoryCredentialStore`` is useful

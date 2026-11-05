@@ -21,8 +21,30 @@ let package = Package(
         .visionOS(.v1),
     ],
     products: [
-        // Core client: networking, auth, and the typed GitHub API surface.
+        // Everything below in one import. Pick single domains to keep the API surface and build small.
         .library(name: "GHKit", targets: ["GHKit"]),
+        // Client, HTTP, authentication, pagination, GraphQL, and the models the domains share.
+        .library(name: "GHKitCore", targets: ["GHKitCore"]),
+        // Profiles, emails, keys, followers.
+        .library(name: "GHKitUsers", targets: ["GHKitUsers"]),
+        // Repositories, contents, branches, commits, releases, deployments, Pages, webhooks, rulesets.
+        .library(name: "GHKitRepositories", targets: ["GHKitRepositories"]),
+        // Issues, comments, labels, milestones, timelines, sub-issues, reactions.
+        .library(name: "GHKitIssues", targets: ["GHKitIssues"]),
+        // Pull requests, reviews, review comments, merging.
+        .library(name: "GHKitPullRequests", targets: ["GHKitPullRequests"]),
+        // Organizations, members, settings, and teams.
+        .library(name: "GHKitOrganizations", targets: ["GHKitOrganizations"]),
+        // Projects (v2): fields, items, views, status updates.
+        .library(name: "GHKitProjects", targets: ["GHKitProjects"]),
+        // Notifications, events, stars, and watching.
+        .library(name: "GHKitActivity", targets: ["GHKitActivity"]),
+        // Gists.
+        .library(name: "GHKitGists", targets: ["GHKitGists"]),
+        // Search code, issues, repositories, users, commits.
+        .library(name: "GHKitSearch", targets: ["GHKitSearch"]),
+        // GitHub App and OAuth app management.
+        .library(name: "GHKitApps", targets: ["GHKitApps"]),
         // SwiftUI helpers: an observable session, sign-in views, environment values.
         .library(name: "GHKitUI", targets: ["GHKitUI"]),
         // Model Context Protocol tools that expose the GitHub API to AI assistants.
@@ -35,12 +57,71 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "GHKitCore",
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitUsers",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitRepositories",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitIssues",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitPullRequests",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitOrganizations",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitProjects",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitActivity",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitGists",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitSearch",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        .target(
+            name: "GHKitApps",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
+        // Re-exports every domain module.
+        .target(
             name: "GHKit",
+            dependencies: [
+                "GHKitCore", "GHKitUsers", "GHKitRepositories", "GHKitIssues", "GHKitPullRequests", "GHKitOrganizations", "GHKitProjects", "GHKitActivity",
+                "GHKitGists", "GHKitSearch", "GHKitApps",
+            ],
             swiftSettings: strictSettings
         ),
         .target(
             name: "GHKitUI",
-            dependencies: ["GHKit"],
+            dependencies: ["GHKitCore", "GHKitUsers"],
             swiftSettings: strictSettings + [.defaultIsolation(MainActor.self)]
         ),
         .target(
@@ -56,7 +137,11 @@ let package = Package(
         ),
         .testTarget(
             name: "GHKitTests",
-            dependencies: ["GHKit", "GHKitMCP", .product(name: "MCP", package: "swift-sdk")],
+            dependencies: [
+                "GHKit", "GHKitCore", "GHKitUsers", "GHKitRepositories", "GHKitIssues", "GHKitPullRequests", "GHKitOrganizations", "GHKitProjects",
+                "GHKitActivity", "GHKitGists", "GHKitSearch", "GHKitApps", "GHKitMCP",
+                .product(name: "MCP", package: "swift-sdk"),
+            ],
             resources: [.copy("Fixtures")],
             swiftSettings: strictSettings
         ),

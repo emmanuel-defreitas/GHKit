@@ -79,7 +79,7 @@ dependencies: [
 ],
 targets: [
     .target(name: "MyApp", dependencies: [
-        .product(name: "GHKit", package: "GHKit"),
+        .product(name: "GHKit", package: "GHKit"),     // every domain; or pick some, such as "GHKitIssues"
         .product(name: "GHKitUI", package: "GHKit"),   // optional SwiftUI helpers
         .product(name: "GHKitMCP", package: "GHKit"),  // optional MCP tools for AI assistants
     ]),
@@ -88,9 +88,23 @@ targets: [
 
 | Product | What's in it |
 |---|---|
-| `GHKit` | The client, authentication, models, and API wrappers. No UI. |
+| `GHKit` | Every domain below, in one import. No UI. |
+| `GHKitCore` | The client, authentication, pagination, GraphQL, custom requests, and the models the domains share. |
+| `GHKitUsers` | `github.users`: profiles, emails, keys, followers. |
+| `GHKitRepositories` | `github.repositories` and `github.rulesets`: contents, branches, commits, releases, deployments, Pages, webhooks. |
+| `GHKitIssues` | `github.issues` and `github.reactions`: comments, labels, milestones, timelines, sub-issues. |
+| `GHKitPullRequests` | `github.pullRequests`: reviews, review comments, merging. |
+| `GHKitOrganizations` | `github.organizations` and `github.teams`. |
+| `GHKitProjects` | `github.projects(_:)`: fields, items, views, status updates. |
+| `GHKitActivity` | `github.activity`: notifications, events, stars, watching. |
+| `GHKitGists` | `github.gists`. |
+| `GHKitSearch` | `github.search`. |
+| `GHKitApps` | `github.apps`: GitHub App and OAuth app management. |
 | `GHKitUI` | `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value. |
 | `GHKitMCP` | `GitHubToolbox`: GitHub tools for a Model Context Protocol server. Adds the [MCP Swift SDK](https://github.com/modelcontextprotocol/swift-sdk). |
+
+Each domain module brings `GHKitCore` with it, so `import GHKitIssues` is enough to make a client and list issues.
+Use `GHKit` while exploring, then switch to the domains you use to keep builds and autocomplete small.
 
 ## 📚 Documentation
 

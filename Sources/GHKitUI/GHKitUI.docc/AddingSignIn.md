@@ -14,7 +14,7 @@ import GHKitUI
 
 @main
 struct MyApp: App {
-    @State private var session = GitHubSession(clientID: "Iv1.abc123", scopes: [.repo, .readOrg, .project])
+    @State private var session = GitHubSession(clientID: "Iv1.abc123", domains: [.repositories, .projects], access: .write)
 
     var body: some Scene {
         WindowGroup {
@@ -32,6 +32,8 @@ struct MyApp: App {
     }
 }
 ```
+
+Passing `domains` asks for the scopes those parts of GitHub need. Pass `scopes:` instead to choose them yourself.
 
 ``GitHubSession/restore()`` loads a saved token and checks it, so returning users skip the sign-in screen.
 ``GitHubSignInView`` runs device flow: it shows the code, and opens GitHub for the user to enter it.

@@ -1,5 +1,6 @@
 import Foundation
-import GHKit
+import GHKitCore
+import GHKitUsers
 import Observation
 
 /// Sign-in state for a SwiftUI app, backed by the Keychain.
@@ -72,6 +73,32 @@ public final class GitHubSession {
         #else
             self.store = store ?? InMemoryCredentialStore()
         #endif
+    }
+
+    /// Creates a signed-out session that asks for the scopes the app's domains need.
+    ///
+    ///     GitHubSession(clientID: "Iv1.abc", domains: [.repositories, .issues], access: .write)
+    ///
+    /// GitHub Apps ignore scopes and use the permissions set on the app; ``/GHKit/GitHubAccess``
+    /// lists those too.
+    /// - Parameters:
+    ///   - clientID: Your OAuth app or GitHub App client ID, with device flow enabled.
+    ///   - domains: The parts of GitHub the app uses, such as `.issues`.
+    ///   - access: Whether the app only reads them, or changes them too.
+    ///   - server: The GitHub instance to sign in to. Defaults to GitHub.com.
+    ///   - store: Where the token is kept. Defaults to the Keychain.
+    ///   - transport: Sends HTTP requests. Replace it to stub responses in tests.
+    public convenience init(
+        clientID: String,
+        domains: [GitHubDomain],
+        access: GitHubDomain.Level = .read,
+        server: GitHubServer = .dotCom,
+        store: (any CredentialStore)? = nil,
+        transport: any HTTPTransport = URLSessionTransport()
+    ) {
+        self.init(
+            clientID: clientID, scopes: domains.access(access).scopeList, server: server, store: store,
+            transport: transport)
     }
 
     public var isSignedIn: Bool { if case .signedIn = state { true } else { false } }
