@@ -4,7 +4,14 @@ extension GitHubDomain {
     /// Repositories and their contents, branches, commits, releases, deployments, Pages, and webhooks.
     public static let repositories = GitHubDomain(
         "repositories",
-        read: GitHubAccess(scopes: [.repo], permissions: [.init("metadata", .read), .init("contents", .read), .init("deployments", .read)]),
+        // Branch protection, deploy keys, autolinks, and invitations read with `administration`;
+        // environments with `actions`.
+        read: GitHubAccess(
+            scopes: [.repo],
+            permissions: [
+                .init("metadata", .read), .init("contents", .read), .init("administration", .read), .init("actions", .read),
+                .init("deployments", .read), .init("pages", .read), .init("repository_hooks", .read), .init("statuses", .read),
+            ]),
         write: GitHubAccess(permissions: [
             .init("contents", .write), .init("administration", .write), .init("deployments", .write), .init("environments", .write), .init("pages", .write),
             .init("repository_hooks", .write), .init("statuses", .write),

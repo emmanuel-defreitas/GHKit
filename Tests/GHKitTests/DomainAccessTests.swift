@@ -1,7 +1,9 @@
 import Foundation
 import Testing
 
+@testable import GHKitActivity
 @testable import GHKitCore
+@testable import GHKitGists
 @testable import GHKitIssues
 @testable import GHKitOrganizations
 @testable import GHKitProjects
@@ -32,7 +34,13 @@ struct DomainAccessTests {
     @Test func readAccessCoversReadEndpoints() {
         #expect(GitHubDomain.users.access(.read).scopeList == ["read:gpg_key", "read:public_key", .readUser, .userEmail])
         #expect(GitHubDomain.users.access(.write).scopeList == [.adminGPGKey, .adminPublicKey, .user])
-        #expect(GitHubDomain.repositories.access(.read).permissionLevels["deployments"] == .read)
+        #expect(
+            GitHubDomain.repositories.access(.read).permissions.map(\.description) == [
+                "actions=read", "administration=read", "contents=read", "deployments=read", "metadata=read", "pages=read",
+                "repository_hooks=read", "statuses=read",
+            ])
+        #expect(GitHubDomain.activity.access(.read).permissions.map(\.description) == ["starring=read", "watching=read"])
+        #expect(GitHubDomain.gists.access(.write).permissions.map(\.description) == ["gists=write"])
     }
 
     @Test func broaderScopesCoverNarrowerOnes() {
