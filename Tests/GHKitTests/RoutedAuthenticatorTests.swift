@@ -67,6 +67,44 @@ struct RoutedAuthenticatorTests {
         #expect(tokens(transport) == ["acme", "acme"])
     }
 
+    @Test func manualPagingKeepsTheDomain() async throws {
+        let transport = MockTransport { _, index in
+            index == 0
+                ? .json("[]", headers: ["Link": #"<https://api.github.com/orgs/acme/projectsV2/1/items?after=x>; rel="next""#])
+                : .json("[]")
+        }
+        let github = makeClient(transport, authenticator: .routed(default: .token("main"), domains: [.projects: .token("projects")]))
+        let request = github.projects(.organization("acme")).itemsRequest(of: 1)
+        let page = try await github.page(request)
+        _ = try await github.page(request, at: try #require(page.next))
+        #expect(tokens(transport) == ["projects", "projects"])
+    }
+
+    @Test func userProjectViewsKeepTheLogin() async throws {
+        // Creating a user project view posts to /users/{numeric id}/…, which must not count as a login.
+        let transport = MockTransport { request, _ in
+            request.path == "/users/octocat" ? .fixture("private-user") : .fixture("projects-v2-view", status: 201)
+        }
+        let github = makeClient(transport, authenticator: .routed(default: .token("main"), owners: ["octocat": .token("octo")]))
+        _ = try await github.projects(.user("octocat")).createView(NewProjectView(name: "Board", layout: .board), in: 5)
+        #expect(transport.requests.last?.path.hasSuffix("/projectsV2/5/views") == true)
+        #expect(tokens(transport) == ["octo", "octo"])
+    }
+
+    @Test func uploadsUseTheRepositoryOwner() async throws {
+        let transport = MockTransport(.fixture("release-asset-response-for-successful-upload", status: 201))
+        let github = makeClient(transport, authenticator: .routed(default: .token("main"), owners: ["octocat": .token("octo")]))
+        let release = try GitHubJSON.decoder().decode(Release.self, from: loadFixture("release"))
+        _ = try await github.repositories.uploadReleaseAsset(Data(), fileName: "a.zip", to: release)
+        _ = try await github.repositories.uploadReleaseAsset(Data(), fileName: "a.zip", toRelease: 7, in: "octocat", "app")
+        #expect(tokens(transport) == ["octo", "octo"])
+
+        let enterprise = GitHubRequest<[IssueLabel]>(
+            method: .post, target: .url(URL(string: "https://ghe.example.com/api/uploads/repos/acme/app/releases/1/assets")!)
+        ) { _ in [] }
+        #expect(enterprise.pathOwner == "acme")
+    }
+
     @Test func customRequestsUseTheDefault() async throws {
         let transport = emptyLists()
         let github = makeClient(transport, authenticator: .routed(default: .token("main"), domains: [.issues: .token("issues")]))
