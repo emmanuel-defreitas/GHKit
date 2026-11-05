@@ -50,7 +50,8 @@ extension GitHubClient {
 
     /// Every element of a list endpoint, fetched page by page as you iterate.
     public func paginate<Element>(_ request: GitHubRequest<[Element]>) -> Paginated<Element> {
-        Paginated(client: self, request: request)
+        // Tagged so `Paginated.request` routes the same way when another client sends it.
+        Paginated(client: self, request: tagged(request))
     }
 }
 
