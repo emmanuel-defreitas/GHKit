@@ -74,12 +74,16 @@ For an urgent fix, branch from `next`, open a PR into `next` titled `fix(hotfix)
 
 ## Adding endpoints
 
-Follow the pattern in `Sources/GHKit/API/` (see `ProjectsAPI.swift`):
+Each part of GitHub is its own module in `Sources/GHKit<Domain>/`, such as `Sources/GHKitIssues/`.
+Follow the pattern there (see `Sources/GHKitProjects/Projects/ProjectsAPI.swift`):
 
+- **Module:** put the endpoint in the domain's module. Domain modules depend only on `GHKitCore`, never on each other.
+  If two domains need the same model, it goes in `Sources/GHKitCore/Models/`. A core helper that domains call,
+  like `escape(_:)`, is `package`, not `public`.
 - **Namespace:** expose a value-type API from `GitHubClient`, for example `github.issues`.
 - **Signatures:** `async throws(GitHubError)`. Return `Paginated<T>` for list endpoints.
 - **Doc comments:** one line on what the method does, plus the HTTP method and path, for example ``/// `GET /repos/{owner}/{repo}/issues` ``.
-- **Models:** go in `Sources/GHKit/Models/`. They're `Sendable`, `Hashable` and `Codable`, with explicit `CodingKeys` and Swift-style names (`nodeID`, `htmlURL`, `createdAt`).
+- **Models:** go in the domain's `Models/` folder, or `Sources/GHKitCore/Models/` when shared. They're `Sendable`, `Hashable` and `Codable`, with explicit `CodingKeys` and Swift-style names (`nodeID`, `htmlURL`, `createdAt`).
 - **Fields:** make a field optional unless GitHub's schema marks it required.
 - **Enums GitHub may extend:** use `OpenEnum` structs, not Swift enums, so new values don't break decoding.
 - **Path segments:** escape user-supplied values with `escape(_:)`.
@@ -104,7 +108,7 @@ Use Swift Testing (`@Test`, `#expect`), `MockTransport`, and `makeClient(_:)` fr
 
 ## Documentation
 
-The API reference is built with DocC from doc comments plus the catalogs in `Sources/GHKit/GHKit.docc` and
+The API reference is built with DocC from doc comments plus the catalogs in `Sources/GHKit/GHKit.docc` (it documents every domain module, since `GHKit` re-exports them) and
 `Sources/GHKitUI/GHKitUI.docc`. Each catalog has a landing page that groups the main types into topics, and
 articles for the main features.
 

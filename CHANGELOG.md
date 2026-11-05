@@ -8,6 +8,32 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ### Added
 
+- Each `GitHubDomain` declares the scopes and fine-grained permissions its endpoints need.
+  `[GitHubDomain.issues, .projects].access(.write)` combines them into a `GitHubAccess`, which gives the scope list
+  for device flow and OAuth, and links that open GitHub's classic or fine-grained token form already filled in.
+  `GitHubSession(clientID:domains:access:)` asks for those scopes at sign-in.
+- `GitHubError.missingAccess` reads the `X-Accepted-GitHub-Permissions` and `X-Accepted-OAuth-Scopes` headers of a
+  `403` or `404` and says which permissions or scopes the call needed.
+- `GitHubClient.missingScopes(for:_:owner:)` checks a classic or OAuth token's scopes for a domain before you use it.
+- `RoutedAuthenticator` sends different credentials for some parts of GitHub or some accounts, such as an
+  organization admin token for `github.organizations` or a GitHub App installation for one organization's
+  repositories. Each domain module declares its `GitHubDomain` values (`.issues`, `.projects`, …), and every
+  request carries a `GitHubRequestContext` with its domain and account. `Authenticator` gains
+  `authenticator(for:)`, which defaults to `self`, so existing authenticators keep working.
+
+### Changed
+
+- **Breaking:** GHKit is split into one library per part of GitHub: `GHKitUsers`, `GHKitRepositories`,
+  `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`, `GHKitProjects`, `GHKitActivity`, `GHKitGists`,
+  `GHKitSearch`, and `GHKitApps`, on top of `GHKitCore` (client, authentication, pagination, GraphQL, and shared
+  models). Apps can link only the domains they use. The `GHKit` product still imports everything, so
+  `import GHKit` keeps working. Code that names the `GHKit` module explicitly, such as `GHKit.Repository`,
+  now needs the module the type moved to.
+
+## [0.3.0] - 2026-11-03
+
+### Added
+
 - `GHKitMCP`, a new product that offers GitHub as Model Context Protocol tools, so apps can let AI assistants
   use GitHub as the signed-in user. `GitHubToolbox` lists and runs the tools, groups them into toolsets, and
   is read-only unless you pass `.readWrite`. It starts with `get_me`, `get_rate_limit`, and the
@@ -36,6 +62,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 ### Changed
 
 - `RateLimit` and `RateLimitOverview` are `Codable`, like the other models.
+
+### Fixed
+
+- The read-only `github_graphql` tool lets operations named `mutation` run, and its guard scans Unicode
+  scalars, as GraphQL's lexer does, so combining marks can't hide a mutation.
+- The `ghkit-mcp` server reports `GHKitVersion.current` as its version.
 
 ## [0.2.0] - 2026-11-03
 
@@ -137,7 +169,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...next
+[0.3.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...0.2.0
 [0.1.1]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/emmanuel-defreitas/GHKit/releases/tag/0.1.0

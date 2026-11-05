@@ -2,8 +2,18 @@ import Foundation
 import MCP
 import Testing
 
-@testable import GHKit
+@testable import GHKitActivity
+@testable import GHKitApps
+@testable import GHKitCore
+@testable import GHKitGists
+@testable import GHKitIssues
 @testable import GHKitMCP
+@testable import GHKitOrganizations
+@testable import GHKitProjects
+@testable import GHKitPullRequests
+@testable import GHKitRepositories
+@testable import GHKitSearch
+@testable import GHKitUsers
 
 @Suite("MCP issue tools")
 struct IssueToolsTests {
@@ -110,6 +120,15 @@ struct IssueToolsTests {
         #expect(isError)
         #expect(text == "`milestone` must be a number, `*`, or `none`.")
         #expect(transport.requests.isEmpty)
+    }
+
+    @Test func listsUseTheDomainCredential() async throws {
+        let transport = MockTransport(.fixture("issue-items"))
+        let client = makeClient(transport, authenticator: .routed(default: .token("main"), domains: [.issues: .token("issues")]))
+        let toolbox = GitHubToolbox(client: client, toolsets: .all, access: .readOnly)
+        let result = try #require(await toolbox.call(CallTool.Parameters(name: "list_issues", arguments: Self.repo)))
+        #expect(result.isError != true)
+        #expect(transport.requests.first?.value(forHTTPHeaderField: "Authorization") == "Bearer issues")
     }
 
     @Test func emptyBodyClearsTheDescription() async throws {

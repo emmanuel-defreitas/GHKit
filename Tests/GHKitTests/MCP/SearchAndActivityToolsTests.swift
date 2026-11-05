@@ -2,8 +2,18 @@ import Foundation
 import MCP
 import Testing
 
-@testable import GHKit
+@testable import GHKitActivity
+@testable import GHKitApps
+@testable import GHKitCore
+@testable import GHKitGists
+@testable import GHKitIssues
 @testable import GHKitMCP
+@testable import GHKitOrganizations
+@testable import GHKitProjects
+@testable import GHKitPullRequests
+@testable import GHKitRepositories
+@testable import GHKitSearch
+@testable import GHKitUsers
 
 @Suite("MCP search, activity, gist, and reaction tools")
 struct SearchAndActivityToolsTests {
