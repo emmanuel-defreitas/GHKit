@@ -45,6 +45,8 @@ let package = Package(
         .library(name: "GHKitSearch", targets: ["GHKitSearch"]),
         // GitHub App and OAuth app management.
         .library(name: "GHKitApps", targets: ["GHKitApps"]),
+        // Service information, licenses, .gitignore templates, codes of conduct, emojis, Markdown rendering.
+        .library(name: "GHKitMeta", targets: ["GHKitMeta"]),
         // SwiftUI helpers: an observable session, sign-in views, environment values.
         .library(name: "GHKitUI", targets: ["GHKitUI"]),
         // Model Context Protocol tools that expose the GitHub API to AI assistants.
@@ -110,12 +112,17 @@ let package = Package(
             dependencies: ["GHKitCore"],
             swiftSettings: strictSettings
         ),
+        .target(
+            name: "GHKitMeta",
+            dependencies: ["GHKitCore"],
+            swiftSettings: strictSettings
+        ),
         // Re-exports every domain module.
         .target(
             name: "GHKit",
             dependencies: [
                 "GHKitCore", "GHKitUsers", "GHKitRepositories", "GHKitIssues", "GHKitPullRequests", "GHKitOrganizations", "GHKitProjects", "GHKitActivity",
-                "GHKitGists", "GHKitSearch", "GHKitApps",
+                "GHKitGists", "GHKitSearch", "GHKitApps", "GHKitMeta",
             ],
             swiftSettings: strictSettings
         ),
@@ -139,7 +146,7 @@ let package = Package(
             name: "GHKitTests",
             dependencies: [
                 "GHKit", "GHKitCore", "GHKitUsers", "GHKitRepositories", "GHKitIssues", "GHKitPullRequests", "GHKitOrganizations", "GHKitProjects",
-                "GHKitActivity", "GHKitGists", "GHKitSearch", "GHKitApps", "GHKitMCP",
+                "GHKitActivity", "GHKitGists", "GHKitSearch", "GHKitApps", "GHKitMeta", "GHKitMCP",
                 .product(name: "MCP", package: "swift-sdk"),
             ],
             resources: [.copy("Fixtures")],

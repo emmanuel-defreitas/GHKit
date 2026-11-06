@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 593 of 1259 endpoints (47%)
+**REST progress:** 607 of 1259 endpoints (48%)
 
 ## Milestones
 
@@ -53,13 +53,13 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 |---|---|---:|---:|---|
 | [projects](#projects) | M1 | 26 | 26 | ✅ |
 | [rate-limit](#rate-limit) | M1 | 1 | 1 | ✅ |
-| [codes-of-conduct](#codes-of-conduct) | M2 | 0 | 2 | ⬜ |
-| [emojis](#emojis) | M2 | 0 | 1 | ⬜ |
+| [codes-of-conduct](#codes-of-conduct) | M2 | 2 | 2 | ✅ |
+| [emojis](#emojis) | M2 | 1 | 1 | ✅ |
 | [git](#git) | M2 | 13 | 13 | ✅ |
-| [gitignore](#gitignore) | M2 | 0 | 2 | ⬜ |
-| [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
-| [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
-| [meta](#meta) | M2 | 0 | 5 | ⬜ |
+| [gitignore](#gitignore) | M2 | 2 | 2 | ✅ |
+| [licenses](#licenses) | M2 | 3 | 3 | ✅ |
+| [markdown](#markdown) | M2 | 2 | 2 | ✅ |
+| [meta](#meta) | M2 | 5 | 5 | ✅ |
 | [orgs](#orgs) | M2 | 99 | 116 | 🚧 |
 | [repos](#repos) | M2 | 201 | 203 | 🚧 |
 | [teams](#teams) | M2 | 16 | 32 | 🚧 |
@@ -189,16 +189,16 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### codes-of-conduct
 
-0/2 done · milestone M2
+2/2 done · milestone M2
 
-- [ ] `GET /codes_of_conduct` — Get all codes of conduct
-- [ ] `GET /codes_of_conduct/{key}` — Get a code of conduct
+- [x] ✅ `GET /codes_of_conduct` — Get all codes of conduct → `meta.codesOfConduct()`
+- [x] ✅ `GET /codes_of_conduct/{key}` — Get a code of conduct → `meta.codeOfConduct(_:)`
 
 ### emojis
 
-0/1 done · milestone M2
+1/1 done · milestone M2
 
-- [ ] `GET /emojis` — Get emojis
+- [x] ✅ `GET /emojis` — Get emojis → `meta.emojis()`
 
 ### git
 
@@ -220,35 +220,35 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### gitignore
 
-0/2 done · milestone M2
+2/2 done · milestone M2
 
-- [ ] `GET /gitignore/templates` — Get all gitignore templates
-- [ ] `GET /gitignore/templates/{name}` — Get a gitignore template
+- [x] ✅ `GET /gitignore/templates` — Get all gitignore templates → `meta.gitignoreTemplates()`
+- [x] ✅ `GET /gitignore/templates/{name}` — Get a gitignore template → `meta.gitignoreTemplate(_:)`
 
 ### licenses
 
-1/3 done · milestone M2
+3/3 done · milestone M2
 
-- [ ] `GET /licenses` — Get all commonly used licenses
-- [ ] `GET /licenses/{license}` — Get a license
+- [x] ✅ `GET /licenses` — Get all commonly used licenses → `meta.licenses(featured:perPage:)`
+- [x] ✅ `GET /licenses/{license}` — Get a license → `meta.license(_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/license` — Get the license for a repository → `repositories.license(_:_:ref:)`
 
 ### markdown
 
-0/2 done · milestone M2
+2/2 done · milestone M2
 
-- [ ] `POST /markdown` — Render a Markdown document
-- [ ] `POST /markdown/raw` — Render a Markdown document in raw mode
+- [x] ✅ `POST /markdown` — Render a Markdown document → `meta.renderMarkdown(_:mode:context:)`
+- [x] ✅ `POST /markdown/raw` — Render a Markdown document in raw mode → `meta.renderMarkdownRaw(_:)`
 
 ### meta
 
-0/5 done · milestone M2
+5/5 done · milestone M2
 
-- [ ] `GET /` — GitHub API Root
-- [ ] `GET /meta` — Get GitHub meta information
-- [ ] `GET /octocat` — Get Octocat
-- [ ] `GET /versions` — Get all API versions
-- [ ] `GET /zen` — Get the Zen of GitHub
+- [x] ✅ `GET /` — GitHub API Root → `meta.root()`
+- [x] ✅ `GET /meta` — Get GitHub meta information → `meta.overview()`
+- [x] ✅ `GET /octocat` — Get Octocat → `meta.octocat(saying:)`
+- [x] ✅ `GET /versions` — Get all API versions → `meta.versions()`
+- [x] ✅ `GET /zen` — Get the Zen of GitHub → `meta.zen()`
 
 ### orgs
 
