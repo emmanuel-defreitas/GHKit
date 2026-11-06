@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 580 of 1259 endpoints (46%)
+**REST progress:** 593 of 1259 endpoints (47%)
 
 ## Milestones
 
@@ -55,7 +55,7 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 | [rate-limit](#rate-limit) | M1 | 1 | 1 | ✅ |
 | [codes-of-conduct](#codes-of-conduct) | M2 | 0 | 2 | ⬜ |
 | [emojis](#emojis) | M2 | 0 | 1 | ⬜ |
-| [git](#git) | M2 | 0 | 13 | ⬜ |
+| [git](#git) | M2 | 13 | 13 | ✅ |
 | [gitignore](#gitignore) | M2 | 0 | 2 | ⬜ |
 | [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
 | [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
@@ -202,21 +202,21 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### git
 
-0/13 done · milestone M2
+13/13 done · milestone M2
 
-- [ ] `POST /repos/{owner}/{repo}/git/blobs` — Create a blob
-- [ ] `GET /repos/{owner}/{repo}/git/blobs/{file_sha}` — Get a blob
-- [ ] `POST /repos/{owner}/{repo}/git/commits` — Create a commit
-- [ ] `GET /repos/{owner}/{repo}/git/commits/{commit_sha}` — Get a commit object
-- [ ] `GET /repos/{owner}/{repo}/git/matching-refs/{ref}` — List matching references
-- [ ] `GET /repos/{owner}/{repo}/git/ref/{ref}` — Get a reference
-- [ ] `POST /repos/{owner}/{repo}/git/refs` — Create a reference
-- [ ] `PATCH /repos/{owner}/{repo}/git/refs/{ref}` — Update a reference
-- [ ] `DELETE /repos/{owner}/{repo}/git/refs/{ref}` — Delete a reference
-- [ ] `POST /repos/{owner}/{repo}/git/tags` — Create a tag object
-- [ ] `GET /repos/{owner}/{repo}/git/tags/{tag_sha}` — Get a tag
-- [ ] `POST /repos/{owner}/{repo}/git/trees` — Create a tree
-- [ ] `GET /repos/{owner}/{repo}/git/trees/{tree_sha}` — Get a tree
+- [x] ✅ `POST /repos/{owner}/{repo}/git/blobs` — Create a blob → `repositories.git(_:_:).createBlob(_:)`, `createBlob(text:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/blobs/{file_sha}` — Get a blob → `repositories.git(_:_:).blob(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/commits` — Create a commit → `repositories.git(_:_:).createCommit(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/commits/{commit_sha}` — Get a commit object → `repositories.git(_:_:).commit(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/matching-refs/{ref}` — List matching references → `repositories.git(_:_:).matchingRefs(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/ref/{ref}` — Get a reference → `repositories.git(_:_:).ref(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/refs` — Create a reference → `repositories.git(_:_:).createRef(_:at:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/git/refs/{ref}` — Update a reference → `repositories.git(_:_:).updateRef(_:to:force:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/git/refs/{ref}` — Delete a reference → `repositories.git(_:_:).deleteRef(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/tags` — Create a tag object → `repositories.git(_:_:).createTag(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/tags/{tag_sha}` — Get a tag → `repositories.git(_:_:).tag(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/trees` — Create a tree → `repositories.git(_:_:).createTree(_:base:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/trees/{tree_sha}` — Get a tree → `repositories.git(_:_:).tree(_:recursive:)`
 
 ### gitignore
 
