@@ -671,13 +671,15 @@ DEFERRED: dict[str, str] = {
     # Ruleset history returns full rulesets, so it ships with the repository rulesets work.
 }
 
+# A status of None is worked out from the milestone's categories.
 MILESTONES = [
-    ("M1", "Authentication & Projects", "✅ Done"),
-    ("M2", "Core resources: users, organizations, teams, repositories", "🚧 In progress"),
-    ("M3", "Collaboration: issues, pull requests, search, activity", "✅ Done"),
+    ("M1", "Authentication & Projects", None),
+    ("M2", "Core resources: users, organizations, teams, repositories", None),
+    ("M3", "Collaboration: issues, pull requests, search, activity", None),
+    # The apps endpoints already done are M1's authentication work, not M4's.
     ("M4", "Automation: Actions, checks, packages, app webhooks", "⬜ Planned"),
-    ("M5", "Security: code scanning, secret scanning, Dependabot", "⬜ Planned"),
-    ("M6", "Platform & admin: Copilot, Codespaces, billing, migrations", "⬜ Planned"),
+    ("M5", "Security: code scanning, secret scanning, Dependabot", None),
+    ("M6", "Platform & admin: Copilot, Codespaces, billing, migrations", None),
 ]
 
 CATEGORY_MILESTONE = {
@@ -715,6 +717,25 @@ def main(spec_path: str) -> None:
                 "deprecated": op.get("deprecated", False),
             })
 
+    def counted(endpoints):
+        """The endpoints a category's progress counts: not deprecated by GitHub, and not deferred elsewhere."""
+        return [e for e in endpoints if not e["deprecated"] and e["id"] not in DEFERRED]
+
+    def category_status(endpoints):
+        scope = counted(endpoints)
+        n_done = sum(1 for e in scope if e["id"] in DONE)
+        n_prog = sum(1 for e in scope if e["id"] in IN_PROGRESS)
+        if not scope:
+            return "—"
+        return "✅" if n_done == len(scope) else ("🚧" if n_done or n_prog else "⬜")
+
+    def milestone_status(key):
+        statuses = [category_status(v) for c, v in by_category.items() if CATEGORY_MILESTONE.get(c, "M6") == key]
+        statuses = [s for s in statuses if s != "—"]
+        if statuses and all(s == "✅" for s in statuses):
+            return "✅ Done"
+        return "🚧 In progress" if any(s != "⬜" for s in statuses) else "⬜ Planned"
+
     total = sum(len(v) for v in by_category.values())
     done = sum(1 for v in by_category.values() for e in v if e["id"] in DONE)
     out = []
@@ -724,30 +745,34 @@ def main(spec_path: str) -> None:
     w(f"Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. "
       f"Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) "
       f"(version {spec['info']['version']}) on {date.today().isoformat()} by `Scripts/generate_todo.py`.\n")
-    w("**Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub\n")
-    w(f"**REST progress:** {done} of {total} endpoints ({done * 100 // total}%)\n")
+    w("**Legend:** ✅ done · 🚧 in progress · ⬜ to do · — nothing left to do · ~~struck~~ deprecated by GitHub\n")
+    supported = sum(1 for v in by_category.values() for e in v if not e["deprecated"])
+    done_supported = sum(1 for v in by_category.values() for e in v if not e["deprecated"] and e["id"] in DONE)
+    w(f"**REST progress:** {done} of {total} endpoints ({done * 100 // total}%); "
+      f"{done_supported} of the {supported} GitHub hasn't deprecated ({done_supported * 100 // supported}%)\n")
 
     w("## Milestones\n")
     w("| Milestone | Scope | Status |")
     w("|---|---|---|")
     for key, name, status in MILESTONES:
-        w(f"| {key} | {name} | {status} |")
+        w(f"| {key} | {name} | {status or milestone_status(key)} |")
     w("")
 
     w(MILESTONE_ONE_DETAILS)
 
     w("## Categories\n")
-    w("| Category | Milestone | Done | Total | Status |")
-    w("|---|---|---:|---:|---|")
+    w("Totals leave out endpoints GitHub deprecated and ones deferred to another milestone.\n")
+    w("| Category | Milestone | Done | Total | Not counted | Status |")
+    w("|---|---|---:|---:|---:|---|")
     for category in sorted(by_category, key=lambda c: (CATEGORY_MILESTONE.get(c, "M6"), c)):
         endpoints = by_category[category]
-        n_done = sum(1 for e in endpoints if e["id"] in DONE)
-        n_prog = sum(1 for e in endpoints if e["id"] in IN_PROGRESS)
-        status = "✅" if n_done == len(endpoints) else ("🚧" if n_done or n_prog else "⬜")
+        scope = counted(endpoints)
+        n_done = sum(1 for e in scope if e["id"] in DONE)
         milestone = CATEGORY_MILESTONE.get(category, "M6")
         if category == "apps":
             milestone = "M1 (auth) · M4 (rest)"
-        w(f"| [{category}](#{category}) | {milestone} | {n_done} | {len(endpoints)} | {status} |")
+        skipped = len(endpoints) - len(scope)
+        w(f"| [{category}](#{category}) | {milestone} | {n_done} | {len(scope)} | {skipped or ''} | {category_status(endpoints)} |")
     w("")
 
     w(GRAPHQL_SECTION)
@@ -757,9 +782,16 @@ def main(spec_path: str) -> None:
     w("## REST endpoints\n")
     for category in sorted(by_category, key=lambda c: (CATEGORY_MILESTONE.get(c, "M6"), c)):
         endpoints = sorted(by_category[category], key=lambda e: (e["path"], METHODS.index(e["method"].lower())))
-        n_done = sum(1 for e in endpoints if e["id"] in DONE)
+        scope = counted(endpoints)
+        n_done = sum(1 for e in scope if e["id"] in DONE)
+        notes = []
+        if n_deprecated := sum(1 for e in endpoints if e["deprecated"]):
+            notes.append(f"{n_deprecated} deprecated")
+        if n_deferred := sum(1 for e in endpoints if not e["deprecated"] and e["id"] in DEFERRED):
+            notes.append(f"{n_deferred} deferred")
         w(f"### {category}\n")
-        w(f"{n_done}/{len(endpoints)} done · milestone {CATEGORY_MILESTONE.get(category, 'M6')}\n")
+        extra = f" · not counted: {', '.join(notes)}" if notes else ""
+        w(f"{n_done}/{len(scope)} done · milestone {CATEGORY_MILESTONE.get(category, 'M6')}{extra}\n")
         for e in endpoints:
             line = f"`{e['method']} {e['path']}` — {e['summary']}"
             if e["deprecated"]:
