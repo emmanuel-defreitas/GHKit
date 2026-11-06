@@ -23,7 +23,7 @@ root="$PWD"
 modules=(GHKit GHKitUI GHKitMCP)
 # GHKit re-exports these, and its reference documents all of them as one module.
 umbrella_parts=(GHKitCore GHKitUsers GHKitRepositories GHKitIssues GHKitPullRequests GHKitOrganizations
-    GHKitProjects GHKitActivity GHKitGists GHKitSearch GHKitApps)
+    GHKitProjects GHKitActivity GHKitGists GHKitSearch GHKitApps GHKitMeta)
 scratch=".build/docs"
 work="$scratch/work"
 output="${1:-$scratch/site}"

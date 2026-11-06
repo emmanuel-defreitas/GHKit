@@ -25,8 +25,8 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
 
     /// Every toolset, in the order their tools are listed.
     static let everyToolset: [GitHubToolset] = [
-        .context, .users, .repositories, .issues, .pullRequests, .search, .activity, .gists, .reactions, .organizations, .teams,
-        .projects, .rawRequests,
+        .context, .users, .repositories, .git, .issues, .pullRequests, .search, .activity, .gists, .reactions, .organizations,
+        .teams, .projects, .meta, .rawRequests,
     ]
 }
 
@@ -39,6 +39,9 @@ extension GitHubToolset {
 
     /// Repositories, files, branches, commits, tags, and releases.
     public static let repositories = GitHubToolset("repositories", tools: RepositoryTools.tools)
+
+    /// Git trees, blobs, commits, references, and tags, for commits that change several files at once.
+    public static let git = GitHubToolset("git", tools: GitTools.tools)
 
     /// Issues and their comments, timelines, labels, assignees, milestones, and sub-issues.
     public static let issues = GitHubToolset("issues", tools: IssueTools.tools)
@@ -66,6 +69,9 @@ extension GitHubToolset {
 
     /// Projects, their fields and items, and status updates.
     public static let projects = GitHubToolset("projects", tools: ProjectTools.tools)
+
+    /// Licenses, `.gitignore` templates, codes of conduct, Markdown rendering, and GitHub's IP ranges and versions.
+    public static let meta = GitHubToolset("meta", tools: MetaTools.tools)
 
     /// `github_rest` and `github_graphql`, for anything the other toolsets don't cover.
     ///
