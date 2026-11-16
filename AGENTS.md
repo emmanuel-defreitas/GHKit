@@ -30,6 +30,7 @@ Scripts/build_docs.sh                                           # DocC site in .
 | `Sources/GHKitCore/Client/` | `GitHubClient`, pagination (`Paginated`, `Page`), GraphQL |
 | `Sources/GHKitCore/HTTP/` | Transport, configuration, `GitHubRequest`, `GitHubError`, response metadata |
 | `Sources/GHKitCore/Auth/` | Authenticators, OAuth device and web flows, GitHub App JWT and installation tokens, credential stores |
+| `Sources/GHKitCore/Crypto/` | `SecretSealer`: libsodium sealed boxes for secret values (X25519 from CryptoKit; Salsa20, Poly1305, BLAKE2b here) |
 | `Sources/GHKitCore/Models/` | Models more than one domain uses (`SimpleUser`, `Repository`, `GitHubIssue`, `Team`, `OpenEnum`, …) |
 | `Sources/GHKitCore/Core/` | `JSONValue`, `CalendarDate`, `RichText`, JSON coders |
 | `Sources/GHKit<Domain>/` | One domain each: its API types (`IssuesAPI`, `ReactionsAPI`, …), and its own models and inputs in `Models/` |
