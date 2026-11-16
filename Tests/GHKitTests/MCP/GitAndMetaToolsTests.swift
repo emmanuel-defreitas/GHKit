@@ -35,7 +35,8 @@ struct GitAndMetaToolsTests {
                 "base": "t0",
                 "entries": [
                     ["path": "README.md", "content": "Hello"], ["path": "run.sh", "sha": "b1", "mode": "executable"],
-                    ["path": "vendor", "sha": "c1", "mode": "submodule"], ["path": "old.txt", "delete": true],
+                    ["path": "vendor", "sha": "c1", "mode": "submodule"], ["path": "lib", "sha": "d1", "mode": "directory"],
+                    ["path": "old.txt", "delete": true],
                 ],
             ]),
             response: .fixture("git-tree", status: 201), route: "POST \(base)/trees",
@@ -45,6 +46,7 @@ struct GitAndMetaToolsTests {
                     ["path": "README.md", "mode": "100644", "type": "blob", "content": "Hello"],
                     ["path": "run.sh", "mode": "100755", "type": "blob", "sha": "b1"],
                     ["path": "vendor", "mode": "160000", "type": "commit", "sha": "c1"],
+                    ["path": "lib", "mode": "040000", "type": "tree", "sha": "d1"],
                     ["path": "old.txt", "mode": "100644", "type": "blob", "sha": nil],
                 ],
             ]),
