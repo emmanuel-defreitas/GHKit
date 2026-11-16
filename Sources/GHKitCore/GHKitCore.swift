@@ -9,5 +9,5 @@
 
 /// The library version, sent in the default `User-Agent` header.
 public enum GHKitVersion {
-    public static let current = "0.3.0"
+    public static let current = "0.4.0"
 }

@@ -7,7 +7,7 @@ Guidance for AI coding agents working on GHKit. Humans: see [CONTRIBUTING.md](CO
 GHKit is a Swift package wrapping the GitHub REST and GraphQL APIs for SwiftUI apps.
 `GHKitCore` holds the client, auth, pagination, GraphQL, and shared models. Each part of GitHub is its own
 library on top of it (`GHKitUsers`, `GHKitRepositories`, `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`,
-`GHKitProjects`, `GHKitActivity`, `GHKitGists`, `GHKitSearch`, `GHKitApps`), and `GHKit` re-exports all of them.
+`GHKitProjects`, `GHKitActivity`, `GHKitGists`, `GHKitSearch`, `GHKitApps`, `GHKitMeta`), and `GHKit` re-exports all of them.
 `GHKitUI` adds a SwiftUI session and views, and `GHKitMCP` exposes the API to AI assistants as Model Context Protocol tools.
 Coverage and the roadmap live in [TODO.md](TODO.md), which is generated; never edit it by hand.
 
