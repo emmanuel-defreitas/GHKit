@@ -25,8 +25,8 @@ public struct GitHubToolset: Sendable, Hashable, CustomStringConvertible {
 
     /// Every toolset, in the order their tools are listed.
     static let everyToolset: [GitHubToolset] = [
-        .context, .users, .repositories, .git, .issues, .pullRequests, .search, .activity, .gists, .reactions, .organizations,
-        .teams, .projects, .meta, .rawRequests,
+        .context, .users, .repositories, .git, .issues, .pullRequests, .actions, .checks, .search, .activity, .gists, .reactions,
+        .organizations, .teams, .projects, .meta, .rawRequests,
     ]
 }
 
@@ -48,6 +48,12 @@ extension GitHubToolset {
 
     /// Pull requests, their diffs and files, reviews, review comments, and merging.
     public static let pullRequests = GitHubToolset("pull_requests", tools: PullRequestTools.tools)
+
+    /// GitHub Actions workflows, runs, jobs, logs, artifacts, and deployment reviews.
+    public static let actions = GitHubToolset("actions", tools: ActionsTools.tools)
+
+    /// Check runs and check suites: the CI results on a commit or pull request.
+    public static let checks = GitHubToolset("checks", tools: CheckTools.tools)
 
     /// Search code, issues and pull requests, repositories, users, and commits.
     public static let search = GitHubToolset("search", tools: SearchTools.tools)

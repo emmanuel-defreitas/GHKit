@@ -1,19 +1,19 @@
 # GHKit API coverage
 
-Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-05 by `Scripts/generate_todo.py`.
+Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-16 by `Scripts/generate_todo.py`.
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · — nothing left to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 607 of 1259 endpoints (48%); 607 of the 1221 GitHub hasn't deprecated (49%)
+**REST progress:** 655 of 1281 endpoints (51%); 655 of the 1243 GitHub hasn't deprecated (52%)
 
 ## Milestones
 
 | Milestone | Scope | Status |
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
-| M2 | Core resources: users, organizations, teams, repositories | ✅ Done |
-| M3 | Collaboration: issues, pull requests, search, activity | ✅ Done |
-| M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
+| M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
+| M3 | Collaboration: issues, pull requests, search, activity | 🚧 In progress |
+| M4 | Automation: Actions, checks, packages, app webhooks | 🚧 In progress |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
 | M6 | Platform & admin: Copilot, Codespaces, billing, migrations | ⬜ Planned |
 
@@ -63,22 +63,22 @@ Totals leave out endpoints GitHub deprecated and ones deferred to another milest
 | [markdown](#markdown) | M2 | 2 | 2 |  | ✅ |
 | [meta](#meta) | M2 | 5 | 5 |  | ✅ |
 | [orgs](#orgs) | M2 | 99 | 99 | 17 | ✅ |
-| [repos](#repos) | M2 | 201 | 201 | 2 | ✅ |
+| [repos](#repos) | M2 | 201 | 202 | 2 | 🚧 |
 | [teams](#teams) | M2 | 16 | 16 | 16 | ✅ |
-| [users](#users) | M2 | 42 | 42 | 5 | ✅ |
+| [users](#users) | M2 | 42 | 50 | 5 | 🚧 |
 | [activity](#activity) | M3 | 34 | 34 |  | ✅ |
 | [gists](#gists) | M3 | 20 | 20 |  | ✅ |
 | [issues](#issues) | M3 | 66 | 66 |  | ✅ |
-| [pulls](#pulls) | M3 | 35 | 35 |  | ✅ |
+| [pulls](#pulls) | M3 | 35 | 36 |  | 🚧 |
 | [reactions](#reactions) | M3 | 15 | 15 |  | ✅ |
 | [search](#search) | M3 | 7 | 7 |  | ✅ |
-| [actions](#actions) | M4 | 0 | 200 |  | ⬜ |
+| [actions](#actions) | M4 | 36 | 200 |  | 🚧 |
 | [agent-automations](#agent-automations) | M4 | 0 | 12 |  | ⬜ |
 | [agent-merge](#agent-merge) | M4 | 0 | 3 |  | ⬜ |
 | [agent-tasks](#agent-tasks) | M4 | 0 | 5 |  | ⬜ |
 | [agents](#agents) | M4 | 0 | 30 |  | ⬜ |
 | [apps](#apps) | M1 (auth) · M4 (rest) | 17 | 37 |  | 🚧 |
-| [checks](#checks) | M4 | 0 | 12 |  | ⬜ |
+| [checks](#checks) | M4 | 12 | 12 |  | ✅ |
 | [hosted-compute](#hosted-compute) | M4 | 0 | 6 |  | ⬜ |
 | [oidc](#oidc) | M4 | 0 | 8 |  | ⬜ |
 | [packages](#packages) | M4 | 0 | 27 |  | ⬜ |
@@ -88,14 +88,14 @@ Totals leave out endpoints GitHub deprecated and ones deferred to another milest
 | [code-scanning](#code-scanning) | M5 | 0 | 25 |  | ⬜ |
 | [code-security](#code-security) | M5 | 0 | 20 |  | ⬜ |
 | [credentials](#credentials) | M5 | 0 | 1 |  | ⬜ |
-| [dependabot](#dependabot) | M5 | 0 | 25 |  | ⬜ |
+| [dependabot](#dependabot) | M5 | 0 | 27 |  | ⬜ |
 | [dependency-graph](#dependency-graph) | M5 | 0 | 4 | 1 | ⬜ |
 | [secret-scanning](#secret-scanning) | M5 | 0 | 17 |  | ⬜ |
 | [security-advisories](#security-advisories) | M5 | 0 | 14 |  | ⬜ |
 | [billing](#billing) | M6 | 0 | 13 |  | ⬜ |
 | [classroom](#classroom) | M6 | 0 | 0 | 6 | — |
 | [codespaces](#codespaces) | M6 | 0 | 45 | 3 | ⬜ |
-| [copilot](#copilot) | M6 | 0 | 34 |  | ⬜ |
+| [copilot](#copilot) | M6 | 0 | 44 |  | ⬜ |
 | [copilot-spaces](#copilot-spaces) | M6 | 0 | 28 |  | ⬜ |
 | [interactions](#interactions) | M6 | 0 | 16 |  | ⬜ |
 | [migrations](#migrations) | M6 | 0 | 14 | 8 | ⬜ |
@@ -375,7 +375,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-201/201 done · milestone M2 · not counted: 2 deferred
+201/202 done · milestone M2 · not counted: 2 deferred
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -522,6 +522,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}` — Get the status of a GitHub Pages deployment → `repositories.pagesDeploymentState(id:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel` — Cancel a GitHub Pages deployment → `repositories.cancelPagesDeployment(id:in:_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/pages/health` — Get a DNS health check for GitHub Pages → `repositories.pagesHealthCheck(_:_:)`
+- [ ] `GET /repos/{owner}/{repo}/planning-statuses` — List planning statuses for a repository
 - [x] ✅ `GET /repos/{owner}/{repo}/private-vulnerability-reporting` — Check if private vulnerability reporting is enabled for a repository → `repositories.privateVulnerabilityReportingEnabled(_:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/private-vulnerability-reporting` — Enable private vulnerability reporting for a repository → `repositories.setPrivateVulnerabilityReporting(enabled:in:_:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/private-vulnerability-reporting` — Disable private vulnerability reporting for a repository → `repositories.setPrivateVulnerabilityReporting(enabled:in:_:)`
@@ -620,7 +621,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### users
 
-42/42 done · milestone M2 · not counted: 5 deferred
+42/50 done · milestone M2 · not counted: 5 deferred
 
 - [x] ✅ `GET /user` — Get the authenticated user → `github.users.authenticated()`, `github.verifyAuthentication()`
 - [x] ✅ `PATCH /user` — Update the authenticated user → `users.updateProfile(_:)`
@@ -641,6 +642,14 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `POST /user/gpg_keys` — Create a GPG key for the authenticated user → `users.addGPGKey(armoredPublicKey:name:)`
 - [x] ✅ `GET /user/gpg_keys/{gpg_key_id}` — Get a GPG key for the authenticated user → `users.gpgKey(id:)`
 - [x] ✅ `DELETE /user/gpg_keys/{gpg_key_id}` — Delete a GPG key for the authenticated user → `users.deleteGPGKey(id:)`
+- [ ] `GET /user/issue-fields` — List issue fields
+- [ ] `POST /user/issue-fields` — Create an issue field
+- [ ] `PATCH /user/issue-fields/{issue_field_id}` — Update an issue field
+- [ ] `DELETE /user/issue-fields/{issue_field_id}` — Delete an issue field
+- [ ] `GET /user/issue-types` — List issue types
+- [ ] `POST /user/issue-types` — Create an issue type
+- [ ] `PUT /user/issue-types/{issue_type_id}` — Update an issue type
+- [ ] `DELETE /user/issue-types/{issue_type_id}` — Delete an issue type
 - [x] ✅ `GET /user/keys` — List public SSH keys for the authenticated user → `users.sshKeys()`
 - [x] ✅ `POST /user/keys` — Create a public SSH key for the authenticated user → `users.addSSHKey(_:title:)`
 - [x] ✅ `GET /user/keys/{key_id}` — Get a public SSH key for the authenticated user → `users.sshKey(id:)`
@@ -807,7 +816,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### pulls
 
-35/35 done · milestone M3
+35/36 done · milestone M3
 
 - [x] ✅ `GET /repos/{owner}/{repo}/pulls` — List pull requests → `pullRequests.list(_:_:state:head:base:sort:ascending:perPage:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/pulls` — Create a pull request → `pullRequests.create(_:in:_:)`
@@ -821,6 +830,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments` — Create a review comment for a pull request → `pullRequests.createReviewComment(_:on:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies` — Create a reply for a review comment → `pullRequests.replyToReviewComment(id:on:in:_:body:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/commits` — List commits on a pull request → `pullRequests.commits(of:in:_:perPage:)`
+- [ ] `POST /repos/{owner}/{repo}/pulls/{pull_number}/copilot-code-review` — Request a Copilot code review for a pull request
 - [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/files` — List pull requests files → `pullRequests.files(of:in:_:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Check if a pull request has been merged → `pullRequests.isMerged(_:in:_:)`
 - [x] ✅ `PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge` — Merge a pull request → `pullRequests.merge(_:in:_:_:)`
@@ -879,7 +889,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### actions
 
-0/200 done · milestone M4
+36/200 done · milestone M4
 
 - [ ] `GET /enterprises/{enterprise}/actions/cache/retention-limit` — Get GitHub Actions cache retention limit for an enterprise
 - [ ] `PUT /enterprises/{enterprise}/actions/cache/retention-limit` — Set GitHub Actions cache retention limit for an enterprise
@@ -979,10 +989,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PUT /orgs/{org}/actions/variables/{name}/repositories` — Set selected repositories for an organization variable
 - [ ] `PUT /orgs/{org}/actions/variables/{name}/repositories/{repository_id}` — Add selected repository to an organization variable
 - [ ] `DELETE /orgs/{org}/actions/variables/{name}/repositories/{repository_id}` — Remove selected repository from an organization variable
-- [ ] `GET /repos/{owner}/{repo}/actions/artifacts` — List artifacts for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Get an artifact
-- [ ] `DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Delete an artifact
-- [ ] `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}` — Download an artifact
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/artifacts` — List artifacts for a repository → `actions.artifacts(_:_:named:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Get an artifact → `actions.artifact(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Delete an artifact → `actions.deleteArtifact(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}` — Download an artifact → `actions.downloadArtifact(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/cache/retention-limit` — Get GitHub Actions cache retention limit for a repository
 - [ ] `PUT /repos/{owner}/{repo}/actions/cache/retention-limit` — Set GitHub Actions cache retention limit for a repository
 - [ ] `GET /repos/{owner}/{repo}/actions/cache/storage-limit` — Get GitHub Actions cache storage limit for a repository
@@ -993,10 +1003,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/actions/caches/{cache_id}` — Delete a GitHub Actions cache for a repository (using a cache ID)
 - [ ] `GET /repos/{owner}/{repo}/actions/concurrency_groups` — List concurrency groups for a repository
 - [ ] `GET /repos/{owner}/{repo}/actions/concurrency_groups/{concurrency_group_name}` — Get a concurrency group for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/jobs/{job_id}` — Get a job for a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs` — Download job logs for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun` — Re-run a job from a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/steps/{step_number}/logs` — Download step logs for a workflow run job
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/jobs/{job_id}` — Get a job for a workflow run → `actions.job(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs` — Download job logs for a workflow run → `actions.jobLogs(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun` — Re-run a job from a workflow run → `actions.rerunJob(id:in:_:debugLogging:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/steps/{step_number}/logs` — Download step logs for a workflow run job → `actions.stepLogs(_:ofJob:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/oidc/customization/sub` — Get the customization template for an OIDC subject claim for a repository
 - [ ] `PUT /repos/{owner}/{repo}/actions/oidc/customization/sub` — Set the customization template for an OIDC subject claim for a repository
 - [ ] `GET /repos/{owner}/{repo}/actions/organization-secrets` — List repository organization secrets
@@ -1033,27 +1043,27 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PUT /repos/{owner}/{repo}/actions/runners/{runner_id}/labels` — Set custom labels for a self-hosted runner for a repository
 - [ ] `DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels` — Remove all custom labels from a self-hosted runner for a repository
 - [ ] `DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}` — Remove a custom label from a self-hosted runner for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/runs` — List workflow runs for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}` — Get a workflow run
-- [ ] `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}` — Delete a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals` — Get the review history for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve` — Approve a workflow run for a fork pull request
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts` — List workflow run artifacts
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}` — Get a workflow run attempt
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs` — List jobs for a workflow run attempt
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs` — Download workflow run attempt logs
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel` — Cancel a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/concurrency_groups` — List concurrency groups for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule` — Review custom deployment protection rules for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel` — Force cancel a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs` — List jobs for a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Download workflow run logs
-- [ ] `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Delete workflow run logs
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Get pending deployments for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Review pending deployments for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun` — Re-run a workflow
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs` — Re-run failed jobs from a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing` — Get workflow run usage
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs` — List workflow runs for a repository → `actions.runs(_:_:matching:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}` — Get a workflow run → `actions.run(id:attempt:in:_:excludingPullRequests:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}` — Delete a workflow run → `actions.deleteRun(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals` — Get the review history for a workflow run → `actions.deploymentReviews(ofRun:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve` — Approve a workflow run for a fork pull request → `actions.approveRun(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts` — List workflow run artifacts → `actions.artifacts(ofRun:in:_:named:ascending:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}` — Get a workflow run attempt → `actions.run(id:attempt:in:_:excludingPullRequests:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs` — List jobs for a workflow run attempt → `actions.jobs(ofRun:attempt:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs` — Download workflow run attempt logs → `actions.runLogs(id:attempt:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel` — Cancel a workflow run → `actions.cancelRun(id:in:_:force:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/concurrency_groups` — List concurrency groups for a workflow run → `actions.concurrencyGroups(ofRun:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule` — Review custom deployment protection rules for a workflow run → `actions.reviewDeploymentProtectionRule(ofRun:in:_:environment:state:comment:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel` — Force cancel a workflow run → `actions.cancelRun(id:in:_:force:)` with `force: true`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs` — List jobs for a workflow run → `actions.jobs(ofRun:in:_:includingEarlierAttempts:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Download workflow run logs → `actions.runLogs(id:attempt:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Delete workflow run logs → `actions.deleteRunLogs(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Get pending deployments for a workflow run → `actions.pendingDeployments(ofRun:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Review pending deployments for a workflow run → `actions.reviewPendingDeployments(ofRun:in:_:environmentIDs:state:comment:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun` — Re-run a workflow → `actions.rerun(id:in:_:failedJobsOnly:debugLogging:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs` — Re-run failed jobs from a workflow run → `actions.rerun(id:in:_:failedJobsOnly:debugLogging:)` with `failedJobsOnly: true`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing` — Get workflow run usage → `actions.runUsage(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/secrets` — List repository secrets
 - [ ] `GET /repos/{owner}/{repo}/actions/secrets/public-key` — Get a repository public key
 - [ ] `GET /repos/{owner}/{repo}/actions/secrets/{secret_name}` — Get a repository secret
@@ -1064,13 +1074,13 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/actions/variables/{name}` — Get a repository variable
 - [ ] `PATCH /repos/{owner}/{repo}/actions/variables/{name}` — Update a repository variable
 - [ ] `DELETE /repos/{owner}/{repo}/actions/variables/{name}` — Delete a repository variable
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows` — List repository workflows
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}` — Get a workflow
-- [ ] `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable` — Disable a workflow
-- [ ] `POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches` — Create a workflow dispatch event
-- [ ] `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable` — Enable a workflow
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs` — List workflow runs for a workflow
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing` — Get workflow usage
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows` — List repository workflows → `actions.workflows(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}` — Get a workflow → `actions.workflow(_:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable` — Disable a workflow → `actions.disableWorkflow(_:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches` — Create a workflow dispatch event → `actions.dispatchWorkflow(_:in:_:ref:inputs:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable` — Enable a workflow → `actions.enableWorkflow(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs` — List workflow runs for a workflow → `actions.runs(of:in:_:matching:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing` — Get workflow usage → `actions.workflowUsage(_:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/secrets` — List environment secrets
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/secrets/public-key` — Get an environment public key
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}` — Get an environment secret
@@ -1196,20 +1206,20 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### checks
 
-0/12 done · milestone M4
+12/12 done · milestone M4
 
-- [ ] `POST /repos/{owner}/{repo}/check-runs` — Create a check run
-- [ ] `GET /repos/{owner}/{repo}/check-runs/{check_run_id}` — Get a check run
-- [ ] `PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}` — Update a check run
-- [ ] `GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations` — List check run annotations
-- [ ] `POST /repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest` — Rerequest a check run
-- [ ] `POST /repos/{owner}/{repo}/check-suites` — Create a check suite
-- [ ] `PATCH /repos/{owner}/{repo}/check-suites/preferences` — Update repository preferences for check suites
-- [ ] `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}` — Get a check suite
-- [ ] `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs` — List check runs in a check suite
-- [ ] `POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest` — Rerequest a check suite
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/check-runs` — List check runs for a Git reference
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/check-suites` — List check suites for a Git reference
+- [x] ✅ `POST /repos/{owner}/{repo}/check-runs` — Create a check run → `checks.createRun(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-runs/{check_run_id}` — Get a check run → `checks.run(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}` — Update a check run → `checks.updateRun(id:in:_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations` — List check run annotations → `checks.annotations(ofRun:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest` — Rerequest a check run → `checks.rerequestRun(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/check-suites` — Create a check suite → `checks.createSuite(headSHA:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/check-suites/preferences` — Update repository preferences for check suites → `checks.setSuitePreferences(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}` — Get a check suite → `checks.suite(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs` — List check runs in a check suite → `checks.runs(inSuite:in:_:matching:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest` — Rerequest a check suite → `checks.rerequestSuite(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/check-runs` — List check runs for a Git reference → `checks.runs(for:in:_:matching:appID:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/check-suites` — List check suites for a Git reference → `checks.suites(for:in:_:appID:checkName:perPage:)`
 
 ### hosted-compute
 
@@ -1360,7 +1370,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### dependabot
 
-0/25 done · milestone M5
+0/27 done · milestone M5
 
 - [ ] `GET /enterprises/{enterprise}/dependabot/alerts` — List Dependabot alerts for an enterprise
 - [ ] `GET /enterprises/{enterprise}/dependabot/repository-access` — Lists the repositories Dependabot can access in an enterprise
@@ -1382,6 +1392,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/dependabot/alerts` — List Dependabot alerts for a repository
 - [ ] `GET /repos/{owner}/{repo}/dependabot/alerts/{alert_number}` — Get a Dependabot alert
 - [ ] `PATCH /repos/{owner}/{repo}/dependabot/alerts/{alert_number}` — Update a Dependabot alert
+- [ ] `GET /repos/{owner}/{repo}/dependabot/runner-settings` — Get repository Dependabot runner settings
+- [ ] `PUT /repos/{owner}/{repo}/dependabot/runner-settings` — Set repository Dependabot runner settings
 - [ ] `GET /repos/{owner}/{repo}/dependabot/secrets` — List repository secrets
 - [ ] `GET /repos/{owner}/{repo}/dependabot/secrets/public-key` — Get a repository public key
 - [ ] `GET /repos/{owner}/{repo}/dependabot/secrets/{secret_name}` — Get a repository secret
@@ -1523,7 +1535,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### copilot
 
-0/34 done · milestone M6
+0/44 done · milestone M6
 
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/enterprise-1-day` — Get Copilot enterprise usage metrics for a specific day
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/enterprise-28-day/latest` — Get Copilot enterprise usage metrics
@@ -1531,6 +1543,8 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/user-teams-1-day` — Get Copilot enterprise user-teams report for a specific day
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/users-1-day` — Get Copilot users usage metrics for a specific day
 - [ ] `GET /enterprises/{enterprise}/copilot/metrics/reports/users-28-day/latest` — Get Copilot users usage metrics
+- [ ] `GET /enterprises/{enterprise}/copilot/policies/code-review` — Get the Copilot code review policy for an enterprise
+- [ ] `PUT /enterprises/{enterprise}/copilot/policies/code-review` — Set the Copilot code review policy for an enterprise
 - [ ] `PUT /enterprises/{enterprise}/copilot/policies/coding_agent` — Set the coding agent policy for an enterprise
 - [ ] `POST /enterprises/{enterprise}/copilot/policies/coding_agent/organizations` — Add organizations to the enterprise coding agent policy
 - [ ] `DELETE /enterprises/{enterprise}/copilot/policies/coding_agent/organizations` — Remove organizations from the enterprise coding agent policy
@@ -1540,6 +1554,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /orgs/{org}/copilot/billing/selected_teams` — Remove teams from the Copilot subscription for an organization
 - [ ] `POST /orgs/{org}/copilot/billing/selected_users` — Add users to the Copilot subscription for an organization
 - [ ] `DELETE /orgs/{org}/copilot/billing/selected_users` — Remove users from the Copilot subscription for an organization
+- [ ] `GET /orgs/{org}/copilot/code-review/runner` — Get the Copilot code review runner configuration for an organization
+- [ ] `PUT /orgs/{org}/copilot/code-review/runner` — Set the Copilot code review runner configuration for an organization
+- [ ] `GET /orgs/{org}/copilot/code-review/settings` — Get Copilot code review settings for an organization
+- [ ] `PATCH /orgs/{org}/copilot/code-review/settings` — Update Copilot code review settings for an organization
 - [ ] `GET /orgs/{org}/copilot/coding-agent/permissions` — Get Copilot cloud agent permissions for an organization
 - [ ] `PUT /orgs/{org}/copilot/coding-agent/permissions` — Set Copilot cloud agent permissions for an organization
 - [ ] `GET /orgs/{org}/copilot/coding-agent/permissions/repositories` — List repositories enabled for Copilot cloud agent in an organization
@@ -1554,11 +1572,15 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /orgs/{org}/copilot/metrics/reports/user-teams-1-day` — Get Copilot organization user-teams report for a specific day
 - [ ] `GET /orgs/{org}/copilot/metrics/reports/users-1-day` — Get Copilot organization users usage metrics for a specific day
 - [ ] `GET /orgs/{org}/copilot/metrics/reports/users-28-day/latest` — Get Copilot organization users usage metrics
+- [ ] `GET /orgs/{org}/copilot/policies/code-review` — Get the Copilot code review policy for an organization
+- [ ] `PUT /orgs/{org}/copilot/policies/code-review` — Set the Copilot code review policy for an organization
 - [ ] `GET /orgs/{org}/members/{username}/copilot` — Get Copilot seat assignment details for a user
 - [ ] `GET /orgs/{org}/teams/{team_slug}/copilot/customizations` — Get Copilot customizations for a team
 - [ ] `PUT /orgs/{org}/teams/{team_slug}/copilot/customizations` — Set Copilot customizations for a team
 - [ ] `DELETE /orgs/{org}/teams/{team_slug}/copilot/customizations` — Delete Copilot customizations for a team
 - [ ] `GET /repos/{owner}/{repo}/copilot/cloud-agent/configuration` — Get Copilot cloud agent configuration for a repository
+- [ ] `GET /repos/{owner}/{repo}/copilot/code-review/settings` — Get Copilot code review settings for a repository
+- [ ] `PATCH /repos/{owner}/{repo}/copilot/code-review/settings` — Update Copilot code review settings for a repository
 
 ### copilot-spaces
 
