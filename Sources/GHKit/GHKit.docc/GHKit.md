@@ -231,6 +231,21 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``PendingDeployment``
 - ``EnvironmentReference``
 - ``ConcurrencyGroup``
+
+### Checks
+
+- ``ChecksAPI``
+- ``CheckRun``
+- ``NewCheckRun``
+- ``CheckRunUpdate``
+- ``NewCheckRunOutput``
+- ``CheckRunAction``
+- ``CheckRunFilter``
+- ``CheckAnnotation``
+- ``NewCheckAnnotation``
+- ``CheckAnnotationLevel``
+- ``CheckSuite``
+- ``CheckSuitePreferences``
 - ``CheckStatus``
 - ``CheckConclusion``
 - ``PullRequestReference``

@@ -136,8 +136,3 @@ extension RepositoriesAPI {
         try await client.value(GitHubRequest(.post, path(owner, name, "/generate"), body: repository))
     }
 }
-
-/// Percent-encodes each segment of a slash-separated path, keeping the slashes.
-func escapePath(_ path: String) -> String {
-    path.split(separator: "/", omittingEmptySubsequences: false).map { escape(String($0)) }.joined(separator: "/")
-}

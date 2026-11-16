@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · — nothing left to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 643 of 1281 endpoints (50%); 643 of the 1243 GitHub hasn't deprecated (51%)
+**REST progress:** 655 of 1281 endpoints (51%); 655 of the 1243 GitHub hasn't deprecated (52%)
 
 ## Milestones
 
@@ -78,7 +78,7 @@ Totals leave out endpoints GitHub deprecated and ones deferred to another milest
 | [agent-tasks](#agent-tasks) | M4 | 0 | 5 |  | ⬜ |
 | [agents](#agents) | M4 | 0 | 30 |  | ⬜ |
 | [apps](#apps) | M1 (auth) · M4 (rest) | 17 | 37 |  | 🚧 |
-| [checks](#checks) | M4 | 0 | 12 |  | ⬜ |
+| [checks](#checks) | M4 | 12 | 12 |  | ✅ |
 | [hosted-compute](#hosted-compute) | M4 | 0 | 6 |  | ⬜ |
 | [oidc](#oidc) | M4 | 0 | 8 |  | ⬜ |
 | [packages](#packages) | M4 | 0 | 27 |  | ⬜ |
@@ -1206,20 +1206,20 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### checks
 
-0/12 done · milestone M4
+12/12 done · milestone M4
 
-- [ ] `POST /repos/{owner}/{repo}/check-runs` — Create a check run
-- [ ] `GET /repos/{owner}/{repo}/check-runs/{check_run_id}` — Get a check run
-- [ ] `PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}` — Update a check run
-- [ ] `GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations` — List check run annotations
-- [ ] `POST /repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest` — Rerequest a check run
-- [ ] `POST /repos/{owner}/{repo}/check-suites` — Create a check suite
-- [ ] `PATCH /repos/{owner}/{repo}/check-suites/preferences` — Update repository preferences for check suites
-- [ ] `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}` — Get a check suite
-- [ ] `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs` — List check runs in a check suite
-- [ ] `POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest` — Rerequest a check suite
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/check-runs` — List check runs for a Git reference
-- [ ] `GET /repos/{owner}/{repo}/commits/{ref}/check-suites` — List check suites for a Git reference
+- [x] ✅ `POST /repos/{owner}/{repo}/check-runs` — Create a check run → `checks.createRun(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-runs/{check_run_id}` — Get a check run → `checks.run(id:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}` — Update a check run → `checks.updateRun(id:in:_:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations` — List check run annotations → `checks.annotations(ofRun:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest` — Rerequest a check run → `checks.rerequestRun(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/check-suites` — Create a check suite → `checks.createSuite(headSHA:in:_:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/check-suites/preferences` — Update repository preferences for check suites → `checks.setSuitePreferences(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}` — Get a check suite → `checks.suite(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs` — List check runs in a check suite → `checks.runs(inSuite:in:_:matching:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest` — Rerequest a check suite → `checks.rerequestSuite(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/check-runs` — List check runs for a Git reference → `checks.runs(for:in:_:matching:appID:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/commits/{ref}/check-suites` — List check suites for a Git reference → `checks.suites(for:in:_:appID:checkName:perPage:)`
 
 ### hosted-compute
 

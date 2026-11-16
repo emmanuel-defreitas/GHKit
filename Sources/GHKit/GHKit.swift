@@ -4,6 +4,7 @@
 @_exported import GHKitActions
 @_exported import GHKitActivity
 @_exported import GHKitApps
+@_exported import GHKitChecks
 @_exported import GHKitCore
 @_exported import GHKitGists
 @_exported import GHKitIssues

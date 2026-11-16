@@ -123,6 +123,11 @@ package func escape(_ segment: String) -> String {
     return segment.addingPercentEncoding(withAllowedCharacters: allowed) ?? segment
 }
 
+/// Percent-encodes each segment of a slash-separated path, such as a file path or a branch like `release/v1`, keeping the slashes.
+package func escapePath(_ path: String) -> String {
+    path.split(separator: "/", omittingEmptySubsequences: false).map { escape(String($0)) }.joined(separator: "/")
+}
+
 /// Percent-encodes what a URL path can't hold, keeping `%XX` escapes that are already there.
 ///
 /// Wrapped endpoints escape each segment with `escape(_:)`. Custom requests may pass raw text.
