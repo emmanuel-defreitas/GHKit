@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · — nothing left to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 624 of 1281 endpoints (48%); 624 of the 1243 GitHub hasn't deprecated (50%)
+**REST progress:** 643 of 1281 endpoints (50%); 643 of the 1243 GitHub hasn't deprecated (51%)
 
 ## Milestones
 
@@ -72,7 +72,7 @@ Totals leave out endpoints GitHub deprecated and ones deferred to another milest
 | [pulls](#pulls) | M3 | 35 | 36 |  | 🚧 |
 | [reactions](#reactions) | M3 | 15 | 15 |  | ✅ |
 | [search](#search) | M3 | 7 | 7 |  | ✅ |
-| [actions](#actions) | M4 | 17 | 200 |  | 🚧 |
+| [actions](#actions) | M4 | 36 | 200 |  | 🚧 |
 | [agent-automations](#agent-automations) | M4 | 0 | 12 |  | ⬜ |
 | [agent-merge](#agent-merge) | M4 | 0 | 3 |  | ⬜ |
 | [agent-tasks](#agent-tasks) | M4 | 0 | 5 |  | ⬜ |
@@ -889,7 +889,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### actions
 
-17/200 done · milestone M4
+36/200 done · milestone M4
 
 - [ ] `GET /enterprises/{enterprise}/actions/cache/retention-limit` — Get GitHub Actions cache retention limit for an enterprise
 - [ ] `PUT /enterprises/{enterprise}/actions/cache/retention-limit` — Set GitHub Actions cache retention limit for an enterprise
@@ -989,10 +989,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PUT /orgs/{org}/actions/variables/{name}/repositories` — Set selected repositories for an organization variable
 - [ ] `PUT /orgs/{org}/actions/variables/{name}/repositories/{repository_id}` — Add selected repository to an organization variable
 - [ ] `DELETE /orgs/{org}/actions/variables/{name}/repositories/{repository_id}` — Remove selected repository from an organization variable
-- [ ] `GET /repos/{owner}/{repo}/actions/artifacts` — List artifacts for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Get an artifact
-- [ ] `DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Delete an artifact
-- [ ] `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}` — Download an artifact
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/artifacts` — List artifacts for a repository → `actions.artifacts(_:_:named:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Get an artifact → `actions.artifact(id:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}` — Delete an artifact → `actions.deleteArtifact(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}` — Download an artifact → `actions.downloadArtifact(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/cache/retention-limit` — Get GitHub Actions cache retention limit for a repository
 - [ ] `PUT /repos/{owner}/{repo}/actions/cache/retention-limit` — Set GitHub Actions cache retention limit for a repository
 - [ ] `GET /repos/{owner}/{repo}/actions/cache/storage-limit` — Get GitHub Actions cache storage limit for a repository
@@ -1003,10 +1003,10 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `DELETE /repos/{owner}/{repo}/actions/caches/{cache_id}` — Delete a GitHub Actions cache for a repository (using a cache ID)
 - [ ] `GET /repos/{owner}/{repo}/actions/concurrency_groups` — List concurrency groups for a repository
 - [ ] `GET /repos/{owner}/{repo}/actions/concurrency_groups/{concurrency_group_name}` — Get a concurrency group for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/jobs/{job_id}` — Get a job for a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs` — Download job logs for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun` — Re-run a job from a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/steps/{step_number}/logs` — Download step logs for a workflow run job
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/jobs/{job_id}` — Get a job for a workflow run → `actions.job(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs` — Download job logs for a workflow run → `actions.jobLogs(id:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun` — Re-run a job from a workflow run → `actions.rerunJob(id:in:_:debugLogging:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/jobs/{job_id}/steps/{step_number}/logs` — Download step logs for a workflow run job → `actions.stepLogs(_:ofJob:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/oidc/customization/sub` — Get the customization template for an OIDC subject claim for a repository
 - [ ] `PUT /repos/{owner}/{repo}/actions/oidc/customization/sub` — Set the customization template for an OIDC subject claim for a repository
 - [ ] `GET /repos/{owner}/{repo}/actions/organization-secrets` — List repository organization secrets
@@ -1046,21 +1046,21 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [x] ✅ `GET /repos/{owner}/{repo}/actions/runs` — List workflow runs for a repository → `actions.runs(_:_:matching:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}` — Get a workflow run → `actions.run(id:attempt:in:_:excludingPullRequests:)`
 - [x] ✅ `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}` — Delete a workflow run → `actions.deleteRun(id:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals` — Get the review history for a workflow run
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals` — Get the review history for a workflow run → `actions.deploymentReviews(ofRun:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve` — Approve a workflow run for a fork pull request → `actions.approveRun(id:in:_:)`
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts` — List workflow run artifacts
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts` — List workflow run artifacts → `actions.artifacts(ofRun:in:_:named:ascending:perPage:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}` — Get a workflow run attempt → `actions.run(id:attempt:in:_:excludingPullRequests:)`
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs` — List jobs for a workflow run attempt
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs` — Download workflow run attempt logs
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs` — List jobs for a workflow run attempt → `actions.jobs(ofRun:attempt:in:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs` — Download workflow run attempt logs → `actions.runLogs(id:attempt:in:_:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel` — Cancel a workflow run → `actions.cancelRun(id:in:_:force:)`
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/concurrency_groups` — List concurrency groups for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule` — Review custom deployment protection rules for a workflow run
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/concurrency_groups` — List concurrency groups for a workflow run → `actions.concurrencyGroups(ofRun:in:_:perPage:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule` — Review custom deployment protection rules for a workflow run → `actions.reviewDeploymentProtectionRule(ofRun:in:_:environment:state:comment:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel` — Force cancel a workflow run → `actions.cancelRun(id:in:_:force:)` with `force: true`
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs` — List jobs for a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Download workflow run logs
-- [ ] `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Delete workflow run logs
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Get pending deployments for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Review pending deployments for a workflow run
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs` — List jobs for a workflow run → `actions.jobs(ofRun:in:_:includingEarlierAttempts:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Download workflow run logs → `actions.runLogs(id:attempt:in:_:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Delete workflow run logs → `actions.deleteRunLogs(id:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Get pending deployments for a workflow run → `actions.pendingDeployments(ofRun:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Review pending deployments for a workflow run → `actions.reviewPendingDeployments(ofRun:in:_:environmentIDs:state:comment:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun` — Re-run a workflow → `actions.rerun(id:in:_:failedJobsOnly:debugLogging:)`
 - [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs` — Re-run failed jobs from a workflow run → `actions.rerun(id:in:_:failedJobsOnly:debugLogging:)` with `failedJobsOnly: true`
 - [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing` — Get workflow run usage → `actions.runUsage(id:in:_:)`

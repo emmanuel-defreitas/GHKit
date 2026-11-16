@@ -2,7 +2,7 @@ import Foundation
 import GHKitCore
 
 extension GitHubClient {
-    /// GitHub Actions: workflows and their runs.
+    /// GitHub Actions: workflows, runs, jobs, logs, and artifacts.
     public var actions: ActionsAPI { ActionsAPI(client: scoped(to: .actions)) }
 }
 

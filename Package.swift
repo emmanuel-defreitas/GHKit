@@ -47,7 +47,7 @@ let package = Package(
         .library(name: "GHKitApps", targets: ["GHKitApps"]),
         // Service information, licenses, .gitignore templates, codes of conduct, emojis, Markdown rendering.
         .library(name: "GHKitMeta", targets: ["GHKitMeta"]),
-        // GitHub Actions workflows and workflow runs.
+        // GitHub Actions workflows, runs, jobs, logs, artifacts, and deployment reviews.
         .library(name: "GHKitActions", targets: ["GHKitActions"]),
         // SwiftUI helpers: an observable session, sign-in views, environment values.
         .library(name: "GHKitUI", targets: ["GHKitUI"]),

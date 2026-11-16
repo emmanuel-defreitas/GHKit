@@ -45,7 +45,7 @@ struct DomainAccessTests {
         #expect(GitHubDomain.gists.access(.write).permissions.map(\.description) == ["gists=write"])
         #expect(GitHubDomain.meta.access(.read).permissions.map(\.description) == ["contents=read", "metadata=read"])
         #expect(GitHubDomain.meta.access(.read).scopes.isEmpty)
-        #expect(GitHubDomain.actions.access(.write).permissions.map(\.description) == ["actions=write", "metadata=read"])
+        #expect(GitHubDomain.actions.access(.write).permissions.map(\.description) == ["actions=write", "deployments=write", "metadata=read"])
         #expect(GitHubDomain.actions.access(.write).scopeList == [.repo])
     }
 
