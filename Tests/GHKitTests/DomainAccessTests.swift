@@ -3,6 +3,7 @@ import Testing
 
 @testable import GHKitActions
 @testable import GHKitActivity
+@testable import GHKitChecks
 @testable import GHKitCore
 @testable import GHKitGists
 @testable import GHKitIssues
@@ -47,6 +48,7 @@ struct DomainAccessTests {
         #expect(GitHubDomain.meta.access(.read).scopes.isEmpty)
         #expect(GitHubDomain.actions.access(.write).permissions.map(\.description) == ["actions=write", "deployments=write", "metadata=read"])
         #expect(GitHubDomain.actions.access(.write).scopeList == [.repo])
+        #expect(GitHubDomain.checks.access(.write).permissions.map(\.description) == ["checks=write", "metadata=read"])
     }
 
     @Test func broaderScopesCoverNarrowerOnes() {
