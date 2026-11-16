@@ -4,7 +4,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 
 **Legend:** ✅ done · 🚧 in progress · ⬜ to do · — nothing left to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 607 of 1281 endpoints (47%); 607 of the 1243 GitHub hasn't deprecated (48%)
+**REST progress:** 624 of 1281 endpoints (48%); 624 of the 1243 GitHub hasn't deprecated (50%)
 
 ## Milestones
 
@@ -13,7 +13,7 @@ Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. G
 | M1 | Authentication & Projects | ✅ Done |
 | M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
 | M3 | Collaboration: issues, pull requests, search, activity | 🚧 In progress |
-| M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
+| M4 | Automation: Actions, checks, packages, app webhooks | 🚧 In progress |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
 | M6 | Platform & admin: Copilot, Codespaces, billing, migrations | ⬜ Planned |
 
@@ -72,7 +72,7 @@ Totals leave out endpoints GitHub deprecated and ones deferred to another milest
 | [pulls](#pulls) | M3 | 35 | 36 |  | 🚧 |
 | [reactions](#reactions) | M3 | 15 | 15 |  | ✅ |
 | [search](#search) | M3 | 7 | 7 |  | ✅ |
-| [actions](#actions) | M4 | 0 | 200 |  | ⬜ |
+| [actions](#actions) | M4 | 17 | 200 |  | 🚧 |
 | [agent-automations](#agent-automations) | M4 | 0 | 12 |  | ⬜ |
 | [agent-merge](#agent-merge) | M4 | 0 | 3 |  | ⬜ |
 | [agent-tasks](#agent-tasks) | M4 | 0 | 5 |  | ⬜ |
@@ -889,7 +889,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### actions
 
-0/200 done · milestone M4
+17/200 done · milestone M4
 
 - [ ] `GET /enterprises/{enterprise}/actions/cache/retention-limit` — Get GitHub Actions cache retention limit for an enterprise
 - [ ] `PUT /enterprises/{enterprise}/actions/cache/retention-limit` — Set GitHub Actions cache retention limit for an enterprise
@@ -1043,27 +1043,27 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `PUT /repos/{owner}/{repo}/actions/runners/{runner_id}/labels` — Set custom labels for a self-hosted runner for a repository
 - [ ] `DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels` — Remove all custom labels from a self-hosted runner for a repository
 - [ ] `DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}` — Remove a custom label from a self-hosted runner for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/runs` — List workflow runs for a repository
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}` — Get a workflow run
-- [ ] `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}` — Delete a workflow run
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs` — List workflow runs for a repository → `actions.runs(_:_:matching:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}` — Get a workflow run → `actions.run(id:attempt:in:_:excludingPullRequests:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}` — Delete a workflow run → `actions.deleteRun(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals` — Get the review history for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve` — Approve a workflow run for a fork pull request
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve` — Approve a workflow run for a fork pull request → `actions.approveRun(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts` — List workflow run artifacts
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}` — Get a workflow run attempt
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}` — Get a workflow run attempt → `actions.run(id:attempt:in:_:excludingPullRequests:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs` — List jobs for a workflow run attempt
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs` — Download workflow run attempt logs
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel` — Cancel a workflow run
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel` — Cancel a workflow run → `actions.cancelRun(id:in:_:force:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/concurrency_groups` — List concurrency groups for a workflow run
 - [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule` — Review custom deployment protection rules for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel` — Force cancel a workflow run
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel` — Force cancel a workflow run → `actions.cancelRun(id:in:_:force:)` with `force: true`
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs` — List jobs for a workflow run
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Download workflow run logs
 - [ ] `DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs` — Delete workflow run logs
 - [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Get pending deployments for a workflow run
 - [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` — Review pending deployments for a workflow run
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun` — Re-run a workflow
-- [ ] `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs` — Re-run failed jobs from a workflow run
-- [ ] `GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing` — Get workflow run usage
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun` — Re-run a workflow → `actions.rerun(id:in:_:failedJobsOnly:debugLogging:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs` — Re-run failed jobs from a workflow run → `actions.rerun(id:in:_:failedJobsOnly:debugLogging:)` with `failedJobsOnly: true`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing` — Get workflow run usage → `actions.runUsage(id:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/actions/secrets` — List repository secrets
 - [ ] `GET /repos/{owner}/{repo}/actions/secrets/public-key` — Get a repository public key
 - [ ] `GET /repos/{owner}/{repo}/actions/secrets/{secret_name}` — Get a repository secret
@@ -1074,13 +1074,13 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 - [ ] `GET /repos/{owner}/{repo}/actions/variables/{name}` — Get a repository variable
 - [ ] `PATCH /repos/{owner}/{repo}/actions/variables/{name}` — Update a repository variable
 - [ ] `DELETE /repos/{owner}/{repo}/actions/variables/{name}` — Delete a repository variable
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows` — List repository workflows
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}` — Get a workflow
-- [ ] `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable` — Disable a workflow
-- [ ] `POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches` — Create a workflow dispatch event
-- [ ] `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable` — Enable a workflow
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs` — List workflow runs for a workflow
-- [ ] `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing` — Get workflow usage
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows` — List repository workflows → `actions.workflows(_:_:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}` — Get a workflow → `actions.workflow(_:in:_:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable` — Disable a workflow → `actions.disableWorkflow(_:in:_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches` — Create a workflow dispatch event → `actions.dispatchWorkflow(_:in:_:ref:inputs:)`
+- [x] ✅ `PUT /repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable` — Enable a workflow → `actions.enableWorkflow(_:in:_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs` — List workflow runs for a workflow → `actions.runs(of:in:_:matching:perPage:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing` — Get workflow usage → `actions.workflowUsage(_:in:_:)`
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/secrets` — List environment secrets
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/secrets/public-key` — Get an environment public key
 - [ ] `GET /repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}` — Get an environment secret
