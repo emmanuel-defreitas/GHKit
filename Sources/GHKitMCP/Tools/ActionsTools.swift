@@ -329,8 +329,11 @@ enum ActionsTools {
     }
 
     /// The last `lines` lines of `text`, with a note when lines were left out.
+    ///
+    /// A final line break ends the last line rather than starting an empty one, and Windows `\r\n` counts as one break.
     static func tail(_ text: String, lines: Int) -> String {
-        let all = text.split(separator: "\n", omittingEmptySubsequences: false)
+        let body = text.last?.isNewline == true ? text.dropLast() : Substring(text)
+        let all = body.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
         guard all.count > lines else { return text }
         return "[Showing the last \(lines) of \(all.count) lines.]\n" + all.suffix(lines).joined(separator: "\n")
     }

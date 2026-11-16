@@ -122,6 +122,12 @@ struct ActionsAndCheckToolsTests {
         #expect(whole == log)
     }
 
+    @Test func aFinalLineBreakDoesNotCountAsALine() {
+        #expect(ActionsTools.tail("first\nERROR: build failed\n", lines: 1) == "[Showing the last 1 of 2 lines.]\nERROR: build failed")
+        #expect(ActionsTools.tail("a\r\nb\r\nc\r\n", lines: 2) == "[Showing the last 2 of 3 lines.]\nb\nc")
+        #expect(ActionsTools.tail("a\nb\n", lines: 2) == "a\nb\n")
+    }
+
     @Test func runListsAreCompact() async throws {
         let (text, isError) = try await callTool(
             "list_workflow_runs", Self.repo, on: MockTransport(.fixture("workflow-run-paginated")))
