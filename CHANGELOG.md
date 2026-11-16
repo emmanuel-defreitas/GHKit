@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-16
+
+### Added
+
+- `GHKitActions`, a new library behind `github.actions`: workflows and workflow runs, jobs, logs, artifacts, and
+  deployment reviews. `GHKit` re-exports it.
+- `GHKitChecks`, a new library behind `github.checks`: check runs, annotations, and check suites. `GHKit`
+  re-exports it.
+- `GHKitMCP` `actions` and `checks` toolsets for the new libraries. Write tools are hidden in read-only toolboxes.
+
+### Fixed
+
+- `GHKitMCP` summary list tools now return one page through `ToolOutput.page`.
+
 ## [0.5.0] - 2026-11-16
 
 ### Added
@@ -195,7 +209,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.5.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.6.0...next
+[0.6.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...0.3.0
