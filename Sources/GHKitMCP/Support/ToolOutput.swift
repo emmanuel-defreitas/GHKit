@@ -27,9 +27,19 @@ struct ToolOutput: Sendable, Equatable {
         _ arguments: ToolArguments,
         _ context: GitHubTool.Context
     ) async throws -> ToolOutput {
+        try await page(list, arguments, context) { $0 }
+    }
+
+    /// One page of a list with each item turned into something smaller, such as a summary, and the cursor for the next one.
+    static func page<Element: Sendable, Item: Encodable>(
+        _ list: Paginated<Element>,
+        _ arguments: ToolArguments,
+        _ context: GitHubTool.Context,
+        map transform: (Element) -> Item
+    ) async throws -> ToolOutput {
         let cursor = try arguments.cursor(for: context.client)
         let page = try await context.client.page(list.request, at: cursor)
-        return try .json(ListPage(items: page.items, nextCursor: page.next?.url.absoluteString))
+        return try .json(ListPage(items: page.items.map(transform), nextCursor: page.next?.url.absoluteString))
     }
 
     /// A whole list GitHub returns in one response, in the same shape as ``page(_:_:_:)`` with no next page.

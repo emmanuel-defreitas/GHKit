@@ -1,8 +1,10 @@
 // `import GHKit` brings in every domain module.
 // Import single modules, such as GHKitIssues, to keep the API surface and builds small.
 
+@_exported import GHKitActions
 @_exported import GHKitActivity
 @_exported import GHKitApps
+@_exported import GHKitChecks
 @_exported import GHKitCore
 @_exported import GHKitGists
 @_exported import GHKitIssues
