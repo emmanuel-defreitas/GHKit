@@ -80,9 +80,7 @@ enum ActionsTools {
                 try arguments.optionalString("workflow") == nil
                 ? actions.runs(owner, repo, matching: filter, perPage: try arguments.perPage)
                 : actions.runs(of: try workflow(arguments), in: owner, repo, matching: filter, perPage: try arguments.perPage)
-            let cursor = try arguments.cursor(for: context.client)
-            let page = try await context.client.page(list.request, at: cursor)
-            return try .json(ListPage(items: page.items.map(RunSummary.init), nextCursor: page.next?.url.absoluteString))
+            return try await .page(list, arguments, context, map: RunSummary.init)
         },
         GitHubTool(
             "get_workflow_run",
