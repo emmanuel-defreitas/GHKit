@@ -6,6 +6,25 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-16
+
+### Added
+
+- Git data in `GHKitRepositories`: `github.repositories.git(_:_:)` reads and creates blobs, trees, commits,
+  references, and annotated tags, and lists, updates, and deletes references.
+- `GHKitMeta`, a new library behind `github.meta`: API root and service information, supported API versions,
+  Zen and Octocat, emojis, licenses, `.gitignore` templates, codes of conduct, and Markdown rendering (with
+  repository context for GFM). `GHKit` re-exports it.
+- `GHKitMCP` `git` toolset: get trees, blobs, commits, references, and tags; create blobs, trees, commits,
+  references, and tags; update and delete references. Write tools are hidden in read-only toolboxes.
+- `GHKitMCP` `meta` toolset: `render_markdown`, licenses, `.gitignore` templates, codes of conduct,
+  `get_github_meta`, and `list_api_versions`.
+
+### Fixed
+
+- Markdown rendering with a repository context now routes the request's credentials to that repository, and the
+  Git tree tools document their file modes.
+
 ## [0.4.0] - 2026-11-05
 
 ### Added
@@ -176,7 +195,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 - Redirects to another host, such as asset downloads, no longer carry the `Authorization` header.
 
-[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.4.0...next
+[Unreleased]: https://github.com/emmanuel-defreitas/GHKit/compare/0.5.0...next
+[0.5.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/emmanuel-defreitas/GHKit/compare/0.1.1...0.2.0
