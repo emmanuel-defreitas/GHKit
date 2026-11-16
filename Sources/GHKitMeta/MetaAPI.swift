@@ -16,13 +16,16 @@ extension GitHubClient {
 public struct MetaAPI: Sendable {
     let client: GitHubClient
 
-    private func text(_ method: HTTPMethod, _ path: String, accept: String, query: [URLQueryItem] = [], body: RequestBody? = nil)
-        async throws(GitHubError) -> String
-    {
-        try await client.value(
-            GitHubRequest(method: method, target: .path(path), query: query, headers: ["Accept": accept], body: body) {
-                String(decoding: $0, as: UTF8.self)
-            })
+    /// - Parameter owner: The account to pick credentials for, when the path has none.
+    private func text(
+        _ method: HTTPMethod, _ path: String, accept: String, query: [URLQueryItem] = [], body: RequestBody? = nil,
+        owner: String? = nil
+    ) async throws(GitHubError) -> String {
+        var request = GitHubRequest(method: method, target: .path(path), query: query, headers: ["Accept": accept], body: body) {
+            String(decoding: $0, as: UTF8.self)
+        }
+        request.routingOwner = owner
+        return try await client.value(request)
     }
 
     // MARK: Service
@@ -114,7 +117,8 @@ public struct MetaAPI: Sendable {
             let context: String?
         }
         let body = Body(text: text, mode: mode, context: context.map { "\($0.owner)/\($0.name)" })
-        return try await self.text(.post, "/markdown", accept: "text/html", body: .json(body))
+        // A private context repository needs its owner's credentials, and the path doesn't name the owner.
+        return try await self.text(.post, "/markdown", accept: "text/html", body: .json(body), owner: context?.owner)
     }
 
     /// Markdown rendered as HTML, sending the text as is, like a `README` file. `POST /markdown/raw`

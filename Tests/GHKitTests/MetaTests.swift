@@ -107,4 +107,13 @@ struct MetaTests {
         #expect(transport.requests[2].value(forHTTPHeaderField: "Content-Type") == "text/plain")
         #expect(transport.requests[2].httpBody.map { String(decoding: $0, as: UTF8.self) } == "# Title")
     }
+
+    @Test func markdownContextPicksTheOwnersCredentials() async throws {
+        let transport = MockTransport(MockResponse(body: Data("<p>Hi</p>".utf8)))
+        let meta = makeClient(transport, authenticator: .routed(default: .token("main"), owners: ["acme": .token("acme")])).meta
+        _ = try await meta.renderMarkdown("Fixes #1", mode: .gfm, context: ("acme", "app"))
+        _ = try await meta.renderMarkdown("Hi")
+        let tokens = transport.requests.map { $0.value(forHTTPHeaderField: "Authorization") }
+        #expect(tokens == ["Bearer acme", "Bearer main"])
+    }
 }

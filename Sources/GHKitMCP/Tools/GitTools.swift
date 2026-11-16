@@ -104,9 +104,10 @@ enum GitTools {
                             [
                                 "path": Schema.string("The file's path, such as `docs/setup.md`."),
                                 "content": Schema.string("The file's new text."),
-                                "sha": Schema.string("An existing blob or tree SHA, instead of `content`."),
+                                "sha": Schema.string("An existing blob, tree, or commit SHA, instead of `content`."),
                                 "delete": Schema.boolean("Removes the path from `base`."),
-                                "mode": Schema.oneOf(modes, "Defaults to `file`, or `directory` for a tree SHA."),
+                                "mode": Schema.oneOf(
+                                    modes, "Defaults to `file`. Set `directory` for a tree SHA and `submodule` for a commit SHA."),
                             ],
                             required: ["path"]
                         ),
