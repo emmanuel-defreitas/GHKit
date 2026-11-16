@@ -91,7 +91,7 @@ targets: [
 | `GHKit` | Every domain below, in one import. No UI. |
 | `GHKitCore` | The client, authentication, pagination, GraphQL, custom requests, and the models the domains share. |
 | `GHKitUsers` | `github.users`: profiles, emails, keys, followers. |
-| `GHKitRepositories` | `github.repositories` and `github.rulesets`: contents, branches, commits, releases, deployments, Pages, webhooks. |
+| `GHKitRepositories` | `github.repositories` and `github.rulesets`: contents, branches, commits, releases, deployments, Pages, webhooks, and Git data (`github.repositories.git(_:_:)`). |
 | `GHKitIssues` | `github.issues` and `github.reactions`: comments, labels, milestones, timelines, sub-issues. |
 | `GHKitPullRequests` | `github.pullRequests`: reviews, review comments, merging. |
 | `GHKitOrganizations` | `github.organizations` and `github.teams`. |
@@ -100,6 +100,7 @@ targets: [
 | `GHKitGists` | `github.gists`. |
 | `GHKitSearch` | `github.search`. |
 | `GHKitApps` | `github.apps`: GitHub App and OAuth app management. |
+| `GHKitMeta` | `github.meta`: service information, licenses, `.gitignore` templates, codes of conduct, emojis, Markdown rendering. |
 | `GHKitUI` | `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value. |
 | `GHKitMCP` | `GitHubToolbox`: GitHub tools for a Model Context Protocol server. Adds the [MCP Swift SDK](https://github.com/modelcontextprotocol/swift-sdk). |
 

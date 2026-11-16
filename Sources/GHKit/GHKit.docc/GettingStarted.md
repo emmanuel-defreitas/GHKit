@@ -27,7 +27,7 @@ targets: [
 |---|---|
 | `GHKit` | Every domain module, in one import. No UI. |
 | `GHKitCore` | ``GitHubClient``, authentication, pagination, GraphQL, custom requests, and shared models. |
-| `GHKitUsers`, `GHKitRepositories`, `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`, `GHKitProjects`, `GHKitActivity`, `GHKitGists`, `GHKitSearch`, `GHKitApps` | One part of GitHub each. Importing one adds its API to the client, such as `github.issues`. |
+| `GHKitUsers`, `GHKitRepositories`, `GHKitIssues`, `GHKitPullRequests`, `GHKitOrganizations`, `GHKitProjects`, `GHKitActivity`, `GHKitGists`, `GHKitSearch`, `GHKitApps`, `GHKitMeta` | One part of GitHub each. Importing one adds its API to the client, such as `github.issues`. |
 | `GHKitUI` | An observable sign-in session, sign-in views, and the `\.gitHubClient` environment value. |
 
 Each domain module brings `GHKitCore` with it. This reference documents every module under GHKit,

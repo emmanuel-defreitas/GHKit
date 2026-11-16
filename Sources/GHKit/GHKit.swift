@@ -6,6 +6,7 @@
 @_exported import GHKitCore
 @_exported import GHKitGists
 @_exported import GHKitIssues
+@_exported import GHKitMeta
 @_exported import GHKitOrganizations
 @_exported import GHKitProjects
 @_exported import GHKitPullRequests

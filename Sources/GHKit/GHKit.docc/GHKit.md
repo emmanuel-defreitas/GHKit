@@ -186,6 +186,32 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``GistCommit``
 - ``GistComment``
 
+### Git data
+
+- ``GitDatabaseAPI``
+- ``GitBlob``
+- ``GitTree``
+- ``NewGitTreeEntry``
+- ``GitCommit``
+- ``NewGitCommit``
+- ``GitActor``
+- ``GitReference``
+- ``GitObject``
+- ``GitTag``
+- ``NewGitTag``
+
+### Service information and rendering
+
+- ``MetaAPI``
+- ``APIRoot``
+- ``GitHubMeta``
+- ``License``
+- ``LicenseSummary``
+- ``GitignoreTemplate``
+- ``CodeOfConduct``
+- ``CodeOfConductSummary``
+- ``MarkdownMode``
+
 ### Paging through lists
 
 - <doc:Pagination>

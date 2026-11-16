@@ -2,16 +2,16 @@
 
 Tracks every GitHub REST endpoint, plus the GraphQL-only features GHKit wraps. Generated from GitHub's [OpenAPI description](https://github.com/github/rest-api-description) (version 1.1.4) on 2026-11-05 by `Scripts/generate_todo.py`.
 
-**Legend:** ✅ done · 🚧 in progress · ⬜ to do · ~~struck~~ deprecated by GitHub
+**Legend:** ✅ done · 🚧 in progress · ⬜ to do · — nothing left to do · ~~struck~~ deprecated by GitHub
 
-**REST progress:** 580 of 1259 endpoints (46%)
+**REST progress:** 607 of 1259 endpoints (48%); 607 of the 1221 GitHub hasn't deprecated (49%)
 
 ## Milestones
 
 | Milestone | Scope | Status |
 |---|---|---|
 | M1 | Authentication & Projects | ✅ Done |
-| M2 | Core resources: users, organizations, teams, repositories | 🚧 In progress |
+| M2 | Core resources: users, organizations, teams, repositories | ✅ Done |
 | M3 | Collaboration: issues, pull requests, search, activity | ✅ Done |
 | M4 | Automation: Actions, checks, packages, app webhooks | ⬜ Planned |
 | M5 | Security: code scanning, secret scanning, Dependabot | ⬜ Planned |
@@ -49,54 +49,56 @@ Classic Projects (v1) aren't covered: GitHub removed them from the REST API.
 
 ## Categories
 
-| Category | Milestone | Done | Total | Status |
-|---|---|---:|---:|---|
-| [projects](#projects) | M1 | 26 | 26 | ✅ |
-| [rate-limit](#rate-limit) | M1 | 1 | 1 | ✅ |
-| [codes-of-conduct](#codes-of-conduct) | M2 | 0 | 2 | ⬜ |
-| [emojis](#emojis) | M2 | 0 | 1 | ⬜ |
-| [git](#git) | M2 | 0 | 13 | ⬜ |
-| [gitignore](#gitignore) | M2 | 0 | 2 | ⬜ |
-| [licenses](#licenses) | M2 | 1 | 3 | 🚧 |
-| [markdown](#markdown) | M2 | 0 | 2 | ⬜ |
-| [meta](#meta) | M2 | 0 | 5 | ⬜ |
-| [orgs](#orgs) | M2 | 99 | 116 | 🚧 |
-| [repos](#repos) | M2 | 201 | 203 | 🚧 |
-| [teams](#teams) | M2 | 16 | 32 | 🚧 |
-| [users](#users) | M2 | 42 | 47 | 🚧 |
-| [activity](#activity) | M3 | 34 | 34 | ✅ |
-| [gists](#gists) | M3 | 20 | 20 | ✅ |
-| [issues](#issues) | M3 | 66 | 66 | ✅ |
-| [pulls](#pulls) | M3 | 35 | 35 | ✅ |
-| [reactions](#reactions) | M3 | 15 | 15 | ✅ |
-| [search](#search) | M3 | 7 | 7 | ✅ |
-| [actions](#actions) | M4 | 0 | 200 | ⬜ |
-| [agent-automations](#agent-automations) | M4 | 0 | 12 | ⬜ |
-| [agent-merge](#agent-merge) | M4 | 0 | 3 | ⬜ |
-| [agent-tasks](#agent-tasks) | M4 | 0 | 5 | ⬜ |
-| [agents](#agents) | M4 | 0 | 30 | ⬜ |
-| [apps](#apps) | M1 (auth) · M4 (rest) | 17 | 37 | 🚧 |
-| [checks](#checks) | M4 | 0 | 12 | ⬜ |
-| [hosted-compute](#hosted-compute) | M4 | 0 | 6 | ⬜ |
-| [oidc](#oidc) | M4 | 0 | 8 | ⬜ |
-| [packages](#packages) | M4 | 0 | 27 | ⬜ |
-| [private-registries](#private-registries) | M4 | 0 | 6 | ⬜ |
-| [campaigns](#campaigns) | M5 | 0 | 5 | ⬜ |
-| [code-quality](#code-quality) | M5 | 0 | 4 | ⬜ |
-| [code-scanning](#code-scanning) | M5 | 0 | 25 | ⬜ |
-| [code-security](#code-security) | M5 | 0 | 20 | ⬜ |
-| [credentials](#credentials) | M5 | 0 | 1 | ⬜ |
-| [dependabot](#dependabot) | M5 | 0 | 25 | ⬜ |
-| [dependency-graph](#dependency-graph) | M5 | 0 | 5 | ⬜ |
-| [secret-scanning](#secret-scanning) | M5 | 0 | 17 | ⬜ |
-| [security-advisories](#security-advisories) | M5 | 0 | 14 | ⬜ |
-| [billing](#billing) | M6 | 0 | 13 | ⬜ |
-| [classroom](#classroom) | M6 | 0 | 6 | ⬜ |
-| [codespaces](#codespaces) | M6 | 0 | 48 | ⬜ |
-| [copilot](#copilot) | M6 | 0 | 34 | ⬜ |
-| [copilot-spaces](#copilot-spaces) | M6 | 0 | 28 | ⬜ |
-| [interactions](#interactions) | M6 | 0 | 16 | ⬜ |
-| [migrations](#migrations) | M6 | 0 | 22 | ⬜ |
+Totals leave out endpoints GitHub deprecated and ones deferred to another milestone.
+
+| Category | Milestone | Done | Total | Not counted | Status |
+|---|---|---:|---:|---:|---|
+| [projects](#projects) | M1 | 26 | 26 |  | ✅ |
+| [rate-limit](#rate-limit) | M1 | 1 | 1 |  | ✅ |
+| [codes-of-conduct](#codes-of-conduct) | M2 | 2 | 2 |  | ✅ |
+| [emojis](#emojis) | M2 | 1 | 1 |  | ✅ |
+| [git](#git) | M2 | 13 | 13 |  | ✅ |
+| [gitignore](#gitignore) | M2 | 2 | 2 |  | ✅ |
+| [licenses](#licenses) | M2 | 3 | 3 |  | ✅ |
+| [markdown](#markdown) | M2 | 2 | 2 |  | ✅ |
+| [meta](#meta) | M2 | 5 | 5 |  | ✅ |
+| [orgs](#orgs) | M2 | 99 | 99 | 17 | ✅ |
+| [repos](#repos) | M2 | 201 | 201 | 2 | ✅ |
+| [teams](#teams) | M2 | 16 | 16 | 16 | ✅ |
+| [users](#users) | M2 | 42 | 42 | 5 | ✅ |
+| [activity](#activity) | M3 | 34 | 34 |  | ✅ |
+| [gists](#gists) | M3 | 20 | 20 |  | ✅ |
+| [issues](#issues) | M3 | 66 | 66 |  | ✅ |
+| [pulls](#pulls) | M3 | 35 | 35 |  | ✅ |
+| [reactions](#reactions) | M3 | 15 | 15 |  | ✅ |
+| [search](#search) | M3 | 7 | 7 |  | ✅ |
+| [actions](#actions) | M4 | 0 | 200 |  | ⬜ |
+| [agent-automations](#agent-automations) | M4 | 0 | 12 |  | ⬜ |
+| [agent-merge](#agent-merge) | M4 | 0 | 3 |  | ⬜ |
+| [agent-tasks](#agent-tasks) | M4 | 0 | 5 |  | ⬜ |
+| [agents](#agents) | M4 | 0 | 30 |  | ⬜ |
+| [apps](#apps) | M1 (auth) · M4 (rest) | 17 | 37 |  | 🚧 |
+| [checks](#checks) | M4 | 0 | 12 |  | ⬜ |
+| [hosted-compute](#hosted-compute) | M4 | 0 | 6 |  | ⬜ |
+| [oidc](#oidc) | M4 | 0 | 8 |  | ⬜ |
+| [packages](#packages) | M4 | 0 | 27 |  | ⬜ |
+| [private-registries](#private-registries) | M4 | 0 | 6 |  | ⬜ |
+| [campaigns](#campaigns) | M5 | 0 | 5 |  | ⬜ |
+| [code-quality](#code-quality) | M5 | 0 | 4 |  | ⬜ |
+| [code-scanning](#code-scanning) | M5 | 0 | 25 |  | ⬜ |
+| [code-security](#code-security) | M5 | 0 | 20 |  | ⬜ |
+| [credentials](#credentials) | M5 | 0 | 1 |  | ⬜ |
+| [dependabot](#dependabot) | M5 | 0 | 25 |  | ⬜ |
+| [dependency-graph](#dependency-graph) | M5 | 0 | 4 | 1 | ⬜ |
+| [secret-scanning](#secret-scanning) | M5 | 0 | 17 |  | ⬜ |
+| [security-advisories](#security-advisories) | M5 | 0 | 14 |  | ⬜ |
+| [billing](#billing) | M6 | 0 | 13 |  | ⬜ |
+| [classroom](#classroom) | M6 | 0 | 0 | 6 | — |
+| [codespaces](#codespaces) | M6 | 0 | 45 | 3 | ⬜ |
+| [copilot](#copilot) | M6 | 0 | 34 |  | ⬜ |
+| [copilot-spaces](#copilot-spaces) | M6 | 0 | 28 |  | ⬜ |
+| [interactions](#interactions) | M6 | 0 | 16 |  | ⬜ |
+| [migrations](#migrations) | M6 | 0 | 14 | 8 | ⬜ |
 
 ## GraphQL-only features
 
@@ -189,70 +191,70 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### codes-of-conduct
 
-0/2 done · milestone M2
+2/2 done · milestone M2
 
-- [ ] `GET /codes_of_conduct` — Get all codes of conduct
-- [ ] `GET /codes_of_conduct/{key}` — Get a code of conduct
+- [x] ✅ `GET /codes_of_conduct` — Get all codes of conduct → `meta.codesOfConduct()`
+- [x] ✅ `GET /codes_of_conduct/{key}` — Get a code of conduct → `meta.codeOfConduct(_:)`
 
 ### emojis
 
-0/1 done · milestone M2
+1/1 done · milestone M2
 
-- [ ] `GET /emojis` — Get emojis
+- [x] ✅ `GET /emojis` — Get emojis → `meta.emojis()`
 
 ### git
 
-0/13 done · milestone M2
+13/13 done · milestone M2
 
-- [ ] `POST /repos/{owner}/{repo}/git/blobs` — Create a blob
-- [ ] `GET /repos/{owner}/{repo}/git/blobs/{file_sha}` — Get a blob
-- [ ] `POST /repos/{owner}/{repo}/git/commits` — Create a commit
-- [ ] `GET /repos/{owner}/{repo}/git/commits/{commit_sha}` — Get a commit object
-- [ ] `GET /repos/{owner}/{repo}/git/matching-refs/{ref}` — List matching references
-- [ ] `GET /repos/{owner}/{repo}/git/ref/{ref}` — Get a reference
-- [ ] `POST /repos/{owner}/{repo}/git/refs` — Create a reference
-- [ ] `PATCH /repos/{owner}/{repo}/git/refs/{ref}` — Update a reference
-- [ ] `DELETE /repos/{owner}/{repo}/git/refs/{ref}` — Delete a reference
-- [ ] `POST /repos/{owner}/{repo}/git/tags` — Create a tag object
-- [ ] `GET /repos/{owner}/{repo}/git/tags/{tag_sha}` — Get a tag
-- [ ] `POST /repos/{owner}/{repo}/git/trees` — Create a tree
-- [ ] `GET /repos/{owner}/{repo}/git/trees/{tree_sha}` — Get a tree
+- [x] ✅ `POST /repos/{owner}/{repo}/git/blobs` — Create a blob → `repositories.git(_:_:).createBlob(_:)`, `createBlob(text:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/blobs/{file_sha}` — Get a blob → `repositories.git(_:_:).blob(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/commits` — Create a commit → `repositories.git(_:_:).createCommit(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/commits/{commit_sha}` — Get a commit object → `repositories.git(_:_:).commit(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/matching-refs/{ref}` — List matching references → `repositories.git(_:_:).matchingRefs(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/ref/{ref}` — Get a reference → `repositories.git(_:_:).ref(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/refs` — Create a reference → `repositories.git(_:_:).createRef(_:at:)`
+- [x] ✅ `PATCH /repos/{owner}/{repo}/git/refs/{ref}` — Update a reference → `repositories.git(_:_:).updateRef(_:to:force:)`
+- [x] ✅ `DELETE /repos/{owner}/{repo}/git/refs/{ref}` — Delete a reference → `repositories.git(_:_:).deleteRef(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/tags` — Create a tag object → `repositories.git(_:_:).createTag(_:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/tags/{tag_sha}` — Get a tag → `repositories.git(_:_:).tag(_:)`
+- [x] ✅ `POST /repos/{owner}/{repo}/git/trees` — Create a tree → `repositories.git(_:_:).createTree(_:base:)`
+- [x] ✅ `GET /repos/{owner}/{repo}/git/trees/{tree_sha}` — Get a tree → `repositories.git(_:_:).tree(_:recursive:)`
 
 ### gitignore
 
-0/2 done · milestone M2
+2/2 done · milestone M2
 
-- [ ] `GET /gitignore/templates` — Get all gitignore templates
-- [ ] `GET /gitignore/templates/{name}` — Get a gitignore template
+- [x] ✅ `GET /gitignore/templates` — Get all gitignore templates → `meta.gitignoreTemplates()`
+- [x] ✅ `GET /gitignore/templates/{name}` — Get a gitignore template → `meta.gitignoreTemplate(_:)`
 
 ### licenses
 
-1/3 done · milestone M2
+3/3 done · milestone M2
 
-- [ ] `GET /licenses` — Get all commonly used licenses
-- [ ] `GET /licenses/{license}` — Get a license
+- [x] ✅ `GET /licenses` — Get all commonly used licenses → `meta.licenses(featured:perPage:)`
+- [x] ✅ `GET /licenses/{license}` — Get a license → `meta.license(_:)`
 - [x] ✅ `GET /repos/{owner}/{repo}/license` — Get the license for a repository → `repositories.license(_:_:ref:)`
 
 ### markdown
 
-0/2 done · milestone M2
+2/2 done · milestone M2
 
-- [ ] `POST /markdown` — Render a Markdown document
-- [ ] `POST /markdown/raw` — Render a Markdown document in raw mode
+- [x] ✅ `POST /markdown` — Render a Markdown document → `meta.renderMarkdown(_:mode:context:)`
+- [x] ✅ `POST /markdown/raw` — Render a Markdown document in raw mode → `meta.renderMarkdownRaw(_:)`
 
 ### meta
 
-0/5 done · milestone M2
+5/5 done · milestone M2
 
-- [ ] `GET /` — GitHub API Root
-- [ ] `GET /meta` — Get GitHub meta information
-- [ ] `GET /octocat` — Get Octocat
-- [ ] `GET /versions` — Get all API versions
-- [ ] `GET /zen` — Get the Zen of GitHub
+- [x] ✅ `GET /` — GitHub API Root → `meta.root()`
+- [x] ✅ `GET /meta` — Get GitHub meta information → `meta.overview()`
+- [x] ✅ `GET /octocat` — Get Octocat → `meta.octocat(saying:)`
+- [x] ✅ `GET /versions` — Get all API versions → `meta.versions()`
+- [x] ✅ `GET /zen` — Get the Zen of GitHub → `meta.zen()`
 
 ### orgs
 
-99/116 done · milestone M2
+99/99 done · milestone M2 · not counted: 4 deprecated, 13 deferred
 
 - [x] ✅ `GET /organizations` — List organizations → `organizations.all(since:perPage:)`
 - [x] ✅ `GET /orgs/{org}` — Get an organization → `organizations.organization(_:)`
@@ -373,7 +375,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### repos
 
-201/203 done · milestone M2
+201/201 done · milestone M2 · not counted: 2 deferred
 
 - [x] ✅ `GET /orgs/{org}/repos` — List organization repositories → `repositories.list(in:type:sort:ascending:perPage:)`
 - [x] ✅ `POST /orgs/{org}/repos` — Create an organization repository → `repositories.create(_:in:)`
@@ -581,7 +583,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### teams
 
-16/32 done · milestone M2
+16/16 done · milestone M2 · not counted: 16 deprecated
 
 - [x] ✅ `GET /orgs/{org}/teams` — List teams → `teams.list(in:type:perPage:)`
 - [x] ✅ `POST /orgs/{org}/teams` — Create a team → `teams.create(_:in:)`
@@ -618,7 +620,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### users
 
-42/47 done · milestone M2
+42/42 done · milestone M2 · not counted: 5 deferred
 
 - [x] ✅ `GET /user` — Get the authenticated user → `github.users.authenticated()`, `github.verifyAuthentication()`
 - [x] ✅ `PATCH /user` — Update the authenticated user → `users.updateProfile(_:)`
@@ -1388,7 +1390,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### dependency-graph
 
-0/5 done · milestone M5
+0/4 done · milestone M5 · not counted: 1 deprecated
 
 - [ ] `GET /repos/{owner}/{repo}/dependency-graph/compare/{basehead}` — Get a diff of the dependencies between commits
 - [ ] ~~`GET /repos/{owner}/{repo}/dependency-graph/sbom` — Export a software bill of materials (SBOM) for a repository.~~
@@ -1457,7 +1459,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### classroom
 
-0/6 done · milestone M6
+0/0 done · milestone M6 · not counted: 6 deprecated
 
 - [ ] ~~`GET /assignments/{assignment_id}` — Closed - Get an assignment~~
 - [ ] ~~`GET /assignments/{assignment_id}/accepted_assignments` — Closed - List accepted assignments for an assignment~~
@@ -1468,7 +1470,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### codespaces
 
-0/48 done · milestone M6
+0/45 done · milestone M6 · not counted: 3 deprecated
 
 - [ ] `GET /orgs/{org}/codespaces` — List codespaces for the organization
 - [ ] ~~`PUT /orgs/{org}/codespaces/access` — Manage access control for organization codespaces~~
@@ -1614,7 +1616,7 @@ GitHub offers these only through GraphQL. GHKit wraps them behind the same `Proj
 
 ### migrations
 
-0/22 done · milestone M6
+0/14 done · milestone M6 · not counted: 8 deprecated
 
 - [ ] `GET /orgs/{org}/migrations` — List organization migrations
 - [ ] `POST /orgs/{org}/migrations` — Start an organization migration
