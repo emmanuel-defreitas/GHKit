@@ -47,9 +47,7 @@ enum CheckTools {
             let list = context.client.checks.runs(
                 for: try arguments.string("ref"), in: owner, repo, matching: filter, appID: try arguments.optionalInt("app_id"),
                 perPage: try arguments.perPage)
-            let cursor = try arguments.cursor(for: context.client)
-            let page = try await context.client.page(list.request, at: cursor)
-            return try .json(ListPage(items: page.items.map(CheckRunSummary.init), nextCursor: page.next?.url.absoluteString))
+            return try await .page(list, arguments, context, map: CheckRunSummary.init)
         },
         GitHubTool(
             "get_check_run",
@@ -89,9 +87,7 @@ enum CheckTools {
             let list = context.client.checks.suites(
                 for: try arguments.string("ref"), in: owner, repo, appID: try arguments.optionalInt("app_id"),
                 checkName: try arguments.optionalString("check_name"), perPage: try arguments.perPage)
-            let cursor = try arguments.cursor(for: context.client)
-            let page = try await context.client.page(list.request, at: cursor)
-            return try .json(ListPage(items: page.items.map(CheckSuiteSummary.init), nextCursor: page.next?.url.absoluteString))
+            return try await .page(list, arguments, context, map: CheckSuiteSummary.init)
         },
     ]
 
