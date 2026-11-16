@@ -224,6 +224,13 @@ GHKit has no UI. For an observable sign-in session and ready-made SwiftUI views,
 - ``WorkflowUsage``
 - ``WorkflowRunUsage``
 - ``BillableTime``
+- ``Job``
+- ``Artifact``
+- ``DeploymentReview``
+- ``DeploymentReviewState``
+- ``PendingDeployment``
+- ``EnvironmentReference``
+- ``ConcurrencyGroup``
 - ``CheckStatus``
 - ``CheckConclusion``
 - ``PullRequestReference``

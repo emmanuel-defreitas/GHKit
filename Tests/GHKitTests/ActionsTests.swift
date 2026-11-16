@@ -123,4 +123,126 @@ struct ActionsTests {
         _ = try await github.actions.workflow("ci.yml", in: "o", "r")
         #expect(transport.requests.first?.value(forHTTPHeaderField: "Authorization") == "Bearer ci")
     }
+
+    @Test func jobAndArtifactModelsDecode() throws {
+        let job = try decoder.decode(Job.self, from: loadFixture("job"))
+        #expect(job.status == .completed)
+        #expect(job.conclusion == .success)
+        #expect(job.steps?.map(\.number) == [1, 2, 3, 4, 5, 6, 7, 8, 16, 17])
+        #expect(job.labels == ["self-hosted", "foo", "bar"])
+        #expect(job.createdAt == nil)
+
+        let artifact = try decoder.decode(Artifact.self, from: loadFixture("artifact"))
+        #expect(artifact.sizeInBytes == 556)
+        #expect(!artifact.isExpired)
+        #expect(artifact.workflowRun?.headBranch == "main")
+
+        let reviews = try decoder.decode([DeploymentReview].self, from: loadFixture("environment-approvals-items"))
+        #expect(reviews.first?.state == .approved)
+        #expect(reviews.first?.environments.first?.name == "staging")
+
+        let pending = try decoder.decode([PendingDeployment].self, from: loadFixture("pending-deployment-items"))
+        #expect(pending.first?.environment.name == "staging")
+        guard case .user(let user)? = pending.first?.reviewers.first, case .team(let team)? = pending.first?.reviewers.last else {
+            Issue.record("Expected a user and a team reviewer")
+            return
+        }
+        #expect(user.login == "octocat")
+        #expect(team.slug == "justice-league")
+    }
+
+    @Test func jobAndLogRequests() async throws {
+        let transport = MockTransport { request, _ in
+            switch request.route {
+            case let route where route.hasSuffix("/jobs"): .fixture("job-paginated")
+            case let route where route.hasSuffix("/logs") && route.hasPrefix("GET /repos/o/r/actions/jobs"): .json("2024 Step 1\n")
+            case let route where route.hasSuffix("/logs") && route.hasPrefix("GET "): MockResponse(body: Data("PK".utf8))
+            case let route where route.hasPrefix("DELETE "): .noContent()
+            case let route where route.hasSuffix("/rerun"): .json("{}", status: 201)
+            default: .fixture("job")
+            }
+        }
+        let actions = makeClient(transport).actions
+        #expect(try await actions.jobs(ofRun: 30, in: "o", "r").collect().count == 1)
+        _ = try await actions.jobs(ofRun: 30, in: "o", "r", includingEarlierAttempts: true, perPage: 5).firstPage()
+        _ = try await actions.jobs(ofRun: 30, attempt: 2, in: "o", "r").firstPage()
+        _ = try await actions.job(id: 9, in: "o", "r")
+        try await actions.rerunJob(id: 9, in: "o", "r", debugLogging: true)
+        #expect(try await actions.jobLogs(id: 9, in: "o", "r") == "2024 Step 1\n")
+        _ = try await actions.stepLogs(2, ofJob: 9, in: "o", "r")
+        #expect(try await actions.runLogs(id: 30, in: "o", "r") == Data("PK".utf8))
+        _ = try await actions.runLogs(id: 30, attempt: 1, in: "o", "r")
+        try await actions.deleteRunLogs(id: 30, in: "o", "r")
+
+        #expect(
+            transport.requests.map(\.route) == [
+                "GET /repos/o/r/actions/runs/30/jobs", "GET /repos/o/r/actions/runs/30/jobs", "GET /repos/o/r/actions/runs/30/attempts/2/jobs",
+                "GET /repos/o/r/actions/jobs/9", "POST /repos/o/r/actions/jobs/9/rerun", "GET /repos/o/r/actions/jobs/9/logs",
+                "GET /repos/o/r/actions/jobs/9/steps/2/logs", "GET /repos/o/r/actions/runs/30/logs",
+                "GET /repos/o/r/actions/runs/30/attempts/1/logs", "DELETE /repos/o/r/actions/runs/30/logs",
+            ])
+        #expect(transport.requests[0].queryItems == ["per_page": "100"])
+        #expect(transport.requests[1].queryItems == ["filter": "all", "per_page": "5"])
+        #expect(transport.requests[4].jsonBody == ["enable_debug_logging": true])
+    }
+
+    @Test func artifactRequests() async throws {
+        let transport = MockTransport { request, _ in
+            switch request.route {
+            case let route where route.hasSuffix("/artifacts"): .fixture("artifact-paginated")
+            case "GET /repos/o/r/actions/artifacts/11/zip": MockResponse(body: Data("PK".utf8))
+            case "DELETE /repos/o/r/actions/artifacts/11": .noContent()
+            default: .fixture("artifact")
+            }
+        }
+        let actions = makeClient(transport).actions
+        #expect(try await actions.artifacts("o", "r").collect().count == 2)
+        _ = try await actions.artifacts("o", "r", named: "coverage").firstPage()
+        _ = try await actions.artifacts(ofRun: 30, in: "o", "r", named: "dist", ascending: true).firstPage()
+        _ = try await actions.artifact(id: 11, in: "o", "r")
+        try await actions.deleteArtifact(id: 11, in: "o", "r")
+        #expect(try await actions.downloadArtifact(id: 11, in: "o", "r") == Data("PK".utf8))
+
+        #expect(
+            transport.requests.map(\.route) == [
+                "GET /repos/o/r/actions/artifacts", "GET /repos/o/r/actions/artifacts", "GET /repos/o/r/actions/runs/30/artifacts",
+                "GET /repos/o/r/actions/artifacts/11", "DELETE /repos/o/r/actions/artifacts/11", "GET /repos/o/r/actions/artifacts/11/zip",
+            ])
+        #expect(transport.requests[1].queryItems == ["name": "coverage", "per_page": "100"])
+        #expect(transport.requests[2].queryItems == ["name": "dist", "direction": "asc", "per_page": "100"])
+    }
+
+    @Test func deploymentReviewRequests() async throws {
+        let transport = MockTransport { request, _ in
+            switch request.route {
+            case "GET /repos/o/r/actions/runs/30/approvals": .fixture("environment-approvals-items")
+            case "GET /repos/o/r/actions/runs/30/pending_deployments": .fixture("pending-deployment-items")
+            case "POST /repos/o/r/actions/runs/30/pending_deployments": .fixture("deployment-items")
+            case "GET /repos/o/r/actions/runs/30/concurrency_groups": .fixture("concurrency-group-run-list")
+            default: .noContent()
+            }
+        }
+        let actions = makeClient(transport).actions
+        #expect(try await actions.deploymentReviews(ofRun: 30, in: "o", "r").count == 1)
+        #expect(try await actions.pendingDeployments(ofRun: 30, in: "o", "r").count == 1)
+        let deployments = try await actions.reviewPendingDeployments(
+            ofRun: 30, in: "o", "r", environmentIDs: [161_088_068], state: .approved, comment: "Ship it!")
+        #expect(deployments.count == 1)
+        try await actions.reviewDeploymentProtectionRule(ofRun: 30, in: "o", "r", environment: "prod", state: .rejected)
+        try await actions.reviewDeploymentProtectionRule(ofRun: 30, in: "o", "r", environment: "prod", comment: "Still checking")
+        let groups = try await actions.concurrencyGroups(ofRun: 30, in: "o", "r").collect()
+        #expect(groups.first?.name == "deploy-prod")
+        #expect(groups.first?.members.first?.position == 0)
+        #expect(groups.first?.members.first?.status == .inProgress)
+
+        #expect(
+            transport.requests.map(\.route) == [
+                "GET /repos/o/r/actions/runs/30/approvals", "GET /repos/o/r/actions/runs/30/pending_deployments",
+                "POST /repos/o/r/actions/runs/30/pending_deployments", "POST /repos/o/r/actions/runs/30/deployment_protection_rule",
+                "POST /repos/o/r/actions/runs/30/deployment_protection_rule", "GET /repos/o/r/actions/runs/30/concurrency_groups",
+            ])
+        #expect(transport.requests[2].jsonBody == ["environment_ids": [161_088_068], "state": "approved", "comment": "Ship it!"])
+        #expect(transport.requests[3].jsonBody == ["environment_name": "prod", "state": "rejected"])
+        #expect(transport.requests[4].jsonBody == ["environment_name": "prod", "comment": "Still checking"])
+    }
 }

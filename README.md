@@ -101,7 +101,7 @@ targets: [
 | `GHKitSearch` | `github.search`. |
 | `GHKitApps` | `github.apps`: GitHub App and OAuth app management. |
 | `GHKitMeta` | `github.meta`: service information, licenses, `.gitignore` templates, codes of conduct, emojis, Markdown rendering. |
-| `GHKitActions` | `github.actions`: GitHub Actions workflows and workflow runs. |
+| `GHKitActions` | `github.actions`: GitHub Actions workflows, runs, jobs, logs, artifacts, and deployment reviews. |
 | `GHKitUI` | `GitHubSession`, `GitHubSignInView`, `DeviceCodeView`, and the `\.gitHubClient` environment value. |
 | `GHKitMCP` | `GitHubToolbox`: GitHub tools for a Model Context Protocol server. Adds the [MCP Swift SDK](https://github.com/modelcontextprotocol/swift-sdk). |
 
@@ -380,7 +380,7 @@ Swap the `HTTPTransport` to add logging or caching, or to stub responses in test
 
 ## 🗺️ Roadmap
 
-GHKit is growing in milestones. [TODO.md](TODO.md) tracks every one of GitHub's 1,281 REST endpoints (624 done, 48%), plus the GraphQL-only features.
+GHKit is growing in milestones. [TODO.md](TODO.md) tracks every one of GitHub's 1,281 REST endpoints (643 done, 50%), plus the GraphQL-only features.
 
 | Milestone | Scope | Status |
 |---|---|---|
